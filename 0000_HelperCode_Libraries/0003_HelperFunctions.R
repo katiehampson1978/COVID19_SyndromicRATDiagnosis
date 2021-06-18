@@ -360,7 +360,7 @@ tidy_output_MV <- function(output_list, # list output from *run_MV_cv_model_parr
 #' returns a list of tidy data frames,
 
 ## Run cv model
-  <- function(dat, swab_type,  covariate_names, 
+tidy_run_cv <- function(dat, swab_type,  covariate_names, 
                         symptom_nam, model_type, cross_val_table, 
                         syndromic_only = TRUE){
   standat <- stan_dat_prep(dat = dat, 
