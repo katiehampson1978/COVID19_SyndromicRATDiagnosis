@@ -11,6 +11,7 @@
 #' Stan fitting code.
 stan_dat_prep <- 
   function(dat, # Raw data
+           swab_type, # Name of swab type
            cross_val_table, # Assignment table of cross validation sets
            covariate_names, # Names of explanatory variables
            response_names # Names of response variables
@@ -186,13 +187,13 @@ run_MV_cv_model_parr <- function(standat, # stan ready data (output from stan_da
                                  syndromic_only = TRUE # Is model syndromic only or does it include RAT
                                  ){
   # Load the global fitting params
-  source("0000_Libraries_Functions_Params/0002_GlobalStanFittingParams.R")
+  source("0000_HelperCode_Libraries/0002_GlobalStanFittingParams.R")
   # If syndromic only model we want the standard MV Probit, if RAT positive we
   # want the two step model formulation
   if(syndromic_only){
     model_file <- "0200_ModelDefinitions/0201_ModelDef_MVProbit.stan"
   }else{
-    model_file <- "RATNeg_Workflow/0200_Models/0203_ModelDef_MVProbit.stan"
+    model_file <- "0200_ModelDefinitions/0202_ModelDef_MVProbit_Split.stan"
   }
   # Compile model
   model <- cmdstan_model(model_file) 
@@ -203,8 +204,8 @@ run_MV_cv_model_parr <- function(standat, # stan ready data (output from stan_da
                           chains = N_Chains,
                           parallel_chains = N_Chains,
                           refresh = 100,
-                          # iter_warmup=10,
-                          # iter_sampling = 10,
+                          # iter_warmup=Iter,
+                          # iter_sampling = Iter,
                           ## Note: using params from the "fitting params" file here
                           # restrict the initial range to limit numerical overflow 
                           # (inits being rejected)
@@ -369,11 +370,11 @@ tidy_run_cv <- function(dat, swab_type,  covariate_names,
                            covariate_names = covariate_names, 
                            response_names = c("result", symptom_nam)
                            )
-  fit <- run_MV_cv_model_parr(standat = standat, swab_type = swab_type, 
-                              fit_type = model_type,  
-                              n_cv_folds = 5, 
+  fit <- run_MV_cv_model_parr(standat = standat, swab_type = swab_type,
+                              fit_type = model_type,
+                              n_cv_folds = 5,
                               syndromic_only = syndromic_only)
-  
+
   temp_fun <- function(x, fit){
     fit_temp <- fit[[x]]
     draws <- fit_temp$draws(c("beta", "Omega",
@@ -383,7 +384,7 @@ tidy_run_cv <- function(dat, swab_type,  covariate_names,
     draws_df <- as_draws_df(draws)
     draws_df
   }
-  
+
   output_list <- map(1:5, ~temp_fun(.x, fit = fit))
 
   output_df <- tidy_output_MV(output_list = output_list,
