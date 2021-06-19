@@ -251,11 +251,21 @@ synd_coarse <- rbind(nas0$cv_log_loss,
              nas6$cv_log_loss,
              nas10$cv_log_loss,
              nas14$cv_log_loss)
-synd_coarse$SympNum <- parse_number(synd_coarse$FitType)
-ggplot(synd_coarse, aes(x = log_loss)) +
+
+synd_coarse_wide <- synd_coarse %>% 
+  pivot_wider(names_from = CV, values_from = log_loss, values_fn = list) %>%
+  unnest(c(`1`, `2` , `3`, `4`,  `5`))
+
+synd_coarse_wide <- synd_coarse_wide %>% 
+  mutate(ModelLogLoss = synd_coarse_wide %>%
+           select(c(`1`, `2` , `3`,  `4`, `5`)) %>%
+           rowSums())
+
+
+synd_coarse_wide$SympNum <- parse_number(synd_coarse_wide$FitType)
+ggplot(synd_coarse_wide, aes(x = ModelLogLoss)) +
   geom_boxplot() +
   facet_grid(vars(SympNum)) +
-  coord_cartesian(xlim = c(0,1)) +
   ggtitle("Nasal Swabs") +
   theme(legend.position = "none") 
 

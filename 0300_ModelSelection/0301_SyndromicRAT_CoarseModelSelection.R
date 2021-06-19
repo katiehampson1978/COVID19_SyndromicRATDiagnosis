@@ -82,17 +82,18 @@ omegas <- get(paste0("SyndromicRAT_Coarse_Round", round))$omegas %>%
   select(starts_with("result"),CV ) %>%
   pivot_longer(-c(CV), names_to = "symptoms")
 
-ggplot(omegas, aes(x = value, fill = symptoms)) +
+ggplot(omegas, aes(x = value)) +
   geom_histogram() +
   facet_grid(vars(CV), vars(symptoms)) +
   geom_vline(xintercept = 0)
 
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit")
+reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain", 
+                     "red_eye", "runny_nose")
 
-# Round 10 ----------------------------------------------------------------
+# Round 9 ----------------------------------------------------------------
 
 best_symptoms_so_far <- symptom_nam[!symptom_nam %in% reject_symptoms]
-round <- 10
+round <- 9
 round == length(best_symptoms_so_far)
 assign(paste0("SyndromicRAT_Coarse_Round", round), 
        nasal_tidy_run(best_symptoms_so_far = best_symptoms_so_far,
@@ -106,8 +107,9 @@ ggplot(omegas, aes(x = value)) +
   facet_grid(vars(CV), vars(symptoms)) +
   geom_vline(xintercept = 0)
 
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired")
+reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain", 
+                     "red_eye", "runny_nose", "cough", "headache",
+                     "vomit")
 
 # Round 06 ----------------------------------------------------------------
 
@@ -126,9 +128,9 @@ ggplot(omegas, aes(x = value)) +
   facet_grid(vars(CV), vars(symptoms)) +
   geom_vline(xintercept = 0)
 
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat")
+reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain", 
+                     "red_eye", "runny_nose", "cough", "headache",
+                     "vomit", "breath_problem", "sore_throat")
 
 # Round 04 ----------------------------------------------------------------
 
@@ -149,9 +151,9 @@ ggplot(omegas, aes(x = value)) +
   facet_grid(vars(CV), vars(symptoms)) +
   geom_vline(xintercept = 0)
 
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem")
+reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain", 
+                     "red_eye", "runny_nose", "cough", "headache",
+                     "vomit", "breath_problem", "sore_throat", "diarrhoea")
 
 # Round 03 ----------------------------------------------------------------
 
@@ -162,7 +164,6 @@ assign(paste0("SyndromicRAT_Coarse_Round", round),
        nasal_tidy_run(best_symptoms_so_far = best_symptoms_so_far,
                       round = round))
 
-
 omegas <- get(paste0("SyndromicRAT_Coarse_Round", round))$omegas %>% 
   select(starts_with("result"),CV ) %>%
   pivot_longer(-c(CV), names_to = "symptoms")
@@ -172,9 +173,10 @@ ggplot(omegas, aes(x = value)) +
   facet_grid(vars(CV), vars(symptoms)) +
   geom_vline(xintercept = 0)
 
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem", "runny_nose")
+reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain", 
+                     "red_eye", "runny_nose", "cough", "headache",
+                     "vomit", "breath_problem", "sore_throat", "diarrhoea", 
+                     "tired")
 
 # Round 02 ----------------------------------------------------------------
 
@@ -185,7 +187,8 @@ assign(paste0("SyndromicRAT_Coarse_Round", round),
        nasal_tidy_run(best_symptoms_so_far = best_symptoms_so_far,
                       round = round))
 
-omegas <- get(paste0("SyndromicRAT_Coarse_Round", round))$omegas %>% select(starts_with("result"),CV ) %>%
+omegas <- get(paste0("SyndromicRAT_Coarse_Round", round))$omegas %>% 
+  select(starts_with("result"),CV ) %>%
   pivot_longer(-c(CV), names_to = "symptoms")
 
 ggplot(omegas, aes(x = value)) +
@@ -193,10 +196,10 @@ ggplot(omegas, aes(x = value)) +
   facet_grid(vars(CV), vars(symptoms)) +
   geom_vline(xintercept = 0)
 
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem", "runny_nose",
-                     "wet_cough")
+reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain", 
+                     "red_eye", "runny_nose", "cough", "headache",
+                     "vomit", "breath_problem", "sore_throat", "diarrhoea", 
+                     "tired", "wet_cough")
 
 # Round 01 ----------------------------------------------------------------
 
@@ -216,47 +219,57 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   facet_grid(vars(CV), vars(symptoms)) +
   geom_vline(xintercept = 0)
 
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem", "runny_nose",
-                     "wet_cough", "loss_of_smell")
+reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain", 
+                     "red_eye", "runny_nose", "cough", "headache",
+                     "vomit", "breath_problem", "sore_throat", "diarrhoea", 
+                     "tired", "wet_cough", "fever")
 
 # Round 0 ----------------------------------------------------------------
 
-best_symptoms_so_far <- symptom_nam[!symptom_nam %in% reject_symptoms]
+
 round <- 0
-round == length(best_symptoms_so_far)
 assign(paste0("SyndromicRAT_Coarse_Round", round), 
-       nasal_tidy_run(best_symptoms_so_far = best_symptoms_so_far,
+       nasal_tidy_run(best_symptoms_so_far = NULL,
                       round = round))
 
 
 # Compare -----------------------------------------------------------------
 
 nas0 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round0__age.gender.rds")
-nas1 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round1_loss_of_smell_age.gender.rds")
-nas2 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round2_wet_cough.loss_of_smell_age.gender.rds")
-nas3 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round3_wet_cough.runny_nose.loss_of_smell_age.gender.rds")
-nas4 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round4_breath_problem.wet_cough.runny_nose.loss_of_smell_age.gender.rds")
-nas6 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round6_fever.breath_problem.wet_cough.sore_throat.runny_nose.loss_of_smell_age.gender.rds")
-nas10 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round10_fever.breath_problem.wet_cough.sore_throat.tired.runny_nose.loss_of_smell.muscle_pain.red_eye.loss_of_taste_age.gender.rds")
+nas1 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round1_fever_age.gender.rds")
+nas2 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round2_fever.wet_cough_age.gender.rds")
+nas3 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round3_fever.wet_cough.tired_age.gender.rds")
+nas4 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round4_fever.wet_cough.tired.diarrhoea_age.gender.rds")
+nas6 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round6_fever.breath_problem.wet_cough.sore_throat.tired.diarrhoea_age.gender.rds")
+nas9 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round9_fever.headache.cough.breath_problem.wet_cough.sore_throat.tired.diarrhoea.vomit_age.gender.rds")
 nas14 <- readRDS("0300_ModelSelection/Output/SyndromicRAT_Coarse_Round14_fever.headache.cough.breath_problem.wet_cough.sore_throat.tired.runny_nose.loss_of_smell.muscle_pain.diarrhoea.vomit.red_eye.loss_of_taste_age.gender.rds")
 
-
 synd_coarse <- rbind(nas0$cv_log_loss,
-             nas1$cv_log_loss,
-             nas2$cv_log_loss,
-             nas3$cv_log_loss,
-             nas4$cv_log_loss,
-             nas6$cv_log_loss,
-             nas10$cv_log_loss,
-             nas14$cv_log_loss)
-synd_coarse$SympNum <- parse_number(synd_coarse$FitType)
-ggplot(synd_coarse, aes(x = log_loss)) +
+                     nas1$cv_log_loss,
+                     nas2$cv_log_loss,
+                     nas3$cv_log_loss,
+                     nas4$cv_log_loss,
+                     nas6$cv_log_loss,
+                     nas9$cv_log_loss,
+                     nas14$cv_log_loss)
+
+synd_coarse_wide <- synd_coarse %>% 
+  pivot_wider(names_from = CV, values_from = log_loss, values_fn = list) %>%
+  unnest(c(`1`, `2` , `3`, `4`,  `5`))
+
+synd_coarse_wide <- synd_coarse_wide %>% 
+  mutate(ModelLogLoss = synd_coarse_wide %>%
+           select(c(`1`, `2` , `3`,  `4`, `5`)) %>%
+           rowSums())
+
+
+synd_coarse_wide$SympNum <- parse_number(synd_coarse_wide$FitType)
+ggplot(synd_coarse_wide, aes(x = ModelLogLoss)) +
   geom_boxplot() +
   facet_grid(vars(SympNum)) +
-  coord_cartesian(xlim = c(0,1)) +
   ggtitle("Nasal Swabs") +
   theme(legend.position = "none") 
+
+
 
 
