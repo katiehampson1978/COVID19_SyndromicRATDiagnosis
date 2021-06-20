@@ -457,22 +457,16 @@ ROC_diagnose <- function(validation_df, prob_range, increment_size){
   diag_df
 }
 
-# auc_calc <- function(validation_df, prob_range, increment_size){
-#   
-#   classification_df <- threshold(validation_df = validation_df, 
-#                                              prob_range = c(prob_range[1], prob_range[2]),
-#                                              increment_size = increment_size)
-#   auc_tmp <- classification_df %>% 
-#     pivot_longer(cols = starts_with("threshold"), 
-#                  names_to = "threshold", 
-#                  values_to = "classification") %>%
-#     na.omit() %>%
-#     nest(data = -c(SwabType, FitType, Chain, Iter))  %>% 
-#     mutate(auc = map_dbl(data, ~ performance(
-#       prediction(
-#         predictions = .x$classification, labels = .x$Truth), "auc")@y.values %>% 
-#         unlist(use.names = FALSE)))
-# 
-# auc_tmp
-# }
 
+
+
+# Function to read in validation dataframes
+read_validation <- function(file){
+  tmp <- readRDS(file)[["validation"]]
+  tmp
+}
+
+my_80CI <- function(varnam, x) {
+  probs <- c(0.1,0.9)
+  tibble("{varnam}_CI" := quantile(x, probs, na.rm = TRUE, names = FALSE), probs = probs)
+}
