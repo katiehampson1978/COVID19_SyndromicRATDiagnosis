@@ -1,0 +1,126 @@
+source("0000_HelperCode_Libraries/0001_Libraries.R")
+source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
+
+SyndOnlyROC <- readRDS("0400_ModelAssessment/0410_SyndromicOnly_ROCrate.rds")
+SyndRATROC <- readRDS("0400_ModelAssessment/0410_SyndromicRAT_ROCrate.rds")
+RATOnlyROC <- readRDS("0400_ModelAssessment/0410_RATOnly_ROCrate.rds")
+
+SyndOnlyROC$ModelClass <- "SyndOnly"
+ SyndRATROC$ModelClass <- "SyndRAT"
+ RATOnlyROC$ModelClass <- "RATonly"
+
+
+ 
+ROCs <- rbind(SyndOnlyROC,
+              SyndRATROC,
+              RATOnlyROC)
+ROCs$FitType[1:500] <- paste0(ROCs$ModelClass[1:500], "_", 
+                              parse_number(ROCs$FitType[1:500]), 
+                              "Symptom", "+Age")
+ROCs$FitType[501] <- "RATonly"
+
+ROC_plots <- ROCs
+ROC_plots$FitType <-  str_replace(ROC_plots$FitType, ".*_", "")
+
+ggplot(ROC_plots , 
+       aes(x = MedFalsePosRate, y = MedTruePosRate, 
+                     colour = FitType)) +
+  geom_point() +
+  geom_line() +
+  geom_errorbar(aes(ymin = MedTruePosRate - SDTruePosRate, 
+                    ymax = MedTruePosRate + SDTruePosRate)) +
+  
+  geom_errorbarh(aes(xmin = MedFalsePosRate - SDFalsePosRate, 
+                     xmax = MedFalsePosRate + SDFalsePosRate)) +
+  geom_line() +
+  geom_abline(slope = 1, alpha = 0.1) +
+  ylab("True Positive Rate") +
+  xlab("False Positive Rate") +
+  facet_wrap(~ModelClass) +
+  ggtitle("ROC Curve For Each Model Class") +
+  scale_colour_discrete(name = "Model Class", 
+                        labels = c("0 Symptoms + Age", 
+                                   "1 Symptom + Age", 
+                                   "2 Symptoms + Age", 
+                                   "3 Symptoms + Age", 
+                                   "4 Symptoms + Age", 
+                                   "RAT Only"))
+
+ggplot(ROC_plots, 
+       aes(x = MedFalseNegRate, y = MedTrueNegRate, 
+           colour = FitType)) +
+  geom_point() +
+  geom_line() +
+  geom_errorbar(aes(ymin = MedTrueNegRate - SDTrueNegRate, 
+                    ymax = MedTrueNegRate + SDTrueNegRate)) +
+  
+  geom_errorbarh(aes(xmin = MedFalseNegRate - SDFalseNegRate, 
+                     xmax = MedFalseNegRate + SDFalseNegRate)) +
+  geom_line() +
+  geom_abline(slope = 1, alpha = 0.1) +
+  facet_wrap(~ModelClass)
+
+
+
+ROCs$threshold <- parse_number(ROCs$threshold)
+
+acceptable_false_neg <- 0.2
+minimise_falseneg <- ROCs %>% group_by(FitType) %>%
+  mutate(tmp = MedFalseNegRate - acceptable_false_neg) %>%
+  filter(tmp > 0) %>%
+  slice(which.min(tmp)) %>%
+  select(-tmp) 
+
+acceptable_false_pos <- 0.2
+minimise_falsepos <- ROCs %>% group_by(FitType) %>%
+  mutate(tmp = MedFalsePosRate - acceptable_false_pos) %>%
+  filter(tmp > 0) %>%
+  slice(which.min(tmp)) %>%
+  select(-tmp) %>%
+  rbind(RATOnlyROC) # Need to add in RATOnly as false pos will go negative here
+
+max_perf <- ROCs %>% group_by(FitType) %>%
+  mutate(tmp = (MedTruePosRate + MedTrueNegRate)) %>%
+  filter(tmp > 0) %>%
+  slice(which.max(tmp)) %>%
+  select(-tmp) 
+
+
+         max_perf$scenario <- "Agnostic"
+minimise_falseneg$scenario <- "Costly False Negatives"
+minimise_falsepos$scenario <- "Costly False Positives"
+
+         max_perf$MedError <- (max_perf$MedFalseNegRate +
+                                     max_perf$MedFalsePosRate)
+minimise_falseneg$MedError <- minimise_falseneg$MedFalsePosRate
+minimise_falsepos$MedError <- minimise_falsepos$MedFalseNegRate 
+
+max_perf$SDError <- (max_perf$SDFalseNegRate +
+                              max_perf$SDFalsePosRate)
+minimise_falseneg$SDError <- minimise_falseneg$SDFalsePosRate
+minimise_falsepos$SDError <- minimise_falsepos$SDFalseNegRate 
+
+minimise_falseneg[minimise_falseneg$FitType == "RATonly", "MedError"] <- NA
+
+
+scenario_outcomes <- rbind(max_perf, minimise_falseneg, minimise_falsepos)
+
+scenario_outcomes_rounded <- scenario_outcomes %>% 
+  mutate_if(is.numeric, ~round(.x, 2))
+
+scenario_outcomes_rounded$FitType <- str_replace(scenario_outcomes_rounded$FitType, ".*_", "")
+
+
+ggplot(scenario_outcomes_rounded, 
+       aes(x = FitType, y = MedError, colour = ModelClass)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = MedError - SDError, 
+                    ymax = MedError + SDError)) +
+
+  ylab("Error") + 
+  xlab("Model") +
+  facet_wrap(~scenario)  +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  scale_colour_discrete(name = "Model Class", 
+                      labels = c("RAT only", "Syndromic Only", "Syndromic + RAT"))
+
