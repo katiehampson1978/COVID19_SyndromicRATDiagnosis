@@ -109,7 +109,7 @@ scenario_outcomes_rounded <- scenario_outcomes %>%
   mutate_if(is.numeric, ~round(.x, 2))
 
 scenario_outcomes_rounded$FitType <- str_replace(scenario_outcomes_rounded$FitType, ".*_", "")
-
+scenario_outcomes_rounded %>% filter(scenario == "Costly False Positives") %>% select(ModelClass, MedError)
 
 ggplot(scenario_outcomes_rounded, 
        aes(x = FitType, y = MedError, colour = ModelClass)) +

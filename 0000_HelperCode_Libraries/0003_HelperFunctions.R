@@ -144,39 +144,6 @@ stan_dat_prep <-
 
 # Model Fitting -----------------------------------------------------------
 
-# source("RATNeg_Workflow/0200_Models/0202_FittingParams.R")
-# # Code to run a univariate model 
-# run_MV_cv_model <- function(standat, n_cv_folds, swab_type, fit_type, modsel = FALSE){
-#   model_file <- "RATNeg_Workflow/0200_Models/0203_ModelDef_MVProbit.stan"
-#   model <- cmdstan_model(model_file) 
-#   output_list <- list()
-#   for(i in seq_along(1:n_cv_folds)){
-#     fit <- model$sample(standat[i][[1]],
-#                         chains = if(modsel){2}else {4},
-#                         parallel_chains = 4,
-#                         refresh = 100,
-#                         ## Note: using params from the "fitting params" file here
-#                         # restrict the initial range to limit numerical overflow 
-#                         # (inits being rejected)
-#                         init = Init_R,
-#                         # Only effects performance if reached
-#                         max_treedepth = TreeDepth,
-#                         # Think of like step length in Gibbs, this will slow things down
-#                         adapt_delta = AdaptDelta,
-#                         save_warmup=TRUE)
-#     temp <- paste0(paste(swab_type, fit_type, sep = "_"), i, sep = "_")
-#     # Extract samples for key params 
-#     assign(paste(temp),
-#            as_draws_df(fit$draws(variable = 
-#                                    c("beta", "Omega", 
-#                                      "logprob", "cv_fold",
-#                                      "log_loss",  
-#                                      "y_true"))))
-#     output_list[[i]] <- get(paste(temp))
-#   }
-#   output_list  
-# }
-
 #' Run multivariate probit code in Stan for a given output of *stan_dat_prep*. 
 #' Function uses the furrr package (wrapper for purrr and the future package) to
 #' run different cross validation sets in parallel.
@@ -288,19 +255,20 @@ tidy_output_MV <- function(output_list, # list output from *run_MV_cv_model_parr
                                   select(.chain) %>% 
                                   unlist(use.names = FALSE))
     cv_log_loss <- rbind(cv_log_loss, temp_log_loss)
-    # Extract beta estimates and bind to other betas
+    ## Extract beta estimates and bind to other betas
+    # Extract results for this round
     temp_beta <- data.frame("CV" = CV, get(obj_name) %>% 
                               select(starts_with("beta")),
                                      "Iter"= get(obj_name) %>% 
-                                       select(c(".iteration")),# %>% 
-                                       #unlist(use.names = FALSE),
+                                       select(c(".iteration")),
                                      "Chain"= get(obj_name) %>% 
                                        select(c(".chain")))
-                            #%>% 
-                                       #unlist(use.names = FALSE)))
+    # Fix variable names
     names(temp_beta) <- c("CV", resp_cov_combos, "Iter", "Chain")
+    # Bind to previous results
     betas <- rbind(betas, temp_beta)
-    #
+    
+    # Extract correlation estimates
     if(length(response_names) == 1){
       corr_names <- "result_result"
     }else{
@@ -308,19 +276,21 @@ tidy_output_MV <- function(output_list, # list output from *run_MV_cv_model_parr
         unite("Omega_nam", Var1:Var2, sep="_") %>% 
         unlist(use.names = FALSE)
     }
-    
-    temp_omegas <- data.frame("CV" = CV, get(obj_name) %>% select(starts_with("Omega")),
+    # Extract results for this round
+    temp_omegas <- data.frame("CV" = CV, get(obj_name) %>% 
+                                select(starts_with("Omega")),
                               "Iter"= get(obj_name) %>% 
-                                select(c(".iteration")),# %>% 
-                              #unlist(use.names = FALSE),
+                                select(c(".iteration")),
                               "Chain"= get(obj_name) %>% 
                                 select(c(".chain")))
+    # Fix variable names
     names(temp_omegas) <- c("CV", corr_names,
                             "Iter",
                             "Chain"
                             )
+    # Bind to previous results
     omegas <- rbind(omegas, temp_omegas)
-    # Extract probabilities and true values
+    ## Extract probabilities and true values
     probs <- get(obj_name) %>% 
       select(cv_fold, starts_with(c("logprob", ".iteration", ".chain"))) %>% 
       pivot_longer(cols = starts_with("logprob"), values_to = "logprob")
@@ -364,17 +334,19 @@ tidy_output_MV <- function(output_list, # list output from *run_MV_cv_model_parr
 tidy_run_cv <- function(dat, swab_type,  covariate_names, 
                         symptom_nam, model_type, cross_val_table, 
                         syndromic_only = TRUE){
+  # Wrap data for stan
   standat <- stan_dat_prep(dat = dat, 
                            cross_val_table = cross_val_table, 
                            swab_type = swab_type, 
                            covariate_names = covariate_names, 
                            response_names = c("result", symptom_nam)
                            )
+  # Run model for each CV fold
   fit <- run_MV_cv_model_parr(standat = standat, swab_type = swab_type,
                               fit_type = model_type,
                               n_cv_folds = 5,
                               syndromic_only = syndromic_only)
-
+  # Extract draws data frame
   temp_fun <- function(x, fit){
     fit_temp <- fit[[x]]
     draws <- fit_temp$draws(c("beta", "Omega",
@@ -384,9 +356,9 @@ tidy_run_cv <- function(dat, swab_type,  covariate_names,
     draws_df <- as_draws_df(draws)
     draws_df
   }
-
+  # Extract draws for each CV fold
   output_list <- map(1:5, ~temp_fun(.x, fit = fit))
-
+  # Convert draws to data frame
   output_df <- tidy_output_MV(output_list = output_list,
                               swab_type = swab_type,
                               fit_type = model_type,
@@ -426,7 +398,8 @@ ROC_diagnose <- function(validation_df, prob_range, increment_size){
     mutate(across(starts_with("threshold"), ~ .x - Truth))
   # Extract classified values and convert to false & true positives and false & true negatives
   classifications <- classification_df %>% select(starts_with("threshold"))
-  # Encode as +- 10 as it takes up less memory than character vectors
+  # Encode as +- 10 as it takes up less memory than character vectors -
+  # could do this more neatly for sure!
   classifications[classifications == 0 & classification_df$Truth == 1] <- 10 #"TruePos" 
   classifications[classifications == 0 & classification_df$Truth == 0] <- -10 #"TrueNeg" 
   # Combinewith meta data
@@ -460,12 +433,17 @@ ROC_diagnose <- function(validation_df, prob_range, increment_size){
 
 
 
-# Function to read in validation dataframes
+# Function to read in file and extract validation dataframe
 read_validation <- function(file){
   tmp <- readRDS(file)[["validation"]]
   tmp
 }
-
+# Function to read in file and extract log loss dataframe
+read_logloss <- function(file){
+  tmp <- readRDS(file)[["cv_log_loss"]]
+  tmp
+}
+# Extract 80% credible interval
 my_80CI <- function(varnam, x) {
   probs <- c(0.1,0.9)
   tibble("{varnam}_CI" := quantile(x, probs, na.rm = TRUE, names = FALSE), probs = probs)

@@ -5,7 +5,8 @@ best_models_syndonly <- readRDS("0300_ModelSelection/0310_SyndromicOnly_BestMode
 best_models_syndrat <- readRDS("0300_ModelSelection/0310_SyndromicRAT_BestModels.rds")
 
 # rds files for best models
-best_model_files_syndonly <- paste0("0300_ModelSelection/Output/SyndromicOnly_Fine_Round", best_models_syndonly$ModelName, ".rds")
+best_model_files_syndonly <- paste0("0300_ModelSelection/Output/SyndromicOnly_Fine_Round", 
+                                    best_models_syndonly$ModelName, ".rds")
 best_model_files_syndrat  <- paste0("0300_ModelSelection/Output/SyndromicRAT_Fine_Round",
                            best_models_syndrat $ModelName, ".rds")
 
@@ -56,5 +57,7 @@ best_valid$FitType <- paste(best_valid$ModelClass, best_valid$FitType, sep = "_"
 ggplot(best_valid %>% group_by(ModelClass), 
        aes(x = ModelLogLoss, y = FitType, fill = FitType)) +
   geom_boxplot() 
-  # facet_grid(vars(ModelClass), scales = "free_y") 
+
+best_valid %>% group_by(FitType) %>% summarise(MedLogLoss = median(ModelLogLoss, na.rm = TRUE),
+                                               SDLogLoss = sd(ModelLogLoss, na.rm = TRUE))
   
