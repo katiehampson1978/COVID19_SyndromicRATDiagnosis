@@ -1,4 +1,9 @@
+#' Now that we have narrowed down to the best set of symptoms for the syndromic
+#' only model. This has reduced the potential model space to manageable level
+#' so we can now explore the symptom-covariate combinations to the 5 best models
+#' of each complexity level. 
 
+# Source helper code and libraries
 source("0000_HelperCode_Libraries/0001_Libraries.R")
 source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
 

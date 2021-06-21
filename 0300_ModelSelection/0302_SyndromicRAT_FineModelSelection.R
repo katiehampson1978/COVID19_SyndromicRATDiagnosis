@@ -28,7 +28,7 @@ cross_val_tab <- matrix(0, nrow = num_weeks, ncol = num_weeks)
 diag(cross_val_tab) <- 1
 colnames(cross_val_tab) <- paste0("cv_", 1:num_weeks)
 
-# Covariate list
+# Covariate combinations list
 covariate_nam <- c("age", "gender")
 covariate_combos <- list(covariate_nam[c(1:2)],
                          covariate_nam[c(1)],
@@ -42,6 +42,7 @@ symptom_nam <- nasal_dat %>%
 
 ## Nasal dat function
 nasal_tidy_run <- function(best_symptoms_so_far, round, covariate_names){
+  # Run model
   tidy_run <- tidy_run_cv(dat = nasal_dat, 
                           swab_type = "nasal", 
                           covariate_names = covariate_names,
@@ -53,6 +54,7 @@ nasal_tidy_run <- function(best_symptoms_so_far, round, covariate_names){
                                                    collapse = "."), sep = "_"),
                           cross_val_table = cross_val_tab, 
                           syndromic_only = FALSE)
+  # Save output
   saveRDS(tidy_run, 
           paste0("0300_ModelSelection/Output/SyndromicRAT_Fine_Round", 
                  paste(round, 
@@ -73,8 +75,12 @@ reject_symptoms <- c("loss_of_smell", "loss_of_taste", "muscle_pain",
 # A for loop is justified here as the number of cores available means the models
 # must run sequentially if CV and chains are to be parallelised
 for(i in seq_along(covariate_combos)){
+  # Choose first covariate combo
   covariate_nam <- covariate_combos[[i]]
   
+
+  # Round 4 -----------------------------------------------------------------
+
   round <- 4
   best_symptoms_so_far <- symptom_nam[!symptom_nam %in% reject_symptoms]
   assign(paste0("SyndromicRAT_Coarse_Round", round), 

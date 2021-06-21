@@ -1,4 +1,7 @@
+#' Now that we have run our most promising model combinations we need to identify
+#' which have the highest predictive power.
 
+# Source helper code and libraries
 source("0000_HelperCode_Libraries/0001_Libraries.R")
 source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
 

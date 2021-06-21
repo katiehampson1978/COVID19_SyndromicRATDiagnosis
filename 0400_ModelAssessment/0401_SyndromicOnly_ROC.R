@@ -1,4 +1,6 @@
-# Best Model Error Rates --------------------------------------------------
+#' We now need to calculate the posterior ROCs for the syndromic only model.
+
+# Read in helper functions and libraries
 source("0000_HelperCode_Libraries/0001_Libraries.R")
 source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
 best_models <- readRDS("0300_ModelSelection/0310_SyndromicOnly_BestModels.rds")
@@ -17,7 +19,8 @@ synd_only_ROC <- ROC_diagnose(validation_df = best_valid,
                               increment_size = 0.02)
 saveRDS(synd_only_ROC, "0400_ModelAssessment/0410_SyndromicOnly_ROC.rds")
 
-# Generate true and false, positive and negative rates 
+# Generate true and false, positive and negative rates, calculate median, SD and 
+# CIs for each 
 synd_only_ROCrate <- synd_only_ROC  %>% 
   group_by(SwabType, FitType, threshold) %>%
   summarise(MedFalseNegRate = median(FalseNegRate, na.rm = TRUE),
