@@ -29,6 +29,7 @@ ROCs$FitType[501] <- "RATonly"
 ROC_plots <- ROCs
 ROC_plots$FitType <-  str_replace(ROC_plots$FitType, ".*_", "")
 
+saveRDS(ROC_plots, "0400_ModelAssessment/0420_ROC_plot_dat.rds")
 # True Positive vs False Positive plot
 ggplot(ROC_plots , 
        aes(x = MedFalsePosRate, y = MedTruePosRate, 
@@ -127,6 +128,7 @@ scenario_outcomes_rounded <- scenario_outcomes %>%
 # Tidy names
 scenario_outcomes_rounded$FitType <- str_replace(scenario_outcomes_rounded$FitType, ".*_", "")
 
+saveRDS(scenario_outcomes_rounded, "0400_ModelAssessment/0420_scenario_outcomes.rds")
 # Plot
 ggplot(scenario_outcomes_rounded, 
        aes(x = FitType, y = MedError, colour = ModelClass)) +
