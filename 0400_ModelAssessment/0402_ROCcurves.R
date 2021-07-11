@@ -77,8 +77,8 @@ acceptable_false_neg <- 0.2 # Acceptable Rate
 # Identify threshold for each fit type that most closely exceed criterion 
 minimise_falseneg <- ROCs %>% group_by(FitType) %>%
   mutate(tmp = MedFalseNegRate - acceptable_false_neg) %>%
-  filter(tmp > 0) %>%
-  slice(which.min(tmp)) %>%
+  filter(tmp < 0) %>%
+  slice(which.max(tmp)) %>%
   select(-tmp) 
 
 # Costly false positives scenario
@@ -86,8 +86,8 @@ acceptable_false_pos <- 0.2 # Acceptable Rate
 # Identify threshold for each fit type that most closely exceed criterion
 minimise_falsepos <- ROCs %>% group_by(FitType) %>%
   mutate(tmp = MedFalsePosRate - acceptable_false_pos) %>%
-  filter(tmp > 0) %>%
-  slice(which.min(tmp)) %>%
+  filter(tmp < 0) %>%
+  slice(which.max(tmp)) %>%
   select(-tmp) %>%
   rbind(RATOnlyROC) # Need to add in RATOnly as false pos will go negative here
 
