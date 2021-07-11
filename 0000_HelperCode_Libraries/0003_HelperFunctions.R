@@ -448,3 +448,5 @@ my_80CI <- function(varnam, x) {
   probs <- c(0.1,0.9)
   tibble("{varnam}_CI" := quantile(x, probs, na.rm = TRUE, names = FALSE), probs = probs)
 }
+
+
