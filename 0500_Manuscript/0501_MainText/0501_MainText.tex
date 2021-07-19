@@ -84,6 +84,7 @@
 
 % Pandoc header
 \renewenvironment{abstract}{}{}
+\usepackage[colorinlistoftodos]{todonotes}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -151,10 +152,10 @@ Sensitivity and Specificity in Real-World COVID-19 Detection}
    \ead{ays328@mail.harvard.edu} 
       \address[IBAHCM]{Institute of Biodiversity, Animal Health and
 Comparative Medicine, University of Glasgow}
-    \address[MathsandStatGla]{School of Mathematics and Statistics,
-University of Glasgow}
     \address[UoGLMICS]{COVID-19 in LMICs Research Group, University of
 Glasgow}
+    \address[MathsandStatGla]{School of Mathematics and Statistics,
+University of Glasgow}
     \address[MRCB]{MRC Biostatistics Unit, University of Cambridge}
     \address[a2i]{a2i Programme, ICT Ministry/UNDP Bangladesh}
     \address[UNFAO]{UN FAO in support of the UN Interagency Support
@@ -170,6 +171,10 @@ Department of Psychiatry, Columbia University}
   \end{abstract}
   
  \end{frontmatter}
+
+\begin{verbatim}
+## here() starts at /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis
+\end{verbatim}
 
 \hypertarget{abstract}{%
 \section{Abstract}\label{abstract}}
@@ -216,111 +221,114 @@ The Bill and Melinda Gates Foundation and the Wellcome Trust.
 \section{Introduction}\label{introduction}}
 
 Identification and isolation of COVID-19 cases remains key to the
-pandemic response across the globe. From informing individual care to
-targeting population-level interventions, the faster and more accurately
-we can identify who is infected, the more effectively we can provide
-clinical care and reduce transmission of infection. RT-PCR has rapidly
-become the default, gold-standard test for COVID-19 in applied settings,
-with high sensitivity and specificity for COVID-19 {[}2{]}. Most of the
-world's population, however, live in low- and middle-income countries
-where the laboratory facilities needed to carry out RT-PCR tests are
-often scarce and hard to reach {[}4{]}. Case identification worldwide,
-therefore, must be made accessible using inexpensive methods that can be
-carried out locally {[}6{]}.
+pandemic response across the globe. The faster and more accurately we
+can identify cases, the more effectively we can provide clinical care,
+reduce transmission of infection and develop population-level
+interventions. RT-PCR testing has rapidly become the default,
+gold-standard test for COVID-19 in applied settings due to its high
+sensitivity and specificity for COVID-19 {[}2{]}. Most of the world's
+population, however, live in low- and middle-income countries where the
+laboratory facilities needed to carry out RT-PCR tests are often scarce
+and hard to reach {[}4{]}. COVID-19 diagnosis worldwide, therefore, must
+be made accessible using inexpensive methods that can be carried out
+locally {[}6{]}.
 
 An increasingly popular alternative to RT-PCR is rapid antigen testing
 (RAT) {[}7{]}. Like RT-PCR, these tests have high specificity for
-COVID-19 and are widely used as they are less expensive, easier to use,
-and faster {[}8{]}. RATs also require less commitment and discomfort for
-patients. For RT-PCR testing, patients must travel to a designated site
-(such as a hospital or testing booth) or have PPE-clad officials visit
-their home. Then, invasive nasopharyngeal swabs must be taken and there
-is a delay in receiving the result (between one day and a week in
-Bangladesh). In contract, RAT can be conducted on saliva samples,
-completed in the home and results are available in 30 minutes. RATs can
-be taken by persons with limited training, thus decreasing the time and
-expense associated with identifying cases. Together, these traits make
-RATs an appealing alternative to RT-PCR. However, several concerns have
-been raised about the sensitivity of RAT {[}9{]} leading to more false
-negative diagnoses.
+COVID-19 while being less expensive, easier to implement, and faster to
+produce results {[}8{]}. RATs also require less commitment and
+discomfort for patients. For RT-PCR testing, patients must travel to a
+designated site (such as a hospital or testing booth) or have highly
+visible PPE-clad officials visit their home. Then, invasive
+nasopharyngeal swabs must be taken and there is a delay in receiving the
+result (between one day and a week in Bangladesh). In contract, RAT can
+be conducted on nasal or saliva samples, completed in the home and
+results are available in 30 minutes. RATs can be taken by persons with
+limited training, thus decreasing the time and expense associated with
+identifying cases. Together, these traits make RATs an appealing
+alternative to RT-PCR. However, several concerns have been raised about
+the sensitivity of RAT {[}9{]} leading to more false negative diagnoses.
 
-One of the alternatives to RT-PCR that has been used since the start of
-the pandemic is identifying suspected cases through symptom-thresholding
+Another alternative to RT-PCR, one that has been used since the start of
+the pandemic, is identifying cases through symptom-thresholding
 {[}10{]}. In this approach, a patient presenting with a fever and one or
 more viral pneumonia symptoms is treated as a COVID-19 positive patient.
 The main advantage of this approach is the ease of implementation. For
-example, in Bangladesh, a lower middle-income country, initial support
-and reporting of infections locally is provided by community support
-teams (CSTs) composed of volunteers from the community with basic
+example, in Bangladesh, a lower middle-income country, much of the
+initial support and reporting of infections locally is provided by
+community support teams (CSTs) composed of local volunteers with basic
 training. The CSTs can easily collect symptomatic data in the community
 and provide care where the criteria are met. Unfortunately, these
 symptom-thresholds were developed early in the outbreak, and thus
 necessarily drawn from clinical intuition, rather than data.
-Consequently, the relationship between the criteria and the target
-diagnosis is often weak, with low specificity leading to a very large
-number of false positive diagnoses.
+Consequently, the relationship between the criteria and the true
+COVID-19 status is often weak, with low specificity leading to a very
+large number of false positive diagnoses.
 
 A natural extension to these symptom-threshold approaches is syndromic
-modelling. Here, rather than using a set of criteria, a range of
+modelling. Here, a patient presenting with a fever and one or more viral
+pneumonia symptoms is treated as a potential COVID-19 patient. However,
+rather than using a set of pre-determined criteria, a range of
 symptomatic and risk factor data are collected and then a sub-sample of
 patients are tested using RT-PCR for COVID-19 {[}11{]}. These data are
-used to generate a predictive model that allows more accurate estimation
-of how likely a patient is to have COVID-19 through the identification
-of COVID-19 syndromes {[}13{]}. It is worth highlighting at this point
-that in resource-limited settings, there is very limited provision for
-testing of asymptomatic cases, despite their important role in disease
+used to fit a model that allows more accurate prediction of how likely a
+patient is to have COVID-19 through the identification of COVID-19
+syndromes {[}13{]}. It is worth highlighting at this point that in
+resource-limited settings, there is very limited provision for testing
+of asymptomatic cases, despite their important role in disease
 transmission {[}14{]}. Even while focusing solely on symptomatic
-patients, syndromic modelling is a complex, nuanced task. The strength
-of relationships between symptoms and diseases is not stable through
-time or across sampling strategies since the relative importance of each
-symptom for disease diagnosis, in part, depends on the prevalence of
-other diseases causing similar symptoms in the community {[}15{]}. For
-example, if another disease for which loss of smell is a symptom becomes
-common, that symptom becomes a worse predictor for COVID-19. Similarly,
-if everyone who has a cough is considered a likely COVID-19 patient and
-thus is included in the sample of symptomatic patients, the cough will
-likely have a very low correlation with COVID-19 (even if the two are
-strongly related in the general population). While these issues can be
-overcome by properly considering the population sampled and using
-appropriately sophisticated statistical methods, the many types of
-common respiratory disease generally means that even then these models
-tend to have relatively high false positive rates for COVID-19 {[}15{]},
-although much lower than the symptom-threshold approach.
+patients, syndromic modelling is a complex and nuanced task. The
+strength of relationships between symptoms and diseases is not stable
+through time or across sampling strategies since the relative importance
+of each symptom for disease diagnosis, in part, depends on the
+prevalence of other diseases causing similar symptoms in the community
+{[}15{]}. For example, if another disease for which loss of smell is a
+symptom becomes common, that symptom becomes a worse predictor for
+COVID-19. Similarly, if everyone who presents has a cough and thus is
+included in the sample, then coughing will likely have a very low
+correlation with COVID-19 (even if the two are strongly related in the
+general population). While these issues can be overcome by properly
+considering the population sampled and using appropriately sophisticated
+statistical methods, the many types of common respiratory disease
+generally means that even then these models tend to have relatively high
+false positive rates (low specificity) for COVID-19 {[}15{]}, although
+much lower than the symptom-threshold approach.
 
 Poor sensitivity and specificity are problematic in diagnositics but
-higher error rates may be tolerable depending on their scale and impact.
-Low specificity will mean a large number of false positive
-classifications, where the patient is told they have COVID-19 but they
-actually do not. This might lead to patients unnecessarily
+higher error rates may be tolerable depending on their scale and impact
+given the local situation. Low specificity means a large number of false
+positive classifications, where the patient is told they have COVID-19
+but they actually do not. This might lead to patients unnecessarily
 self-isolating and receiving support which can be expensive to the
 individuals and local public health bodies, as well as reducing
 available resources for those who need them {[}16{]}. Similarly, low
-sensitivity will result in more false negative classifications, where
-the patient is told they do not have COVID-19 but they actually do,
-which can lead to a health-risk for the individual and to the disease
-spreading further {[}17{]}. The costs of these misclassifications will
-depend on local context. When the prevalence of the disease is low,
-false positives may create local skepticism about the value of testing,
-or when there are strong population-level mitigations already in place
-(such as a nationwide lockdown), then false positives might be more
-costly than false negatives {[}16{]}. If the disease is abundant or
-increasing rapidly then false negatives are likely to be more costly. In
-most situations, a balance will need to be struck {[}4{]}.
+sensitivity means more false negative classifications, where the patient
+is told they do not have COVID-19 but they actually do, which can lead
+to a health-risk for the individual and to the disease spreading further
+{[}17{]}. The costs of these misclassifications will depend on local
+context. When the prevalence of the disease is low, false positives may
+create local skepticism about the value of testing, or when there are
+strong population-level mitigations already in place (such as a
+nationwide lockdown), then false positives might be more costly than
+false negatives {[}16{]}. If the disease is abundant or increasing
+rapidly then false negatives are likely to be more costly. In most
+situations, a balance will need to be struck {[}4{]}.
 
-The two dominant testing methods available in resource limited settings,
-therefore, are both flawed. Relying solely on symptomatic diagnosis will
-likely overestimate the number of individuals with COVID-19 due to its
-lack of specificity. Conversely, RATs will give a false impression of
-control due to the number of positive cases that will be missed. In this
-paper, we demonstrate how to combine these data types to exploit their
-complementarity and ameliolariate their respective weaknesses. We aim to
-compare the performance of these two testing methods and the combined
-approach both in terms of general prediction and as diagnostics under
-three epidemiological scenarios; and to demonstrate that the combined
-data achieve equal to much lower error rates than the next best method.
-We then discuss the role of statistically integrating data from multiple
-imperfect testing methods in resource limited settings to improve the
-diagnosis of diseases, particularly COVID-19.
+The two dominant ``alternative'' testing methods available in resource
+limited settings, therefore, are both flawed. Relying solely on
+symptomatic diagnosis will likely overestimate the number of individuals
+with COVID-19 due to its lack of specificity. Conversely, RATs will give
+a false impression of control due to the number of positive cases that
+will be missed. In this paper, we demonstrate how to combine these data
+types to exploit their complementarity and ameliolariate their
+respective weaknesses. We aim to compare the performance of these two
+testing methods and the combined approach both in terms of general
+prediction and as diagnostics under three epidemiological scenarios; and
+to demonstrate that the combined data achieve equal to much lower error
+rates than the next best method. We then discuss the role of
+statistically integrating data from multiple imperfect testing methods
+in resource limited settings to improve the diagnosis of diseases,
+particularly COVID-19.
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -331,12 +339,13 @@ hotlines for COVID-19 support. Recruitment took place across Dhaka (the
 capital city of Bangladesh) between 2nd April 2021 and 5th May 2021.
 
 Patients were selected for further testing conditional on the presence
-of a fever (\textgreater38°C) and one or more of 13 additional symptoms
-associated with COVID-19 (breathing problems, coughing, diarrhoea, a
-headache, loss of taste, loss of smell, muscle pain, red eyes, a runny
-nose, a sore throat, tiredness, vomiting or a wet cough). The patient's
-age and gender were also recorded, but these data were not included in
-the patient selection criteria.
+of a fever (\textgreater38°C) at the point of testing and one or more of
+14 additional symptoms associated with COVID-19 (breathing problems,
+coughing, diarrhoea, fever (ongoing), a headache, loss of taste, loss of
+smell, muscle pain, red eyes, a runny nose, a sore throat, tiredness,
+vomiting or a wet cough). The patient's age and gender were also
+recorded, but these data were not included in the patient selection
+criteria.
 
 Nasal swabs and syndromic data were collected from the patient by
 medical technologists. One swab each was used for Rapid Antigen Testing
@@ -347,25 +356,15 @@ Appendix XX. Participants provided written informed consent to sample
 collection and for their test results to be analyzed in the study.
 
 \begin{figure}
-\hypertarget{fig:data-flowchart}{%
-\centering
-\includegraphics[width=4.375in,height=3.10417in]{MainTextFigs/DataFlowchart.pdf}
-\caption{Schematic description of identification of likely COVID-19
-patients by CSTs. The teams collected syndromic data (age, gender and
-presence/absence of 14 predetermined symptoms), and two sets of
-naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR).
-We then used these two imperfect diagnostics (RAT and syndromic data) to
-generate three model classes: RAT result only in Model Class 1,
-Syndromic Data only in Model Class 2, and both RAT result and syndromic
-data in Model Class 3. The PCR test result is used to train and test
-each model using temporal cross validation.}\label{fig:data-flowchart}
-}
+\includegraphics[width=1\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart} \caption{Schematic description of identification of likely COVID-19 patients by CSTs, swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used these two imperfect diagnostics (RAT and syndromic data) to generate three model classes: RAT result only in Model Class 1, Syndromic Data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The PCR test result is used to train and test each model using temporal cross validation.}\label{fig:data-flowchart}
 \end{figure}
 
 We examined the ability of the two imperfect identification methods, the
 syndromic profile and RAT result, to predict the patient's COVID-19
 status when used separately and together. The different data
-combinations define three model classes.
+combinations define three model classes (Figure
+@ref(fig:data-flowchart)).
+\todo{Find more ways to cite Figure 1 in this text.}
 
 Model Class 1 uses only the RAT result and is the simplest of the three.
 It simply equates a positive RAT result with the patient being PCR
