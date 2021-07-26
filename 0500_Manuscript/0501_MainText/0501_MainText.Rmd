@@ -92,6 +92,7 @@ bibliography: mybibfile.bib
 linenumbers: true
 numbersections: true
 csl: elsevier-vancouver.csl
+output:
   bookdown::pdf_book:
     base_format: rticles::elsevier_article
 header-includes:
@@ -99,36 +100,33 @@ header-includes:
   - \usepackage[colorinlistoftodos]{todonotes}
 ---
 
-```{r setup, echo=FALSE, messages=FALSE, warnings=FALSE}
-library(here)
-```
 
-# Abstract
+<!-- # Abstract -->
 
-*Background*
+<!-- *Background* -->
 
-The majority of the world's population live in low- and middle-income countries where access to gold-standard diagnostics like RT-PCR is often limited.
-Rapid Antigen Testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice.
+<!-- The majority of the world's population live in low- and middle-income countries where access to gold-standard diagnostics like RT-PCR is often limited. -->
+<!-- Rapid Antigen Testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice. -->
 
-*Methods*
+<!-- *Methods* -->
 
-Bangladesh's Institute of Epidemiology Disease Control And Research (IEDCR) identified potential COVID-19 patients in Dhaka using syndromic surveillance.
-A sample (n = 511) of these patients was tested using RAT and syndromic data were collected.
-Models were fit to predict RT-PCR status using the RAT data, the syndromic data, and the two combined.
-Model performance was measured using predictive power, sensitivity and specificity.
+<!-- Bangladesh's Institute of Epidemiology Disease Control And Research (IEDCR) identified potential COVID-19 patients in Dhaka using syndromic surveillance. -->
+<!-- A sample (n = 511) of these patients was tested using RAT and syndromic data were collected. -->
+<!-- Models were fit to predict RT-PCR status using the RAT data, the syndromic data, and the two combined. -->
+<!-- Model performance was measured using predictive power, sensitivity and specificity. -->
 
-*Findings*
+<!-- *Findings* -->
 
-Combined data models yielded improved performance over syndromic- and RAT-only models across all three metrics, with sensitivity of W (CI ...) {relative to {X and Y}, respectively}, specificity of A (CI ...) {relative to {B and C}, respectively} and log-loss of D (CI ...) {relative to {E and F}, respectively}.
+<!-- Combined data models yielded improved performance over syndromic- and RAT-only models across all three metrics, with sensitivity of W (CI ...) {relative to {X and Y}, respectively}, specificity of A (CI ...) {relative to {B and C}, respectively} and log-loss of D (CI ...) {relative to {E and F}, respectively}. -->
 
-*Interpretation*
+<!-- *Interpretation* -->
 
-We demonstrate that integrating these imperfect data sources greatly improves the detection of COVID-19.
-Low-cost and accessible surveillance methods make pandemic control in low- and middle- income countries a possibility.
+<!-- We demonstrate that integrating these imperfect data sources greatly improves the detection of COVID-19. -->
+<!-- Low-cost and accessible surveillance methods make pandemic control in low- and middle- income countries a possibility. -->
 
-*Funding*
+<!-- *Funding* -->
 
-The Bill and Melinda Gates Foundation and the Wellcome Trust.
+<!-- The Bill and Melinda Gates Foundation and the Wellcome Trust. -->
 
 # Introduction
 
@@ -203,7 +201,7 @@ knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0501_MainText/MainTextF
 
 We examined the ability of the two imperfect identification methods, the syndromic profile and RAT result, to predict the patient's COVID-19 status when used separately and together.
 The different data combinations define three model classes (Figure \@ref(fig:data-flowchart)).
-\todo{Find more ways to cite Figure 1 in this text.}
+\todo{Find more ways to cite Figure \@ref(fig:data-flowchart) in this text.}
 
 Model Class 1 uses only the RAT result and is the simplest of the three.
 It simply equates a positive RAT result with the patient being PCR positive, and a negative RAT result with PCR negativity.
@@ -281,7 +279,7 @@ For both Model Class 2 (syndromic data only) and Model Class 3 (syndromic and RA
 
 In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with a cross entropy of 4.79 (cross entropy values further from zero correspond to worse predictive performance).
 The median cross entropy values were between 2.90 and 2.95 for models in Class 2 (syndromic data only).
-Models in Class 3 (combined data model) performed best with cross entropy values between 2.40 and 2.43 (see Figure 3).
+Models in Class 3 (combined data model) performed best with cross entropy values between 2.40 and 2.43 (see Figure \@ref(fig:pred-perf)).
 
 ```{r pred-perf, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Interquartile ranges for the posterior cross entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. Cross entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each class."}
 library(viridis)
@@ -372,13 +370,13 @@ ggplot(best_valid,
 
 ```
 
-General model classification performance is shown by the full ROC curves for each model (Figure 4).
+General model classification performance is shown by the full ROC curves for each model (Figure \@ref(fig:ROC-plot)).
 
-Scenario specific classification performance is shown in Figure 5.
-In Scenario 1, the median error was 0.62 for models in Class 1 and Class 3 and between 0.90 and 0.96 for models in Class 2 (Figure 5A).
+Scenario specific classification performance is shown in Figure \@ref(fig:scenario-plot).
+In Scenario 1, the median error was 0.62 for models in Class 1 and Class 3 and between 0.90 and 0.96 for models in Class 2 (Figure \@ref(fig:scenario-plot)).
 In Scenario 2, Model Class 1 was unable to meet the required false negative rate.
-The median errors were between 0.69 and 0.74 for models in Class 2, and 0.57 and 0.69 for models in Class 3 (Figure 5B).
-In Scenario 3, the error in Class 1 was 0.60 and the median errors ranged from 0.70 to 0.75 for Class 2, and 0.44 and 0.47 for Class 3 (Figure 5C).
+The median errors were between 0.69 and 0.74 for models in Class 2, and 0.57 and 0.69 for models in Class 3 (Figure \@ref(fig:scenario-plot)).
+In Scenario 3, the error in Class 1 was 0.60 and the median errors ranged from 0.70 to 0.75 for Class 2, and 0.44 and 0.47 for Class 3 (Figure \@ref(fig:scenario-plot)).
 
 ```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = " Receiver operating characteristics for RAT only approach and posterior mean  (+- posterior standard deviation) receiver operating characteristics for Class 2 and 3 models. These curves demonstrate the performance of the model for any given scenario as defined by false and true positive rates (as opposed to Figure 5 which demonstrates model performance in specific scenarios)."}
 ROC_plots <- readRDS("0400_ModelAssessment/0420_ROC_plot_dat.rds")
@@ -439,8 +437,7 @@ ggplot(scenario_outcomes,
 
 ```
 
-Discussion
-==========
+# Discussion
 
 We have demonstrated that combining two imperfect diagnostics yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually. 
 These improvements are non-trivial in real-world settings like Bangladesh, where there are currently thousands of new cases being identified every day and the pandemic growth is accelerating meaning every missed case has a compounding effect. 
@@ -494,8 +491,10 @@ By using the small amount of RT-PCR testing possible and formally integrating mu
 We have demonstrated that these improvements can be impressive in real-world scenarios, and will have a large impact when scaled to the population sizes in low- and middle-income countries. 
 As such, these low-cost improvements to existing testing programs have the potential to identify one to two orders of magnitude more cases than either gold-standard or alternative methods alone. 
 
-Funding
-=======
+# Funding
 
 The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z). 
 The authors declare no competing interests.
+
+
+# References
