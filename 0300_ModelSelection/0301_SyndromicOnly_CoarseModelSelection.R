@@ -41,7 +41,7 @@ colnames(cross_val_tab) <- paste0("cv_", 1:num_weeks)
 covariate_nam <- c("age", "gender")
 # Symptoms List
 symptom_nam <- nasal_dat %>% 
-  select(-c(id, nasal_ag, all_of(covariate_nam), result, month, week, day)) %>% 
+  select(-c(id, nasal_ag, all_of(covariate_nam), result, week)) %>% 
   names()
 
 ## Nasal dat function
