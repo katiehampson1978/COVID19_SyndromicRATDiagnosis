@@ -92,7 +92,7 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   geom_vline(xintercept = 0)
 
 # Select symptoms with weakest or inconsistent signed symptoms
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose")
 
 # Round 10 ----------------------------------------------------------------
 
@@ -143,9 +143,7 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   geom_vline(xintercept = 0)
 
 # Select symptoms with weakest or inconsistent signed symptoms
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose")
 
 # Round 04 ----------------------------------------------------------------
 
