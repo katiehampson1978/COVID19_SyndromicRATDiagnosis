@@ -11,7 +11,13 @@ best_model_files <- paste0("0300_ModelSelection/Output/SyndromicOnly_Fine_Round"
 
 # Read each file in parallel, extract validation df and bind into single data frame 
 best_valid <- best_model_files %>% 
-  future_map_dfr(read_validation)
+  future_map_dfr(read_validation) 
+
+# Very lightly thin to make ROC calculations feasible
+iter_num <- max(best_valid$Iter)
+iter_thin <- 0.75 
+thinned_iter_indx <- sample(1:iter_num, iter_thin * iter_num)
+best_valid <- best_valid %>% filter(Iter %in% thinned_iter_indx)
 
 # Generate true and false, positive and negative counts 
 synd_only_ROC <- ROC_diagnose(validation_df = best_valid, 
