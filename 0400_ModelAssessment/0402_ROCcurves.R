@@ -116,7 +116,7 @@ minimise_falseneg$SDError <- minimise_falseneg$SDFalsePosRate
 minimise_falsepos$SDError <- minimise_falsepos$SDFalseNegRate 
 
 # Remove RATonly error as it is technically infinite
-minimise_falseneg[minimise_falseneg$FitType == "RATonly", "MedError"] <- NA
+# minimise_falseneg[minimise_falseneg$FitType == "RATonly", "MedError"] <- NA
 
 # Combine best thresholds for each scenario into one dataframe
 scenario_outcomes <- rbind(max_perf, minimise_falseneg, minimise_falsepos)
@@ -127,7 +127,7 @@ scenario_outcomes_rounded <- scenario_outcomes %>%
 
 # Tidy names
 scenario_outcomes_rounded$FitType <- str_replace(scenario_outcomes_rounded$FitType, ".*_", "")
-
+View(scenario_outcomes_rounded)
 saveRDS(scenario_outcomes_rounded, "0400_ModelAssessment/0420_scenario_outcomes.rds")
 # Plot
 ggplot(scenario_outcomes_rounded, 
