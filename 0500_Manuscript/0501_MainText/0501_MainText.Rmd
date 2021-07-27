@@ -81,7 +81,7 @@ address:
   - code: UNFAO
     address: UN FAO in support of the UN Interagency Support Team, Bangladesh
   - code: IEDCR
-    address: Institute of Epidemiology Disease Control and Research, Ministry of Health, Bangladesh
+    address: Institute of Epidemiology, Disease Control and Research, Ministry of Health, Bangladesh
   - code: Columbia
     address: Division of Developmental Neuroscience, Department of Psychiatry, Columbia University
 footnote:
@@ -106,7 +106,7 @@ header-includes:
 <!-- *Background* -->
 
 <!-- The majority of the world's population live in low- and middle-income countries where access to gold-standard diagnostics like RT-PCR is often limited. -->
-<!-- Rapid Antigen Testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice. -->
+<!-- Rapid antigen testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice. -->
 
 <!-- *Methods* -->
 
@@ -141,7 +141,7 @@ Like RT-PCR, these tests have high specificity for COVID-19 while being less exp
 RATs also require less commitment and discomfort for patients.
 For RT-PCR testing, patients must travel to a designated site (such as a hospital or testing booth) or have highly visible PPE-clad officials visit their home.
 Then, invasive nasopharyngeal swabs must be taken and there is a delay in receiving the result (between one day and a week in Bangladesh).
-In contract, RAT can be conducted on nasal or saliva samples, completed in the home and results are available in 30 minutes.
+In contrast, RAT can be conducted on nasal or saliva samples, completed in the home and results are available in 30 minutes.
 RATs can be taken by persons with limited training, thus decreasing the time and expense associated with identifying cases.
 Together, these traits make RATs an appealing alternative to RT-PCR.
 However, several concerns have been raised about the sensitivity of RAT [@mak2020evaluation, muhi2021multi] leading to more false negative diagnoses.
@@ -151,12 +151,12 @@ In this approach, a patient presenting with a fever and one or more viral pneumo
 The main advantage of this approach is the ease of implementation.
 For example, in Bangladesh, a lower middle-income country, much of the initial support and reporting of infections locally is provided by community support teams (CSTs) composed of local volunteers with basic training.
 The CSTs can easily collect symptomatic data in the community and provide care where the criteria are met.
-Unfortunately, these symptom-thresholds were developed early in the outbreak, and thus necessarily drawn from clinical intuition, rather than data.
+However, these symptom-thresholds were developed early in the outbreak, and thus necessarily drawn from clinical intuition, rather than data.
 Consequently, the relationship between the criteria and the true COVID-19 status is often weak, with low specificity leading to a very large number of false positive diagnoses.
 
 A natural extension to these symptom-threshold approaches is syndromic modelling.
 Here, a patient presenting with a fever and one or more viral pneumonia symptoms is treated as a potential COVID-19 patient.
-However, rather than using a set of pre-determined criteria, a range of symptomatic and risk factor data are collected and then a sub-sample of patients are tested using RT-PCR for COVID-19 [@sim2021utilizing].
+However, rather than using a set of pre-determined criteria, a range of symptomatic and risk factor data are collected and then a sub-sample of patients is tested using RT-PCR for COVID-19 [@sim2021utilizing].
 These data are used to fit a model that allows more accurate prediction of how likely a patient is to have COVID-19 through the identification of COVID-19 syndromes [@undurraga2021covid, @wenham2020covid].
 It is worth highlighting at this point that in resource-limited settings, there is very limited provision for testing of asymptomatic cases, despite their important role in disease transmission [@mayorga2020modelling].
 Even while focusing solely on symptomatic patients, syndromic modelling is a complex and nuanced task.
@@ -165,20 +165,20 @@ For example, if another disease for which loss of smell is a symptom becomes com
 Similarly, if everyone who presents has a cough and thus is included in the sample, then coughing will likely have a very low correlation with COVID-19 (even if the two are strongly related in the general population).
 While these issues can be overcome by properly considering the population sampled and using appropriately sophisticated statistical methods, the many types of common respiratory disease generally means that even then these models tend to have relatively high false positive rates (low specificity) for COVID-19 [@garry2020considerations], although much lower than the symptom-threshold approach.
 
-Poor sensitivity and specificity are problematic in diagnositics but higher error rates may be tolerable depending on their scale and impact given the local situation.
+Poor sensitivity and specificity are problematic in diagnostics but higher error rates than gold-standard methods may be tolerable depending on their scale and impact given the local situation.
 Low specificity means a large number of false positive classifications, where the patient is told they have COVID-19 but they actually do not.
 This might lead to patients unnecessarily self-isolating and receiving support which can be expensive to the individuals and local public health bodies, as well as reducing available resources for those who need them [@surkova2020false].
 Similarly, low sensitivity means more false negative classifications, where the patient is told they do not have COVID-19 but they actually do, which can lead to a health-risk for the individual and to the disease spreading further [@west2020covid].
 The costs of these misclassifications will depend on local context.
-When the prevalence of the disease is low, false positives may create local skepticism about the value of testing, or when there are strong population-level mitigations already in place (such as a nationwide lockdown), then false positives might be more costly than false negatives [@surkova2020false].
+When the prevalence of the disease is low, false positives may create local scepticism about the value of testing, or when there are strong population-level mitigations already in place (such as a nationwide lockdown), then false positives might be more costly than false negatives [@surkova2020false].
 If the disease is abundant or increasing rapidly then false negatives are likely to be more costly.
 In most situations, a balance will need to be struck [@vandenberg2021considerations].
 
 The two dominant "alternative" testing methods available in resource limited settings, therefore, are both flawed.
 Relying solely on symptomatic diagnosis will likely overestimate the number of individuals with COVID-19 due to its lack of specificity.
 Conversely, RATs will give a false impression of control due to the number of positive cases that will be missed.
-In this paper, we demonstrate how to combine these data types to exploit their complementarity and ameliolariate their respective weaknesses.
-We aim to compare the performance of these two testing methods and the combined approach both in terms of general prediction and as diagnostics under three epidemiological scenarios; and to demonstrate that the combined data achieve equal to much lower error rates than the next best method.
+In this paper, we demonstrate how to combine these data types to exploit their complementarity and amelioriate their respective weaknesses.
+We aim to compare the performance of these two testing methods and the combined approach both in terms of general prediction and as diagnostics under three epidemiological scenarios; and demonstrate that the combined data achieve equal to much lower error rates than the next best method.
 We then discuss the role of statistically integrating data from multiple imperfect testing methods in resource limited settings to improve the diagnosis of diseases, particularly COVID-19.
 
 # Methods
@@ -190,12 +190,11 @@ Patients were selected for further testing conditional on the presence of a feve
 The patient's age and gender were also recorded, but these data were not included in the patient selection criteria.
 
 Nasal swabs and syndromic data were collected from the patient by medical technologists.
-One swab each was used for Rapid Antigen Testing (RAT) and RT-PCR (gold-standard for COVID-19 status).
-The syndromic profile comprises the patient's symptomatic information, age and gender).
+One swab each was used for rapid antigen testing (RAT) and RT-PCR (gold-standard for COVID-19 status).
 The full questionnaire and testing protocols are provided in Appendix XX. 
 Participants provided written informed consent to sample collection and for their test results to be analyzed in the study.
 
-```{r data-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic description of identification of likely COVID-19 patients by CSTs, swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used these two imperfect diagnostics (RAT and syndromic data) to generate three model classes: RAT result only in Model Class 1, Syndromic Data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The PCR test result is used to train and test each model using temporal cross validation."}
+```{r data-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross validation."}
 knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf"))
 ```
 
@@ -217,49 +216,54 @@ The models were fitted to the data using Hamiltonian Monte Carlo in the Stan pro
 
 We conducted backwards model selection (starting with the most complex model feasible, with all 14 symptoms and both covariates) to identify a subset of models with the highest predictive power under temporal cross validation.
 Reducing the number of possible models to a small number of the most predictive models was necessary to reduce computational demand and reduce the risk of overfitting models to the test scenarios.
-The large number of symptoms means that there is a high number of potential model configurations (>131000 for 14 symptoms and two covariates) which might, by chance, perform  well on the test sets (even under the challenging conditions of temporal cross validation) but lack transferability.
+The large number of symptoms means that there is a high number of potential model configurations (>131 000 for 14 symptoms and two covariates) which might, by chance, perform  well on the test sets (even under the challenging conditions of temporal cross validation) but lack transferability.
 By first using general predictive power to narrow down the number of candidate models and then testing those models under more specific scenarios, we are more likely to choose models which generalise well to new data.
+The number of candidate models used was not pre-determined.
+In fitting the models it became clear that there were "jumps" in performance (as defined below) between models containing five and four symptoms, so the models with zero to four symptoms were used as the candidate models.
 
 We scored the models' predictive power using cross entropy.
-Cross entropy measures the accuracy of probabilistic predictions for models that predict binary outcomes using probabilities [@gneiting2007strictly].
+Cross entropy measures the accuracy of probabilistic predictions for models that predict binary outcomes using probabilities [@gneiting2007strictly], similar in concept to a mean squared error.
 A cross entropy value close to zero corresponds to high levels of accuracy, with larger values indicating lower accuracy.
 As the score only uses the predicted probability and true values, it is possible to directly compare the predictions of any model for the same test set.
 More details on the model structure and selection process, including code, are available in Appendix XX.
 
-![Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting we carried out two rounds of model selection. The data are divided into temporal cross validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive fine model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross entropy scoring. The cross entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131000 to just four per model class.
-](MainTextFigs/ModelSelectionFlowchart.pdf){#fig:modsel-flowchart width="420" height="298"}
+
+```{r data-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and, to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive fine model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross entropy scoring. The cross entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class."}
+knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/MainTextFigs/ModelSelectionFlowchart.pdf"))
+```
 
 We then compared models as classifiers using their false positive and false negative rates in three epidemiological scenarios.
 In applied settings, models must often be evaluated on their performance as classifiers rather than just as prediction engines (i.e. their ability to say a patient is COVID-19 positive or negative, not simply the probability the patient might be COVID-19 positive or negative).
 To generate a classification, a probability threshold must be chosen over which patients are classified as COVID-19 positive.
 
-ROC curves were drawn to show classifier performance across a range of unspecified scenarios, and error rates under three specific epidemiological scenarios were compared.
+Classifier performance was compared using ROC curves and error rates under three epidemiological scenarios.
 ROC curves show the true and false positive rates that each model can achieve.
+To extract the error rate under the epidemiological scenarios (described below), we use the ROC calculations to identify the probability threshold which most closely meets the scenario requirement (see Table \@ref(tab:scenarios-tab).
 Comparing specific scenarios allows classifier performance to be demonstrated in relevant scenarios.
 Whether measuring classifier performance in specific scenarios or more generally, decisions need to be made about the relative cost and acceptable levels of the two types of misclassification (false positives and negatives).
 We strongly emphasise that local context should be the guide in applying these methods.
 
 In Scenario 1, we do not consider epidemiological context but simply weight false negative and false positive rates equally by aiming to maximise the overall correct classification rate.
-Scenario 2 corresponds to the current situation in Bangladesh at time of writing (June 2021), with COVID-19 cases beginning to rapidly increase again.
+Scenario 2 corresponds to the current situation in Bangladesh at time of writing (July 2021), with COVID-19 cases beginning to rapidly increase again.
 Under these circumstances, false negatives are extremely costly relative to false positives due to the exponential growth of the disease.
 In Scenario 3, the pandemic is not declining but maintaining a steady rate of cases.
 In this situation, policy-makers may be keen to keep false positive diagnoses low to prevent lockdown fatigue and to keep the workforce active.
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r scenarios-tab, echo = FALSE, message = FALSE, warning = FALSE}
 library(kableExtra); library(tidyverse)
 
 dt <- tibble(
    Scenarios = c("1 Agnostic", "2 Rising Cases", "3 Steady, Low-Level Cases"),
    Requirement = c("Maximise correct classification rates", 
-                   "20% max false positive rate", 
-                   "20% max false negative rate"),
+                   "≤20% false positive rate", 
+                   "≤20% false negative rate"),
    Error = c("Sum of error rates", "False negative rate", "False positive rate ")
 )
 kable(dt, "latex", booktabs = T,
 col.names = c("Scenario Name", 
               "Requirement", 
               "Performance Criterion (Error)"),
-caption = "For each scenario there is a requirement and a performance criterion.
+caption = "For each epidemiological scenario there is a requirement and a performance criterion.
 The requirement refers to a base level of performance the model must achieve; in general this will be a maximum acceptable error rate of some kind.
 The requirement determines a threshold for each model which most closely meets that requirement.
 The performance criterion is then used to determine which model performs the 'best' given that the requirement has been met.") %>%
@@ -271,17 +275,17 @@ The performance criterion is then used to determine which model performs the 'be
 
 A total of 511 subjects had data available for the current analyses.
 The mean age of women participants (56% of the sample) was 38.5 (SD = 15.4), and for men (44% of the sample) was 41.8 (SD = 17.2).
-Participants were self-selecting and drawn from across Dhaka, the capital of Bangladesh.
+Participants were self-selecting and drawn from across Dhaka.
 
-Model selection for Model Class 2 and 3 each retained age as an explanatory variable and showed a marked decline in predictive power at more than 4 symptoms.
+Model selection for Model Class 2 (syndromic data only) and 3 (syndromic and RAT data), each retained age as an explanatory variable and showed a marked decline in predictive power at more than 4 symptoms.
 The final four symptoms in order of importance (i.e. the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were wet cough, runny nose, loss of smell and breathing problems for Model Class 2, and fever, wet cough, tiredness and diarrhoea for Model Class 3.
-For both Model Class 2 (syndromic data only) and Model Class 3 (syndromic and RAT data), model selection retained age as a covariate but not gender.
+For both Model Class 2 and Model Class 3 model selection retained age as a covariate but not gender.
 
 In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with a cross entropy of 4.79 (cross entropy values further from zero correspond to worse predictive performance).
 The median cross entropy values were between 2.90 and 2.95 for models in Class 2 (syndromic data only).
 Models in Class 3 (combined data model) performed best with cross entropy values between 2.40 and 2.43 (see Figure \@ref(fig:pred-perf)).
 
-```{r pred-perf, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Interquartile ranges for the posterior cross entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. Cross entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each class."}
+```{r pred-perf, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Predictive performance of candidate models. Interquartile ranges for the posterior cross entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. Cross entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each model class (1: rapid antigen testing (RAT) only; 2: syndromic data only; and 3: combined RAT and syndromic data)."}
 library(viridis)
 library(viridisLite)
 # Load libraries and helper functions
@@ -350,9 +354,9 @@ best_valid$SympNum[20001] <- "RAT only"
 best_valid$FitType <- paste(best_valid$ModelClass, best_valid$FitType, sep = "_")
 
 model_classes <- c(
-                    `RATonly` = "RAT Only",
-                    `SyndOnly` = "Syndromic Only",
-                    `SyndRAT` = "Combined"
+                    `RATonly` = "Model Class 1",
+                    `SyndOnly` = "Model Class 2",
+                    `SyndRAT` = "Model Class 3"
                     )
 
 # Plot
@@ -373,12 +377,12 @@ ggplot(best_valid,
 General model classification performance is shown by the full ROC curves for each model (Figure \@ref(fig:ROC-plot)).
 
 Scenario specific classification performance is shown in Figure \@ref(fig:scenario-plot).
-In Scenario 1, the median error was 0.62 for models in Class 1 and Class 3 and between 0.90 and 0.96 for models in Class 2 (Figure \@ref(fig:scenario-plot)).
-In Scenario 2, Model Class 1 was unable to meet the required false negative rate.
+In Scenario 1 ("Agnostic", see  \@ref(tab:scenarios-tab).), the median error was 0.62 for models in Class 1 and Class 3 and between 0.90 and 0.96 for models in Class 2 (Figure \@ref(fig:scenario-plot)).
+In Scenario 2 ("Rising Cases"), Model Class 1 was unable to meet the required false negative rate.
 The median errors were between 0.69 and 0.74 for models in Class 2, and 0.57 and 0.69 for models in Class 3 (Figure \@ref(fig:scenario-plot)).
-In Scenario 3, the error in Class 1 was 0.60 and the median errors ranged from 0.70 to 0.75 for Class 2, and 0.44 and 0.47 for Class 3 (Figure \@ref(fig:scenario-plot)).
+In Scenario 3 ("Steady, Low-Level Cases"), the error in Class 1 was 0.60 and the median errors ranged from 0.70 to 0.75 for Class 2, and 0.44 and 0.47 for Class 3 (Figure \@ref(fig:scenario-plot)).
 
-```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = " Receiver operating characteristics for RAT only approach and posterior mean  (+- posterior standard deviation) receiver operating characteristics for Class 2 and 3 models. These curves demonstrate the performance of the model for any given scenario as defined by false and true positive rates (as opposed to Figure 5 which demonstrates model performance in specific scenarios)."}
+```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = " Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior mean  (+- posterior standard deviation) receiver operating characteristics for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space)."}
 ROC_plots <- readRDS("0400_ModelAssessment/0420_ROC_plot_dat.rds")
 model_classes <- c(
                     `RATonly` = "RAT Only",
@@ -441,7 +445,7 @@ ggplot(scenario_outcomes,
 
 We have demonstrated that combining two imperfect diagnostics yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually. 
 These improvements are non-trivial in real-world settings like Bangladesh, where there are currently thousands of new cases being identified every day and the pandemic growth is accelerating meaning every missed case has a compounding effect. 
-In the most relevant scenario, 2 where we try to keep the false negative rate low, the combined data model achieves 40 percentage points lower than the false negative rate of the RAT only model, and a 12 percentage points lower false positive rate than the syndromic only model.
+In the most relevant scenario, 2 ("Rising Cases"), where we try to keep the false negative rate low, the combined data model achieves 40 percentage points lower than the false negative rate of the RAT only model, and a 12 percentage points lower false positive rate than the syndromic only model.
 These are large performance gains for any diagnostic, although  under the current situation will have a considerable impact on identifying both COVID-19 positive and negative patients. 
 The pattern is similar in Scenario 3 with the predictive performance metrics showing that the combined model has equal or better performance across most potential scenarios. 
 Furthermore, this boost is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries. 
@@ -452,14 +456,14 @@ These imperfect detection methods have been developed as inexpensive alternative
 While even the improvements described above will never allow these methods to compete with RT-PCR in terms of sensitivity and specificity, Rapid Antigen Testing and syndromic diagnosis also hold several further advantages. 
 Unlike RT-PCR where patients have to go to designated testing centres, samples need to be taken by trained technologists and results take a day to a week to come back, both of the imperfect diagnostics can be delivered in the community with almost instant result delivery. 
 This has several advantages. 
-Firstly, increased accessibility by removing the need to travel for testing, thus reduces bias particularly against poorer, sicker and older people. 
+Firstly, increased accessibility by removing the need to travel for testing, thus reduces bias particularly against poorer, sicker and older people and reduces the risk of transmission in transit. 
 Secondly, linked to cost, it is much easier to scale up testing when specialist training and expensive equipment and biosafety procedures are not required. 
 Thirdly, it allows for assessment of an individual’s wellbeing in the home context, and thus facilitates tailoring interventions to where they are most needed.
 
 The symptoms retained in the models may hint at the mechanism by which combining syndromic data and RAT results improves diagnosis. 
 We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients. 
 We do, however, highlight that the symptoms retained in the final models for the syndromic-only and combined models are largely different (only one symptom appears in both lists). 
-We propose that this is due to the fact that RAT is most effective during the first week of symptom onset, with much worse performance pre- and post- this period [@linares2020panbio, @mak2020evaluation, @muhi2021multi]. 
+We propose that this is due to the fact that RAT is most effective during the first week of symptom onset, with much worse performance before and after this period [@linares2020panbio, @mak2020evaluation, @muhi2021multi]. 
 These first-week symptoms are generally typical of viral pneumonias [@xu2020clinical], and, indeed, when the RAT result is excluded from the model, the most important symptoms are typical of upper respiratory tract infections. 
 However, when the RAT result is combined with syndromic data, the most important symptoms become much more eclectic. 
 It is probable that these symptoms are either typical of later-stage COVID-19 or are less common presentations of the disease, possibly caused by co-infection or multimorbidities. 
@@ -476,14 +480,14 @@ The modelling frameworks we have used are also sufficiently flexible to accommod
 Of particular interest are extensions to include the “pandemic context” in the model using space-time data. 
 Furthermore, by using more sophisticated modelling structures it is possible to tune error rates to better reflect the local relative costs of false positives and false negatives. 
 Naturally, these strengths have complementary limitations. 
-Our models require updating in real-time and can only achieve good performance if the validation data is of high quality. Similarly, targeting error rates is only sensible if those rates properly reflect local conditions which is hard to do in practice. 
+Our models require updating in real-time and can only achieve good performance if the validation data are of high quality. Similarly, targeting error rates is only sensible if those rates properly reflect local conditions which is hard to do in practice. 
 These limitations should be seriously considered but the alternatives for imperfect testing methods are diagnostics that cannot be tailored to local conditions at all (and, as such may perform worse than a method which is sub-optimally tailored to local conditions) or diagnostics which make these decisions implicitly and not explicitly. 
-We believe that in choosing the latter these decisions are more readily challenged, researched and improved upon. 
+We believe that in choosing to be explicit these decisions are more readily challenged, researched and improved upon. 
 We also emphasise the need for rigorous experimental design to ensure findings from the sample population are applicable to the target population and the need for further research into understanding error rate tradeoffs in applied settings. 
 
 The methodology we have outlined here is applicable to a wide range of diseases and settings across low- and middle-income countries. 
 One of the biggest challenges in diagnosing and tracking many diseases in resource-limited settings is the low availability of access to gold-standard testing (such as RT-PCR in the case of COVID-19) and high error rate of alternative testing methods. 
-In this paper, we have outlined a process for coupling a small number of gold-standard tests with formal statistical integration of alternative testing methods, to generate high quality diagnostic models. 
+In this paper, we have outlined the process for coupling a small number of gold-standard tests with formal statistical integration of alternative testing methods, to generate high quality diagnostic models. 
 This process readily maps onto many other case identification problems, including the diagnosis of several neglected tropical diseases. For example, malaria (gold standard (GS) is also RT-PCR, imperfect methods (IM) include antigen tests, syndromic diagnosis and blood smears), schistosomiasis (GS: RT-PCR or autopsy; IM: Kato Katz egg counts, antibody detection) and rabies (GS: fluorescent antibody test; IM: light microscopy, differential diagnosis).
 
 In conclusion, we believe that the combined syndromic and rapid antigen testing approach represents the most promising approach to large-scale testing in low- and middle- income countries at present. 
@@ -496,5 +500,8 @@ As such, these low-cost improvements to existing testing programs have the poten
 The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z). 
 The authors declare no competing interests.
 
+# Acknowledgements 
+
+CSTs + BAHCM/MathsAndStats + Matthiopoulos Research Group \todo{Fergus to look up names} + Dan Haydon
 
 # References
