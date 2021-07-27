@@ -412,6 +412,11 @@ ROC_diagnose <- function(validation_df, prob_range, increment_size){
     pivot_longer(cols = starts_with("threshold"), 
                  names_to = "threshold", 
                  values_to = "classification") 
+  # To deal with the huge memory size, we can justify thinning the iterations
+  num_iter <- max(unique(diagnosed_grouped_df$Iter))
+  thin_iter <- 0.05*num_iter
+  chosen_iters <- round(runif(thin_iter, 0, num_iter))
+  diagnosed_grouped_df <- diagnosed_grouped_df %>% filter(Iter %in% chosen_iters)
   # Get classification counts
   diag_df <- lazy_dt(diagnosed_grouped_df) %>%
     group_by(SwabType, FitType, Iter, Chain, threshold) %>%
