@@ -141,14 +141,15 @@ Like RT-PCR, these tests have high specificity for COVID-19 while being less exp
 RATs also require less commitment and discomfort for patients.
 For RT-PCR testing, patients must travel to a designated site (such as a hospital or testing booth) or have highly visible PPE-clad officials visit their home.
 Then, invasive nasopharyngeal swabs must be taken and there is a delay in receiving the result (between one day and a week in Bangladesh).
-In contrast, RAT can be conducted on nasal or saliva samples, completed in the home and results are available in 30 minutes.
+In contrast, RAT can be conducted on nasal or saliva samples, completed in the home with minimal PPE and results are available in 30 minutes.
 RATs can be taken by persons with limited training, thus decreasing the time and expense associated with identifying cases.
 Together, these traits make RATs an appealing alternative to RT-PCR.
 However, several concerns have been raised about the sensitivity of RAT [@mak2020evaluation, muhi2021multi] leading to more false negative diagnoses.
 
 Another alternative to RT-PCR, one that has been used since the start of the pandemic, is identifying cases through symptom-thresholding [@jin2020rapid].
 In this approach, a patient presenting with a fever and one or more viral pneumonia symptoms is treated as a COVID-19 positive patient.
-The main advantage of this approach is the ease of implementation.
+The main advantage of this approach is the ease of implementation. 
+As with RAT the process is faster, cheaper and less invasive than RT-PCR, but unlike RAT the process relies on minimal equipment and thus can be scaled quickly and easily.
 For example, in Bangladesh, a lower middle-income country, much of the initial support and reporting of infections locally is provided by community support teams (CSTs) composed of local volunteers with basic training.
 The CSTs can easily collect symptomatic data in the community and provide care where the criteria are met.
 However, these symptom-thresholds were developed early in the outbreak, and thus necessarily drawn from clinical intuition, rather than data.
@@ -457,33 +458,27 @@ ggplot(scenario_outcomes,
 
 # Discussion
 
-We have demonstrated that combining two imperfect diagnostics yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually. 
-These improvements are non-trivial in real-world settings like Bangladesh, where there are currently thousands of new cases being identified every day and the pandemic growth is accelerating meaning every missed case has a compounding effect. 
-In the most relevant scenario, 2 ("Rising Cases"), where we try to keep the false negative rate low, the combined data model achieves 
-`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min())` percentage points lower than the false negative rate of the RAT only model, and a 
-`r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min())` percentage points lower false positive rate than the syndromic only model.
-These are large performance gains for any diagnostic, although  under the current situation will have a considerable impact on identifying both COVID-19 positive and negative patients. 
-The pattern is similar in Scenario 3 and when comparing the more generic measures of model performance in prediction and classification (Figures \@ref(fig:pred-perf) and \@ref(fig:scenario-plot), respectively).
-Across almost all scenarios and metrics, the combined data model has equal or better performance.
+We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually. 
+These improvements are non-trivial in real-world settings.
+In Bangladesh, there are currently 15 000 new cases being identified every day, using only the limited supply of RT-PCR, the pandemic growth is accelerating and every missed case has a compounding effect. 
+Scenario 2 ("Rising Cases") was developed with the need to keep false negative rates low and maps well onto the situation in Bangladesh (see Table \@ref(tab:scenarios-tab)).
+In this scenario, the combined data model (Model Class 3) false negative rate is 
+`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min())` percentage points lower that of the RAT only model (Model Class 1). 
+Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is
+`r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min())` percentage points higher.
+These are large performance gains for any diagnostic but when deployed at the scale of Bangladesh and similar countries, these improvements represent catching tens of thousands of cases that would otherwise be missed. 
 Furthermore, this boost is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries. 
 Outwith developing and rerunning the models presented in this paper, these improvements are essentially cost free and eminently scalable.
 
-Syndromic identification and RATs are fast, inexpensive and  can be performed at patients' homes by minimally trained personnel. 
-These imperfect detection methods have been developed as inexpensive alternatives to RT-PCR. 
-While even the improvements described above will never allow these methods to compete with RT-PCR in terms of sensitivity and specificity, Rapid Antigen Testing and syndromic diagnosis also hold several further advantages. 
-Unlike RT-PCR where patients have to go to designated testing centres, samples need to be taken by trained technologists and results take a day to a week to come back, both of the imperfect diagnostics can be delivered in the community with almost instant result delivery. 
-This has several advantages. 
-Firstly, increased accessibility by removing the need to travel for testing, thus reduces bias particularly against poorer, sicker and older people and reduces the risk of transmission in transit. 
-Secondly, linked to cost, it is much easier to scale up testing when specialist training and expensive equipment and biosafety procedures are not required. 
-Thirdly, it allows for assessment of an individual’s wellbeing in the home context, and thus facilitates tailoring interventions to where they are most needed.
+The pattern is similar in epidemiological Scenarios 1 ("Agnostic") and 3 ("Steady, Low-Level Cases"), with the combined model class performing performing equally well or better than the other two classes (Figure \@ref(fig:scenario-plot)).
+These three scenarios only offer snapshots of performance, however, and we strongly advocate defining model performance in terms of false negative and false positive rates with reference to local conditions.
+An indication of how these models will perform under any condition can be obtained by comparing the more generic model performance metrics for prediction and classification (Figures \@ref(fig:pred-perf) and \@ref(fig:ROC-plot), respectively).
+These figures demonstrate both the added flexibility of the more complex model classes that allow them to be tailored to specific needs and the need to combine the high-quality but inflexible RAT results with the more flexible but lower quality syndromic data.
 
-The symptoms retained in the models may hint at the mechanism by which combining syndromic data and RAT results improves diagnosis. 
+
 We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients. 
-We do, however, highlight that the symptoms retained in the final models for the syndromic-only and combined models are largely different (only one symptom appears in both lists). 
-We propose that this is due to the fact that RAT is most effective during the first week of symptom onset, with much worse performance before and after this period [@linares2020panbio, @mak2020evaluation, @muhi2021multi]. 
-These first-week symptoms are generally typical of viral pneumonias [@xu2020clinical], and, indeed, when the RAT result is excluded from the model, the most important symptoms are typical of upper respiratory tract infections. 
-However, when the RAT result is combined with syndromic data, the most important symptoms become much more eclectic. 
-It is probable that these symptoms are either typical of later-stage COVID-19 or are less common presentations of the disease, possibly caused by co-infection or multimorbidities. 
+We do, however, highlight that while fever and loss of smell were the two most important symptoms in the two classes of syndromic models,
+the other symptoms retained were different (with cough and wet cough retained in the combined syndromic and RAT model, Class 3, and loss of taste and vomiting in the syndromic only model, Class 2).
 Further research is needed to understand the mechanisms by which symptoms predict COVID-19 and by which RAT misses COVID-19. 
 Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using Threshold Cycle (Ct) values from the RT-PCR to compare viral load with respect to prediction by the different methods [@albert2021field]. 
 We note also that, as expected, age was retained in model selection. 
@@ -495,15 +490,16 @@ We believe that the combined syndromic and rapid testing  model represents the m
 By taking a statistical modelling approach to case identification, we are able to update our diagnostic process in real time, allowing this method to readily adapt to new variants (or even new diseases) or new priorities for resource allocation. 
 The modelling frameworks we have used are also sufficiently flexible to accommodate new data sources. 
 Of particular interest are extensions to include the “pandemic context” in the model using space-time data. 
-Furthermore, by using more sophisticated modelling structures it is possible to tune error rates to better reflect the local relative costs of false positives and false negatives. 
+Furthermore, by using more sophisticated modelling structures that work at the scale of probabilities, rather than binary tests, it is possible to tune error rates to better reflect the local relative costs of false positives and false negatives.
 Naturally, these strengths have complementary limitations. 
-Our models require updating in real-time and can only achieve good performance if the validation data are of high quality. Similarly, targeting error rates is only sensible if those rates properly reflect local conditions which is hard to do in practice. 
+Our models require updating in real-time and can only achieve good performance if the validation data are of high quality. 
+Similarly, targeting error rates is only sensible if those rates properly reflect local conditions which is hard to do in practice. 
 These limitations should be seriously considered but the alternatives for imperfect testing methods are diagnostics that cannot be tailored to local conditions at all (and, as such may perform worse than a method which is sub-optimally tailored to local conditions) or diagnostics which make these decisions implicitly and not explicitly. 
 We believe that in choosing to be explicit these decisions are more readily challenged, researched and improved upon. 
-We also emphasise the need for rigorous experimental design to ensure findings from the sample population are applicable to the target population and the need for further research into understanding error rate tradeoffs in applied settings. 
+We also emphasise the need for rigorous experimental design to ensure findings from the sample population are applicable to the target population and the need for further research into understanding error rate trade-offs in applied settings. 
 
 The methodology we have outlined here is applicable to a wide range of diseases and settings across low- and middle-income countries. 
-One of the biggest challenges in diagnosing and tracking many diseases in resource-limited settings is the low availability of access to gold-standard testing (such as RT-PCR in the case of COVID-19) and high error rate of alternative testing methods. 
+One of the biggest challenges in diagnosing and tracking many diseases in resource-limited settings is the low availability of access to gold-standard testing (such as RT-PCR in the case of COVID-19) and high error rates of alternative testing methods. 
 In this paper, we have outlined the process for coupling a small number of gold-standard tests with formal statistical integration of alternative testing methods, to generate high quality diagnostic models. 
 This process readily maps onto many other case identification problems, including the diagnosis of several neglected tropical diseases. For example, malaria (gold standard (GS) is also RT-PCR, imperfect methods (IM) include antigen tests, syndromic diagnosis and blood smears), schistosomiasis (GS: RT-PCR or autopsy; IM: Kato Katz egg counts, antibody detection) and rabies (GS: fluorescent antibody test; IM: light microscopy, differential diagnosis).
 
