@@ -214,7 +214,7 @@ Structurally, the multivariate probit model allows the symptoms and COVID-19 sta
 In Model Class 3, we model RAT positive patients as PCR positive and use the syndromic approach outlined for Model Class 2 for the RAT negative patients.
 The models were fitted to the data using Hamiltonian Monte Carlo in the Stan programming language [@carpenter2017stan].
 
-We conducted backwards model selection (starting with the most complex model feasible, with all 14 symptoms and both covariates) to identify a subset of models with the highest predictive power under temporal cross validation.
+We conducted backwards model selection (starting with the most complex model feasible, with all 14 symptoms and both covariates) to identify a subset of models with the highest predictive power under temporal cross validation (Figure \@ref(fig:modsel-flowchart)).
 Reducing the number of possible models to a small number of the most predictive models was necessary to reduce computational demand and reduce the risk of overfitting models to the test scenarios.
 The large number of symptoms means that there is a high number of potential model configurations (>131 000 for 14 symptoms and two covariates) which might, by chance, perform  well on the test sets (even under the challenging conditions of temporal cross validation) but lack transferability.
 By first using general predictive power to narrow down the number of candidate models and then testing those models under more specific scenarios, we are more likely to choose models which generalise well to new data.
@@ -228,8 +228,8 @@ As the score only uses the predicted probability and true values, it is possible
 More details on the model structure and selection process, including code, are available in Appendix XX.
 
 
-```{r data-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and, to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive fine model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross entropy scoring. The cross entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class."}
-knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/MainTextFigs/ModelSelectionFlowchart.pdf"))
+```{r modsel-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and, to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive fine model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross entropy scoring. The cross entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class."}
+knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf"))
 ```
 
 We then compared models as classifiers using their false positive and false negative rates in three epidemiological scenarios.
@@ -255,8 +255,8 @@ library(kableExtra); library(tidyverse)
 dt <- tibble(
    Scenarios = c("1 Agnostic", "2 Rising Cases", "3 Steady, Low-Level Cases"),
    Requirement = c("Maximise correct classification rates", 
-                   "≤20% false positive rate", 
-                   "≤20% false negative rate"),
+                   "Max. 20% false positive rate", 
+                   "Max. 20% false negative rate"),
    Error = c("Sum of error rates", "False negative rate", "False positive rate ")
 )
 kable(dt, "latex", booktabs = T,
@@ -363,7 +363,7 @@ model_classes <- c(
 ggplot(best_valid, 
        aes(x = ModelLogLoss, y = as.factor(SympNum), colour = FitType)) +
   geom_boxplot() +
-  coord_cartesian(xlim = c(0,5)) + 
+  coord_cartesian(xlim = c(0,3.5)) + 
   ylab("Candidate Model") +
   xlab("Cross Entropy") +
   facet_grid(rows = vars(ModelClass), 
