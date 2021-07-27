@@ -37,7 +37,7 @@ covariate_combos <- list(covariate_nam[c(1:2)],
 
 # Symptoms List
 symptom_nam <- nasal_dat %>% 
-  select(-c(id, nasal_ag, all_of(covariate_nam), result, month, week, day)) %>% 
+  select(-c(id, nasal_ag, all_of(covariate_nam), result, week)) %>% 
   names()
 
 ## Nasal dat function
@@ -66,9 +66,8 @@ nasal_tidy_run <- function(best_symptoms_so_far, round, covariate_names){
 }
 
 # Top 4 symptoms
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem", "cough", "wet_cough", "diarrhoea")
 
 
 

@@ -37,7 +37,7 @@ covariate_combos <- list(covariate_nam[c(1:2)],
 
 # Symptoms List
 symptom_nam <- nasal_dat %>% 
-  select(-c(id, nasal_ag, all_of(covariate_nam), result, month, week, day)) %>% 
+  select(-c(id, nasal_ag, all_of(covariate_nam), result, week)) %>% 
   names()
 
 ## Nasal dat function

@@ -143,9 +143,64 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   geom_vline(xintercept = 0)
 
 # Select symptoms with weakest or inconsistent signed symptoms
-reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem")
 
-# Round 04 ----------------------------------------------------------------
+# Round 07 ----------------------------------------------------------------
+
+best_symptoms_so_far <- symptom_nam[!symptom_nam %in% reject_symptoms]
+# Number of symptoms
+round <- 7
+# Sense check!
+round == length(best_symptoms_so_far)
+assign(paste0("SyndromicOnly_Coarse_Round", round), 
+       nasal_tidy_run(best_symptoms_so_far = best_symptoms_so_far,
+                      round = round))
+
+
+# Extract correlation estimates
+omegas <- get(paste0("SyndromicOnly_Coarse_Round", round))$omegas %>% 
+  select(starts_with("result"),CV ) %>%
+  pivot_longer(-c(CV), names_to = "symptoms")
+
+# Visualise
+ggplot(omegas, aes(x = value, fill = symptoms)) +
+  geom_histogram() +
+  facet_grid(vars(CV), vars(symptoms)) +
+  geom_vline(xintercept = 0)
+
+# Select symptoms with weakest or inconsistent signed symptoms
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem", "cough", "wet_cough")
+
+# Round 05----------------------------------------------------------------
+
+best_symptoms_so_far <- symptom_nam[!symptom_nam %in% reject_symptoms]
+# Number of symptoms
+round <- 5
+# Sense check!
+round == length(best_symptoms_so_far)
+assign(paste0("SyndromicOnly_Coarse_Round", round), 
+       nasal_tidy_run(best_symptoms_so_far = best_symptoms_so_far,
+                      round = round))
+
+
+# Extract correlation estimates
+omegas <- get(paste0("SyndromicOnly_Coarse_Round", round))$omegas %>% 
+  select(starts_with("result"),CV ) %>%
+  pivot_longer(-c(CV), names_to = "symptoms")
+
+# Visualise
+ggplot(omegas, aes(x = value, fill = symptoms)) +
+  geom_histogram() +
+  facet_grid(vars(CV), vars(symptoms)) +
+  geom_vline(xintercept = 0)
+
+# Select symptoms with weakest or inconsistent signed symptoms
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem", "cough", "wet_cough", "diarrhoea")
+
+# Round 04----------------------------------------------------------------
 
 best_symptoms_so_far <- symptom_nam[!symptom_nam %in% reject_symptoms]
 # Number of symptoms
@@ -169,9 +224,9 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   geom_vline(xintercept = 0)
 
 # Select symptoms with weakest or inconsistent signed symptoms
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem", "cough", "wet_cough", 
+                     "diarrhoea", "vomit")
 
 # Round 03 ----------------------------------------------------------------
 
@@ -197,9 +252,9 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   geom_vline(xintercept = 0)
 
 # Select symptoms with weakest or inconsistent signed symptoms
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem", "runny_nose")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem", "cough", "wet_cough", 
+                     "diarrhoea", "vomit", "fever")
 
 # Round 02 ----------------------------------------------------------------
 
@@ -224,10 +279,9 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   geom_vline(xintercept = 0)
 
 # Select symptoms with weakest or inconsistent signed symptoms
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem", "runny_nose",
-                     "wet_cough")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem", "cough", "wet_cough", 
+                     "diarrhoea", "vomit", "fever", "loss_of_smell")
 
 # Round 01 ----------------------------------------------------------------
 
@@ -253,10 +307,10 @@ ggplot(omegas, aes(x = value, fill = symptoms)) +
   geom_vline(xintercept = 0)
 
 # Select symptoms with weakest or inconsistent signed symptoms
-reject_symptoms <- c("cough", "diarrhoea", "headache", "vomit", 
-                     "loss_of_taste", "muscle_pain", "red_eye", "tired",
-                     "fever", "sore_throat", "breath_problem", "runny_nose",
-                     "wet_cough", "loss_of_smell")
+reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
+                     "sore_throat", "breath_problem", "cough", "wet_cough", 
+                     "diarrhoea", "vomit", "fever", "loss_of_smell",
+                     "loss_of_taste")
 
 # Round 0 ----------------------------------------------------------------
 
@@ -275,12 +329,13 @@ assign(paste0("SyndromicOnly_Coarse_Round", round),
 
 # Read in files
 nas0 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round0__age.gender.rds")
-nas1 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round1_loss_of_smell_age.gender.rds")
-nas2 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round2_wet_cough.loss_of_smell_age.gender.rds")
-nas3 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round3_wet_cough.runny_nose.loss_of_smell_age.gender.rds")
-nas4 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round4_breath_problem.wet_cough.runny_nose.loss_of_smell_age.gender.rds")
-nas6 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round6_fever.breath_problem.wet_cough.sore_throat.runny_nose.loss_of_smell_age.gender.rds")
-nas10 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round10_fever.breath_problem.wet_cough.sore_throat.tired.runny_nose.loss_of_smell.muscle_pain.red_eye.loss_of_taste_age.gender.rds")
+nas1 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round1_loss_of_taste_age.gender.rds")
+nas2 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round2_loss_of_smell.loss_of_taste_age.gender.rds")
+nas3 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round3_fever.loss_of_smell.loss_of_taste_age.gender.rds")
+nas4 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round4_fever.loss_of_smell.vomit.loss_of_taste_age.gender.rds")
+nas5 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round5_fever.loss_of_smell.diarrhoea.vomit.loss_of_taste_age.gender.rds")
+nas7 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round7_fever.cough.wet_cough.loss_of_smell.diarrhoea.vomit.loss_of_taste_age.gender.rds")
+nas10 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round10_fever.cough.breath_problem.wet_cough.sore_throat.tired.loss_of_smell.diarrhoea.vomit.loss_of_taste_age.gender.rds")
 nas14 <- readRDS("0300_ModelSelection/Output/SyndromicOnly_Coarse_Round14_fever.headache.cough.breath_problem.wet_cough.sore_throat.tired.runny_nose.loss_of_smell.muscle_pain.diarrhoea.vomit.red_eye.loss_of_taste_age.gender.rds")
 
 # Extract log loss data frames
@@ -289,7 +344,8 @@ synd_coarse <- rbind(nas0$cv_log_loss,
              nas2$cv_log_loss,
              nas3$cv_log_loss,
              nas4$cv_log_loss,
-             nas6$cv_log_loss,
+             nas5$cv_log_loss,
+             nas7$cv_log_loss,
              nas10$cv_log_loss,
              nas14$cv_log_loss)
 
