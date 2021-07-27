@@ -378,7 +378,7 @@ threshold <- function(validation_df, prob_range, increment_size){
   # Generate vector of probability values
   thresholds <- seq(from = prob_range[1], to = prob_range[2], by = increment_size)
   # For each probability determine whether classifier will return 1 or 0
-  classifier_df <- map_dfc(thresholds, ~if_else(validation_df$Prob >= .x, 1, 0))
+  classifier_df <- future_map_dfc(thresholds, ~if_else(validation_df$Prob >= .x, 1, 0))
   # Make names nicer
   names(classifier_df) <- paste0("threshold", thresholds*100)
   # Combine with original dataframe
@@ -418,12 +418,12 @@ ROC_diagnose <- function(validation_df, prob_range, increment_size){
   chosen_iters <- round(runif(thin_iter, 0, num_iter))
   diagnosed_grouped_df <- diagnosed_grouped_df %>% filter(Iter %in% chosen_iters)
   # Get classification counts
-  diag_df <- lazy_dt(diagnosed_grouped_df) %>%
+  diag_df <- (diagnosed_grouped_df) %>%
     group_by(SwabType, FitType, Iter, Chain, threshold) %>%
-    summarise(FalsePos = sum(classification == 1), #"FalsePos"),
-              TruePos = sum(classification == 10), #"TruePos"),
-              FalseNeg = sum(classification == -1), #"FalseNeg"),
-              TrueNeg = sum(classification == -10)) %>% #"TrueNeg")) %>%
+    summarise(FalsePos = sum(classification == 1), 
+              TruePos = sum(classification == 10), 
+              FalseNeg = sum(classification == -1), 
+              TrueNeg = sum(classification == -10)) %>% 
     ungroup() %>%
     as.data.frame()
   # Get classification rates
