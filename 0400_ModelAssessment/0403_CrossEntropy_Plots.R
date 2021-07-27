@@ -58,11 +58,14 @@ best_valid$FitType <- paste0(parse_number(best_valid$FitType),
 best_valid$FitType[20001] <- "RATonly"
 best_valid$FitType <- paste(best_valid$ModelClass, best_valid$FitType, sep = "_")
 
+
 # Plot
 ggplot(best_valid %>% group_by(ModelClass), 
        aes(x = ModelLogLoss, y = FitType, fill = FitType)) +
   geom_boxplot() 
 
-best_valid %>% group_by(FitType) %>% summarise(MedLogLoss = median(ModelLogLoss, na.rm = TRUE),
-                                               SDLogLoss = sd(ModelLogLoss, na.rm = TRUE))
-  
+best_valid_med <- best_valid %>% group_by(FitType) %>% summarise(MedLogLoss = median(ModelLogLoss, na.rm = TRUE))#,
+                                               # SDLogLoss = sd(ModelLogLoss, na.rm = TRUE))
+
+best_valid_med <- best_valid_med %>% separate(FitType, into = c("ModelClass", "FitType"))
+saveRDS(best_valid_med, "0400_ModelAssessment/0430_MedCrossEnts.rds")  
