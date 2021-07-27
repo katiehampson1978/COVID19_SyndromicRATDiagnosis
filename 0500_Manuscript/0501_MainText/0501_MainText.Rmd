@@ -255,8 +255,8 @@ library(kableExtra); library(tidyverse)
 dt <- tibble(
    Scenarios = c("1 Agnostic", "2 Rising Cases", "3 Steady, Low-Level Cases"),
    Requirement = c("Maximise correct classification rates", 
-                   "Max. 20% false positive rate", 
-                   "Max. 20% false negative rate"),
+                   "Max. 20% false negative rate", 
+                   "Max. 20% false positive rate"),
    Error = c("Sum of error rates", "False negative rate", "False positive rate ")
 )
 kable(dt, "latex", booktabs = T,
@@ -273,17 +273,33 @@ The performance criterion is then used to determine which model performs the 'be
 
 # Results
 
-A total of 511 subjects had data available for the current analyses.
-The mean age of women participants (56% of the sample) was 38.5 (SD = 15.4), and for men (44% of the sample) was 41.8 (SD = 17.2).
+```{r inline_code, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+pop_summ <- readRDS("0100_Data/0103_pop_summ.RDS")
+pop_size <- sum(pop_summ$Gender_Count)
+cross_entropy <- readRDS("0400_ModelAssessment/0430_MedCrossEnts.rds")
+scenario_outcomes <- readRDS("0400_ModelAssessment/0420_scenario_outcomes.rds") %>% ungroup()
+
+scenario_outcomes$scenario <- 
+  recode(scenario_outcomes$scenario, `Agnostic` = "Scenario 1",
+         `Costly False Negatives` = "Scenario 2",
+         `Costly False Positives` = "Scenario 3")
+
+RATonlyROC <- readRDS("0400_ModelAssessment/0410_RATOnly_ROCrate.rds")
+RATonlyFPR <- RATonlyROC$MedFalsePosRate %>% round(2)
+RATonlyFNR <- RATonlyROC$MedFalseNegRate %>% round(2)
+```
+
+A total of `r pop_size` subjects had data available for the current analyses.
+The mean age of women participants (`r 100*pop_summ$Gender_Count[1]/pop_size %>% round()`% of the sample) was `r pop_summ$Age_Mean[1]  %>% round(2)` (SD = `r pop_summ$Age_SD[1] %>% round(2)`), and for men (`r round(100*pop_summ$Gender_Count[2]/pop_size)  %>% round()`% of the sample) was `r pop_summ$Age_Mean[2]  %>% round(2)` (SD = `r pop_summ$Age_SD[2] %>% round(2)`).
 Participants were self-selecting and drawn from across Dhaka.
 
 Model selection for Model Class 2 (syndromic data only) and 3 (syndromic and RAT data), each retained age as an explanatory variable and showed a marked decline in predictive power at more than 4 symptoms.
 The final four symptoms in order of importance (i.e. the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were wet cough, runny nose, loss of smell and breathing problems for Model Class 2, and fever, wet cough, tiredness and diarrhoea for Model Class 3.
 For both Model Class 2 and Model Class 3 model selection retained age as a covariate but not gender.
 
-In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with a cross entropy of 4.79 (cross entropy values further from zero correspond to worse predictive performance).
-The median cross entropy values were between 2.90 and 2.95 for models in Class 2 (syndromic data only).
-Models in Class 3 (combined data model) performed best with cross entropy values between 2.40 and 2.43 (see Figure \@ref(fig:pred-perf)).
+In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with a cross entropy of  `r cross_entropy %>% filter(ModelClass == "RATonly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% round(2)` (cross entropy values further from zero correspond to worse predictive performance).
+The median cross entropy values were between `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for models in Class 2 (syndromic data only).
+Models in Class 3 (combined data model) performed best with cross entropy values between `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` (see Figure \@ref(fig:pred-perf)).
 
 ```{r pred-perf, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Predictive performance of candidate models. Interquartile ranges for the posterior cross entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. Cross entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each model class (1: rapid antigen testing (RAT) only; 2: syndromic data only; and 3: combined RAT and syndromic data)."}
 library(viridis)
@@ -377,10 +393,14 @@ ggplot(best_valid,
 General model classification performance is shown by the full ROC curves for each model (Figure \@ref(fig:ROC-plot)).
 
 Scenario specific classification performance is shown in Figure \@ref(fig:scenario-plot).
-In Scenario 1 ("Agnostic", see  \@ref(tab:scenarios-tab).), the median error was 0.62 for models in Class 1 and Class 3 and between 0.90 and 0.96 for models in Class 2 (Figure \@ref(fig:scenario-plot)).
+In Scenario 1 ("Agnostic", see Table \@ref(tab:scenarios-tab)), the median error was `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE)` for models in Class 1 and Class 3 and between `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2 (Figure \@ref(fig:scenario-plot)).
 In Scenario 2 ("Rising Cases"), Model Class 1 was unable to meet the required false negative rate.
-The median errors were between 0.69 and 0.74 for models in Class 2, and 0.57 and 0.69 for models in Class 3 (Figure \@ref(fig:scenario-plot)).
-In Scenario 3 ("Steady, Low-Level Cases"), the error in Class 1 was 0.60 and the median errors ranged from 0.70 to 0.75 for Class 2, and 0.44 and 0.47 for Class 3 (Figure \@ref(fig:scenario-plot)).
+The median errors were between 
+`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and 
+`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2, and 
+`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and 
+`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 3 (Figure \@ref(fig:scenario-plot)).
+In Scenario 3 ("Steady, Low-Level Cases"), the error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE)` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 3 (Figure \@ref(fig:scenario-plot)).
 
 ```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = " Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior mean  (+- posterior standard deviation) receiver operating characteristics for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space)."}
 ROC_plots <- readRDS("0400_ModelAssessment/0420_ROC_plot_dat.rds")
@@ -413,13 +433,7 @@ ggplot(ROC_plots ,
 ```
 
 ```{r scenario-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Performance of models under each scenario measured by errors defined in Table 2. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite)."}
-scenario_outcomes <- readRDS("0400_ModelAssessment/0420_scenario_outcomes.rds")
 
-scenario_outcomes$scenario <- 
-  recode(scenario_outcomes$scenario, `Agnostic` = "Scenario 1",
-         `Costly False Positives` = "Scenario 2",
-         `Costly False Negatives` = "Scenario 3")
-  
 ggplot(scenario_outcomes, 
        aes(x = MedError, y = FitType, colour = ModelClass)) +
   geom_point() +
@@ -445,9 +459,12 @@ ggplot(scenario_outcomes,
 
 We have demonstrated that combining two imperfect diagnostics yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually. 
 These improvements are non-trivial in real-world settings like Bangladesh, where there are currently thousands of new cases being identified every day and the pandemic growth is accelerating meaning every missed case has a compounding effect. 
-In the most relevant scenario, 2 ("Rising Cases"), where we try to keep the false negative rate low, the combined data model achieves 40 percentage points lower than the false negative rate of the RAT only model, and a 12 percentage points lower false positive rate than the syndromic only model.
+In the most relevant scenario, 2 ("Rising Cases"), where we try to keep the false negative rate low, the combined data model achieves 
+`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min())` percentage points lower than the false negative rate of the RAT only model, and a 
+`r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min())` percentage points lower false positive rate than the syndromic only model.
 These are large performance gains for any diagnostic, although  under the current situation will have a considerable impact on identifying both COVID-19 positive and negative patients. 
-The pattern is similar in Scenario 3 with the predictive performance metrics showing that the combined model has equal or better performance across most potential scenarios. 
+The pattern is similar in Scenario 3 and when comparing the more generic measures of model performance in prediction and classification (Figures \@ref(fig:pred-perf) and \@ref(fig:scenario-plot), respectively).
+Across almost all scenarios and metrics, the combined data model has equal or better performance.
 Furthermore, this boost is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries. 
 Outwith developing and rerunning the models presented in this paper, these improvements are essentially cost free and eminently scalable.
 

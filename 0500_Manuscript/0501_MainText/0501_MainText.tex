@@ -300,8 +300,8 @@ The performance criterion is then used to determine which model performs the 'be
 Scenario Name & Requirement & Performance Criterion (Error)\\
 \midrule
 1 Agnostic & Maximise correct classification rates & Sum of error rates\\
-2 Rising Cases & \$\textbackslash{}geq\$20\% false positive rate & False negative rate\\
-3 Steady, Low-Level Cases & \$\textbackslash{}geq\$20\% false negative rate & False positive rate\\
+2 Rising Cases & Max. 20\% false negative rate & False negative rate\\
+3 Steady, Low-Level Cases & Max. 20\% false positive rate & False positive rate\\
 \bottomrule
 \end{tabu}
 \end{table}
@@ -309,17 +309,17 @@ Scenario Name & Requirement & Performance Criterion (Error)\\
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-A total of 511 subjects had data available for the current analyses.
-The mean age of women participants (56\% of the sample) was 38.5 (SD = 15.4), and for men (44\% of the sample) was 41.8 (SD = 17.2).
+A total of 1172 subjects had data available for the current analyses.
+The mean age of women participants (46.8430034\% of the sample) was 37.13 (SD = 14.11), and for men (53\% of the sample) was 35.94 (SD = 14.28).
 Participants were self-selecting and drawn from across Dhaka.
 
 Model selection for Model Class 2 (syndromic data only) and 3 (syndromic and RAT data), each retained age as an explanatory variable and showed a marked decline in predictive power at more than 4 symptoms.
 The final four symptoms in order of importance (i.e.~the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were wet cough, runny nose, loss of smell and breathing problems for Model Class 2, and fever, wet cough, tiredness and diarrhoea for Model Class 3.
 For both Model Class 2 and Model Class 3 model selection retained age as a covariate but not gender.
 
-In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with a cross entropy of 4.79 (cross entropy values further from zero correspond to worse predictive performance).
-The median cross entropy values were between 2.90 and 2.95 for models in Class 2 (syndromic data only).
-Models in Class 3 (combined data model) performed best with cross entropy values between 2.40 and 2.43 (see Figure \ref{fig:pred-perf}).
+In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with a cross entropy of 3.24 (cross entropy values further from zero correspond to worse predictive performance).
+The median cross entropy values were between 2.52 and 2.59 for models in Class 2 (syndromic data only).
+Models in Class 3 (combined data model) performed best with cross entropy values between 1.44 and 1.45 (see Figure \ref{fig:pred-perf}).
 
 \begin{figure}
 \centering
@@ -330,10 +330,14 @@ Models in Class 3 (combined data model) performed best with cross entropy values
 General model classification performance is shown by the full ROC curves for each model (Figure \ref{fig:ROC-plot}).
 
 Scenario specific classification performance is shown in Figure \ref{fig:scenario-plot}.
-In Scenario 1 (``Agnostic,'' see \ref{tab:scenarios-tab}.), the median error was 0.62 for models in Class 1 and Class 3 and between 0.90 and 0.96 for models in Class 2 (Figure \ref{fig:scenario-plot}).
+In Scenario 1 (``Agnostic,'' see Table \ref{tab:scenarios-tab}), the median error was 0.34 for models in Class 1 and Class 3 and between 0.98 and 1 for models in Class 2 (Figure \ref{fig:scenario-plot}).
 In Scenario 2 (``Rising Cases''), Model Class 1 was unable to meet the required false negative rate.
-The median errors were between 0.69 and 0.74 for models in Class 2, and 0.57 and 0.69 for models in Class 3 (Figure \ref{fig:scenario-plot}).
-In Scenario 3 (``Steady, Low-Level Cases''), the error in Class 1 was 0.60 and the median errors ranged from 0.70 to 0.75 for Class 2, and 0.44 and 0.47 for Class 3 (Figure \ref{fig:scenario-plot}).
+The median errors were between
+0.82 and
+0.94 for models in Class 2, and
+0.48 and
+0.78 for models in Class 3 (Figure \ref{fig:scenario-plot}).
+In Scenario 3 (``Steady, Low-Level Cases''), the error in Class 1 was 0.02, 0.02 and the median errors ranged from 0.14 to 0.19 for Class 2, and 0.08 to 0.19 for Class 3 (Figure \ref{fig:scenario-plot}).
 
 \begin{figure}
 \centering
@@ -352,7 +356,9 @@ In Scenario 3 (``Steady, Low-Level Cases''), the error in Class 1 was 0.60 and t
 
 We have demonstrated that combining two imperfect diagnostics yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually.
 These improvements are non-trivial in real-world settings like Bangladesh, where there are currently thousands of new cases being identified every day and the pandemic growth is accelerating meaning every missed case has a compounding effect.
-In the most relevant scenario, 2 (``Rising Cases''), where we try to keep the false negative rate low, the combined data model achieves 40 percentage points lower than the false negative rate of the RAT only model, and a 12 percentage points lower false positive rate than the syndromic only model.
+In the most relevant scenario, 2 (``Rising Cases''), where we try to keep the false negative rate low, the combined data model achieves
+22 percentage points lower than the false negative rate of the RAT only model, and a
+34 percentage points lower false positive rate than the syndromic only model.
 These are large performance gains for any diagnostic, although under the current situation will have a considerable impact on identifying both COVID-19 positive and negative patients.
 The pattern is similar in Scenario 3 with the predictive performance metrics showing that the combined model has equal or better performance across most potential scenarios.
 Furthermore, this boost is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries.
