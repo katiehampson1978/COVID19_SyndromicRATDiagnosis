@@ -5,7 +5,11 @@
 # Source helper code and libraries
 source("0000_HelperCode_Libraries/0001_Libraries.R")
 source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
-
+RATonly <- readRDS("0100_Data/0103_nasal_dat.RDS")
+# RAT outcome
+RATresult <- RATonly$nasal_ag  
+# PCR outcome
+truth <- RATonly$result
 # Create data frame to match format of other ROC dateframes.
 RAT_only_ROC <- data.frame("SwabType" = "nasal",
                            "FitType" = "RATonly",
