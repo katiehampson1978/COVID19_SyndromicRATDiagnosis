@@ -21,7 +21,7 @@ ROCs <- rbind(SyndOnlyROC,
 # Modify fit type name to include class, symptom number and age 
 ROCs$FitType[1:500] <- paste0(ROCs$ModelClass[1:500], "_", 
                               parse_number(ROCs$FitType[1:500]), 
-                              "Symptom", "+Age")
+                              "Symptom")
 # Change RATonly row
 ROCs$FitType[501] <- "RATonly"
 
@@ -48,11 +48,11 @@ ggplot(ROC_plots ,
   facet_wrap(~ModelClass) +
   ggtitle("ROC Curve For Each Model Class") +
   scale_colour_discrete(name = "Model Class", 
-                        labels = c("0 Symptoms + Age", 
-                                   "1 Symptom + Age", 
-                                   "2 Symptoms + Age", 
-                                   "3 Symptoms + Age", 
-                                   "4 Symptoms + Age", 
+                        labels = c("0 Symptoms", 
+                                   "1 Symptom ", 
+                                   "2 Symptoms", 
+                                   "3 Symptoms", 
+                                   "4 Symptoms", 
                                    "RAT Only"))
 
 # True Negative vs False Negative plot

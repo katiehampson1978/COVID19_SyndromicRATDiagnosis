@@ -49,7 +49,7 @@ ggplot(final_models_wide %>% filter(FitType %in% symp_4_models),
   geom_boxplot()
 
 # Add model with lowest log loss to best model list
-best_models$ModelName[1] <- symp_4_models[2]
+best_models$ModelName[1] <- symp_4_models[1]
 
 # 3 Symptom Model Comparisons ---------------------------------------------
 
@@ -67,7 +67,7 @@ ggplot(final_models_wide %>% filter(FitType %in% symp_2_models),
   geom_boxplot()
 
 # Add model with lowest log loss to best model list
-best_models$ModelName[3] <- symp_2_models[2]
+best_models$ModelName[3] <- symp_2_models[1]
 
 # 1 Symptom Model Comparisons ---------------------------------------------
 
@@ -85,7 +85,7 @@ ggplot(final_models_wide %>% filter(FitType %in% symp_0_models),
   geom_boxplot()
 
 # Add model with lowest log loss to best model list
-best_models$ModelName[5] <- symp_0_models[2]
+best_models$ModelName[5] <- symp_0_models[1]
 
 
 # Best Model From Each Round ----------------------------------------------

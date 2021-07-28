@@ -54,7 +54,7 @@ best_valid <- rbind(best_valid_syndonly %>% select(FitType, ModelLogLoss, ModelC
                     best_valid_RATonly %>% select(FitType, ModelLogLoss, ModelClass)) 
 # Tidy names
 best_valid$FitType <- paste0(parse_number(best_valid$FitType), 
-                              "Symptom", "+Age")
+                              "Symptom")
 best_valid$FitType[20001] <- "RATonly"
 best_valid$FitType <- paste(best_valid$ModelClass, best_valid$FitType, sep = "_")
 

@@ -32,7 +32,8 @@ colnames(cross_val_tab) <- paste0("cv_", 1:num_weeks)
 covariate_nam <- c("age", "gender")
 covariate_combos <- list(covariate_nam[c(1:2)],
                          covariate_nam[c(1)],
-                         covariate_nam[c(2)]
+                         covariate_nam[c(2)],
+                         NULL
 )
 
 # Symptoms List

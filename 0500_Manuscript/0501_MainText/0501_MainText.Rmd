@@ -72,10 +72,10 @@ address:
     address: Institute of Biodiversity, Animal Health and Comparative Medicine, University of Glasgow
   - code: UoGLMICS
     address: 'COVID-19 in LMICs Research Group, University of Glasgow'
-  - code: MathsandStatGla
-    address: School of Mathematics and Statistics, University of Glasgow
   - code: MRCB
     address: MRC Biostatistics Unit, University of Cambridge 
+  - code: MathsandStatGla
+    address: School of Mathematics and Statistics, University of Glasgow
   - code: a2i
     address: 'a2i Programme, ICT Ministry/UNDP Bangladesh' 
   - code: UNFAO
@@ -113,7 +113,10 @@ scenario_outcomes <- readRDS("0400_ModelAssessment/0420_scenario_outcomes.rds") 
 scenario_outcomes$scenario <- 
   recode(scenario_outcomes$scenario, `Agnostic` = "Scenario 1",
          `Costly False Negatives` = "Scenario 2",
-         `Costly False Positives` = "Scenario 3")
+         `Costly False Positives` = "Scenario 3") 
+scenario_outcomes <- scenario_outcomes %>% 
+  # Remove 0 symptom models as they aren't actionable
+  filter(!FitType %in% c("0Symptom"))
 
 RATonlyROC <- readRDS("0400_ModelAssessment/0410_RATOnly_ROCrate.rds")
 RATonlyFPR <- RATonlyROC$MedFalsePosRate %>% round(2)
@@ -315,7 +318,8 @@ Models in Class 3 (combined data model) performed best with cross entropy values
 source("0000_HelperCode_Libraries/0001_Libraries.R")
 source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
 
-# Read in dataframe of best models
+# Read in dataframe of best models - indexing to remove zero symptom models as they have no
+# practical implementation
 best_models_syndonly <- readRDS("0300_ModelSelection/0310_SyndromicOnly_BestModels.rds")
 best_models_syndrat <- readRDS("0300_ModelSelection/0310_SyndromicRAT_BestModels.rds")
 
@@ -369,9 +373,9 @@ best_valid <- rbind(best_valid_syndonly %>%
                       select(FitType, ModelLogLoss, ModelClass)) 
 # Tidy names
 best_valid$FitType <- paste(parse_number(best_valid$FitType), 
-                              "Symptom(s)", "+ Age", sep = " ")
+                              "Symptom(s)", sep = " ")
 best_valid$FitType[20001] <- "RATonly"
-best_valid$SympNum <- paste0(parse_number(best_valid$FitType), " Symptoms + Age")
+best_valid$SympNum <- paste0(parse_number(best_valid$FitType), " Symptoms")
 best_valid$SympNum[20001] <- "RAT only"
 # best_valid$ModStru <- best_valid$FitType
 best_valid$FitType <- paste(best_valid$ModelClass, best_valid$FitType, sep = "_")
@@ -383,7 +387,8 @@ model_classes <- c(
                     )
 
 # Plot
-ggplot(best_valid, 
+# Remove 0 Symptom models as they are not actionable
+ggplot(best_valid %>% filter(SympNum != "0 Symptoms"), 
        aes(x = ModelLogLoss, y = as.factor(SympNum), colour = FitType)) +
   geom_boxplot() +
   coord_cartesian(xlim = c(0,3.5)) + 
@@ -417,7 +422,7 @@ model_classes <- c(
                     `SyndRAT` = "Combined"
                     )
 
-ggplot(ROC_plots , 
+ggplot(ROC_plots%>% filter(FitType!="0Symptom"), 
        aes(x = MedFalsePosRate, y = MedTruePosRate, 
                      colour = FitType)) +
   geom_point() +
@@ -439,7 +444,7 @@ ggplot(ROC_plots ,
 
 ```
 
-```{r scenario-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Performance of models under each scenario measured by errors defined in Table 2. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite)."}
+```{r scenario-plot, echo=FALSE, fig.cap="Performance of models under each scenario measured by errors defined in Table 2. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).", message=FALSE, warning=FALSE}
 
 ggplot(scenario_outcomes, 
        aes(x = MedError, y = FitType, colour = ModelClass)) +
