@@ -166,8 +166,41 @@
   
  \end{frontmatter}
 
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\hypertarget{abstract-max-250-words---currently-over}{%
+\section{Abstract (Max 250 Words - Currently over)}\label{abstract-max-250-words---currently-over}}
+
+\emph{Background}
+
+The majority of the world's population live in low- and middle-income countries where access to gold-standard diagnostics like RT-PCR is often limited.
+Rapid antigen testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice.
+
+\emph{Methods}
+
+Bangladesh's Institute of Epidemiology Disease Control And Research (IEDCR) identified potential COVID-19 patients in Dhaka using syndromic surveillance.
+A sample (n = 1172) of these patients was tested using RAT and syndromic data were collected.
+Models were fit to predict RT-PCR status using the RAT data, the syndromic data, and the two combined.
+Model performance was measured using predictive power and classification performance under three epidemiological scenarios: ``Agnostic,'' ``Rising Cases'' and ``Low-Level Cases.''
+
+\emph{Findings}
+
+Combined data models yielded equal or improved performance over syndromic- and RAT-only models.
+For predictive performance, the cross entropy for the models were 1.44, 2.52, and 3.24, respectively.\\
+In the first scenario, the median error rates were 0.34, 0.98, and 0.34, respectively.\\
+In the second scenario, the median error rates were \ensuremath{\infty{}}, 0.82, and 0.48, respectively.\\
+In the final scenario, the median error rates were 0.32, 0.82, and 0.25, respectively. \todo{Add CIs to median error rates.}
+
+\emph{Interpretation}
+
+Inexpensive and accessible surveillance methods are essential for pandemic control in low- and middle- income countries.
+These methods are imperfect, with much lower sensitivity and specificity than gold-standard methods like RT-PCR.
+We demonstrate that by exploiting complementary strengths and weaknesses across two imperfect diagnostics, we can greatly improve the detection of COVID-19.
+
+\emph{Funding}
+
+The Bill and Melinda Gates Foundation and the Wellcome Trust.
+
+\hypertarget{introduction-1107-words}{%
+\section{Introduction (\textasciitilde1107 Words)}\label{introduction-1107-words}}
 
 Identification and isolation of COVID-19 cases remains key to the pandemic response across the globe.
 The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
@@ -180,7 +213,7 @@ Like RT-PCR, these tests have high specificity for COVID-19 while being less exp
 RATs also require less commitment and discomfort for patients.
 For RT-PCR testing, patients must travel to a designated site (such as a hospital or testing booth) or have highly visible PPE-clad officials visit their home.
 Then, invasive nasopharyngeal swabs must be taken and there is a delay in receiving the result (between one day and a week in Bangladesh).
-In contrast, RAT can be conducted on nasal or saliva samples, completed in the home and results are available in 30 minutes.
+In contrast, RAT can be conducted on nasal or saliva samples, completed in the home with minimal PPE and results are available in 30 minutes.
 RATs can be taken by persons with limited training, thus decreasing the time and expense associated with identifying cases.
 Together, these traits make RATs an appealing alternative to RT-PCR.
 However, several concerns have been raised about the sensitivity of RAT {[}9{]} leading to more false negative diagnoses.
@@ -188,6 +221,7 @@ However, several concerns have been raised about the sensitivity of RAT {[}9{]} 
 Another alternative to RT-PCR, one that has been used since the start of the pandemic, is identifying cases through symptom-thresholding {[}10{]}.
 In this approach, a patient presenting with a fever and one or more viral pneumonia symptoms is treated as a COVID-19 positive patient.
 The main advantage of this approach is the ease of implementation.
+As with RAT the process is faster, cheaper and less invasive than RT-PCR, but unlike RAT the process relies on minimal equipment and thus can be scaled quickly and easily.
 For example, in Bangladesh, a lower middle-income country, much of the initial support and reporting of infections locally is provided by community support teams (CSTs) composed of local volunteers with basic training.
 The CSTs can easily collect symptomatic data in the community and provide care where the criteria are met.
 However, these symptom-thresholds were developed early in the outbreak, and thus necessarily drawn from clinical intuition, rather than data.
@@ -220,8 +254,8 @@ In this paper, we demonstrate how to combine these data types to exploit their c
 We aim to compare the performance of these two testing methods and the combined approach both in terms of general prediction and as diagnostics under three epidemiological scenarios; and demonstrate that the combined data achieve equal to much lower error rates than the next best method.
 We then discuss the role of statistically integrating data from multiple imperfect testing methods in resource limited settings to improve the diagnosis of diseases, particularly COVID-19.
 
-\hypertarget{methods}{%
-\section{Methods}\label{methods}}
+\hypertarget{methods-1019-words}{%
+\section{Methods (\textasciitilde1019 Words)}\label{methods-1019-words}}
 
 Participants included in this study were identified for COVID-19 testing after self-reporting symptoms to the Bangladesh government's national hotlines for COVID-19 support.
 Recruitment took place across Dhaka (the capital city of Bangladesh) between 2nd April 2021 and 5th May 2021.
@@ -301,13 +335,13 @@ Scenario Name & Requirement & Performance Criterion (Error)\\
 \midrule
 1 Agnostic & Maximise correct classification rates & Sum of error rates\\
 2 Rising Cases & Max. 20\% false negative rate & False negative rate\\
-3 Steady, Low-Level Cases & Max. 20\% false positive rate & False positive rate\\
+3 Low-Level Cases & Max. 20\% false positive rate & False positive rate\\
 \bottomrule
 \end{tabu}
 \end{table}
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\hypertarget{results-353-words}{%
+\section{Results (\textasciitilde353 words)}\label{results-353-words}}
 
 A total of 1172 subjects had data available for the current analyses.
 The mean age of women participants (46.8430034\% of the sample) was 37.13 (SD = 14.11), and for men (53\% of the sample) was 35.94 (SD = 14.28).
@@ -337,7 +371,7 @@ The median errors were between
 0.94 for models in Class 2, and
 0.48 and
 0.78 for models in Class 3 (Figure \ref{fig:scenario-plot}).
-In Scenario 3 (``Steady, Low-Level Cases''), the error in Class 1 was 0.02, 0.02 and the median errors ranged from 0.14 to 0.19 for Class 2, and 0.08 to 0.19 for Class 3 (Figure \ref{fig:scenario-plot}).
+In Scenario 3 (``Low-Level Cases''), the error in Class 1 was 0.02 and the median errors ranged from 0.14 to 0.19 for Class 2, and 0.08 to 0.19 for Class 3 (Figure \ref{fig:scenario-plot}).
 
 \begin{figure}
 \centering
@@ -351,78 +385,82 @@ In Scenario 3 (``Steady, Low-Level Cases''), the error in Class 1 was 0.02, 0.02
 \caption{\label{fig:scenario-plot}Performance of models under each scenario measured by errors defined in Table 2. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).}
 \end{figure}
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\hypertarget{discussion-1314-words}{%
+\section{Discussion (\textasciitilde1314 Words)}\label{discussion-1314-words}}
 
-We have demonstrated that combining two imperfect diagnostics yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually.
-These improvements are non-trivial in real-world settings like Bangladesh, where there are currently thousands of new cases being identified every day and the pandemic growth is accelerating meaning every missed case has a compounding effect.
-In the most relevant scenario, 2 (``Rising Cases''), where we try to keep the false negative rate low, the combined data model achieves
-22 percentage points lower than the false negative rate of the RAT only model, and
-34 percentage points lower false positive rate than the syndromic only model.
-These are large performance gains for any diagnostic, although under the current situation will have a considerable impact on identifying both COVID-19 positive and negative patients.
-The pattern is similar in Scenario 3 and when comparing the more generic measures of model performance in prediction and classification (Figures \ref{fig:pred-perf} and \ref{fig:scenario-plot}, respectively).
-Across almost all scenarios and metrics, the combined data model has equal or better performance.
+We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually.
+These improvements are non-trivial in real-world settings.
+In Bangladesh, there are currently 15 000 new cases being identified every day, using only the limited supply of RT-PCR, the pandemic growth is accelerating and every missed case has a compounding effect.
+Scenario 2 (``Rising Cases'') was developed with the need to keep false negative rates low and maps well onto the situation in Bangladesh (see Table \ref{tab:scenarios-tab}).
+In this scenario, the combined data model (Model Class 3) false negative rate is
+22 percentage points lower that of the RAT only model (Model Class 1).
+Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is
+34 percentage points higher.
+These are large performance gains for any diagnostic but when deployed at the scale of Bangladesh and similar countries, these improvements represent catching tens of thousands of cases that would otherwise be missed.
 Furthermore, this boost is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries.
 Outwith developing and rerunning the models presented in this paper, these improvements are essentially cost free and eminently scalable.
 
-Syndromic identification and RATs are fast, inexpensive and can be performed at patients' homes by minimally trained personnel.
-These imperfect detection methods have been developed as inexpensive alternatives to RT-PCR.
-While even the improvements described above will never allow these methods to compete with RT-PCR in terms of sensitivity and specificity, Rapid Antigen Testing and syndromic diagnosis also hold several further advantages.
-Unlike RT-PCR where patients have to go to designated testing centres, samples need to be taken by trained technologists and results take a day to a week to come back, both of the imperfect diagnostics can be delivered in the community with almost instant result delivery.
-This has several advantages.
-Firstly, increased accessibility by removing the need to travel for testing, thus reduces bias particularly against poorer, sicker and older people and reduces the risk of transmission in transit.
-Secondly, linked to cost, it is much easier to scale up testing when specialist training and expensive equipment and biosafety procedures are not required.
-Thirdly, it allows for assessment of an individual's wellbeing in the home context, and thus facilitates tailoring interventions to where they are most needed.
+The pattern is similar in epidemiological Scenarios 1 (``Agnostic'') and 3 (``Low-Level Cases''), with the combined model class performing performing equally well or better than the other two classes (Figure \ref{fig:scenario-plot}).
+These three scenarios only offer snapshots of performance, however, and we strongly advocate defining model performance in terms of false negative and false positive rates with reference to local conditions.
+An indication of how these models will perform under any condition can be obtained by comparing the more generic model performance metrics for prediction and classification (Figures \ref{fig:pred-perf} and \ref{fig:ROC-plot}, respectively).
+These figures demonstrate both the added flexibility of the more complex model classes that allow them to be tailored to specific needs and the need to combine the high-quality but inflexible RAT results with the more flexible but lower quality syndromic data.
+Interestingly, the most of the Class 2 models performs approximately as well as chance except the simplest which performs worse than chance.
+A model that performs worse than random can still be useful if one takes the inverse decision. \todo{@Dirk - can you please clarify this or suggest reasons the model is performing so badly. The red line here is a univariate probit regression with one continuous covariate so I don't understand why it's performing so poorly unless the temporal cross validation sets are wildly different from each other?}
+Even a flexible model which performs as well as random classification can be useful if those error rates reflect those needed in a given local situation.
+Fortunately, Model Class 3 is both flexible and performs better than random.
 
-The symptoms retained in the models may hint at the mechanism by which combining syndromic data and RAT results improves diagnosis.
 We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients.
-We do, however, highlight that the symptoms retained in the final models for the syndromic-only and combined models are largely different (only one symptom appears in both lists).
-We propose that this is due to the fact that RAT is most effective during the first week of symptom onset, with much worse performance before and after this period {[}21{]}.
-These first-week symptoms are generally typical of viral pneumonias {[}22{]}, and, indeed, when the RAT result is excluded from the model, the most important symptoms are typical of upper respiratory tract infections.
-However, when the RAT result is combined with syndromic data, the most important symptoms become much more eclectic.
-It is probable that these symptoms are either typical of later-stage COVID-19 or are less common presentations of the disease, possibly caused by co-infection or multimorbidities.
+We do, however, highlight that while fever and loss of smell were the two most important symptoms in the two classes of syndromic models,
+the other symptoms retained were different (with cough and wet cough retained in the combined syndromic and RAT model, Class 3, and loss of taste and vomiting in the syndromic only model, Class 2).
 Further research is needed to understand the mechanisms by which symptoms predict COVID-19 and by which RAT misses COVID-19.
-Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using Threshold Cycle (Ct) values from the RT-PCR to compare viral load with respect to prediction by the different methods {[}23{]}.
+Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using Threshold Cycle (Ct) values from the RT-PCR to compare viral load with respect to prediction by the different methods {[}21{]}.
 We note also that, as expected, age was retained in model selection.
 We were, however, surprised that gender was removed during model selection.
-Gender is thought to play a major role in infection risk {[}25{]}.
-As we are looking to predict symptomatic COVID-19 in symptomatic individuals, generalised risk of infection is perhaps less predictive than expected, potentially due to the balancing of risk and burden {[}26{]}.
+Gender is thought to play a major role in infection risk {[}23{]}.
+As we are looking to predict symptomatic COVID-19 in symptomatic individuals, generalised risk of infection is perhaps less predictive than expected, potentially due to the balancing of risk and burden {[}24{]}.
 
-We believe that the combined syndromic and rapid testing model represents the most promising approach to testing for COVID-19 in low- and middle- income countries at present.
+Using a large sample collected under field-realistic conditions, we have rigorously tested our approach.
 By taking a statistical modelling approach to case identification, we are able to update our diagnostic process in real time, allowing this method to readily adapt to new variants (or even new diseases) or new priorities for resource allocation.
 The modelling frameworks we have used are also sufficiently flexible to accommodate new data sources.
 Of particular interest are extensions to include the ``pandemic context'' in the model using space-time data.
-Furthermore, by using more sophisticated modelling structures it is possible to tune error rates to better reflect the local relative costs of false positives and false negatives.
+Furthermore, by using more sophisticated modelling structures that work at the scale of probabilities, rather than binary tests, it is possible to tune error rates to better reflect the local relative costs of false positives and false negatives.
 Naturally, these strengths have complementary limitations.
-Our models require updating in real-time and can only achieve good performance if the validation data are of high quality. Similarly, targeting error rates is only sensible if those rates properly reflect local conditions which is hard to do in practice.
+Our models require updating in real-time and can only achieve good performance if the validation data are of high quality.
+Similarly, targeting error rates is only sensible if those rates properly reflect local conditions which is hard to do in practice.
 These limitations should be seriously considered but the alternatives for imperfect testing methods are diagnostics that cannot be tailored to local conditions at all (and, as such may perform worse than a method which is sub-optimally tailored to local conditions) or diagnostics which make these decisions implicitly and not explicitly.
-We believe that in choosing to be explicit these decisions are more readily challenged, researched and improved upon.
-We also emphasise the need for rigorous experimental design to ensure findings from the sample population are applicable to the target population and the need for further research into understanding error rate tradeoffs in applied settings.
+We choose to make these decisions explicitly to allow them to be more readily challenged, researched and improved upon.
+We also emphasise the need for rigorous experimental design to ensure findings from the sample population are applicable to the target population and the need for further research into understanding error rate trade-offs in applied settings.
 
+We believe that the combined syndromic and rapid antigen testing approach represents the most promising approach to large-scale testing in low- and middle- income countries for COVID-19 at present.
+By using the small amount of RT-PCR testing possible and formally integrating multiple imperfect, non-gold-standard methods, we can tune these diagnostics to our local conditions.
+We have demonstrated that these improvements can be impressive in real-world scenarios, and will have a large impact when scaled to the population sizes in low- and middle-income countries.
 The methodology we have outlined here is applicable to a wide range of diseases and settings across low- and middle-income countries.
-One of the biggest challenges in diagnosing and tracking many diseases in resource-limited settings is the low availability of access to gold-standard testing (such as RT-PCR in the case of COVID-19) and high error rate of alternative testing methods.
+One of the biggest challenges in diagnosing and tracking many diseases in resource-limited settings is the low availability of access to gold-standard testing (such as RT-PCR in the case of COVID-19) and high error rates of alternative testing methods.
 In this paper, we have outlined the process for coupling a small number of gold-standard tests with formal statistical integration of alternative testing methods, to generate high quality diagnostic models.
 This process readily maps onto many other case identification problems, including the diagnosis of several neglected tropical diseases. For example, malaria (gold standard (GS) is also RT-PCR, imperfect methods (IM) include antigen tests, syndromic diagnosis and blood smears), schistosomiasis (GS: RT-PCR or autopsy; IM: Kato Katz egg counts, antibody detection) and rabies (GS: fluorescent antibody test; IM: light microscopy, differential diagnosis).
 
-In conclusion, we believe that the combined syndromic and rapid antigen testing approach represents the most promising approach to large-scale testing in low- and middle- income countries at present.
-By using the small amount of RT-PCR testing possible and formally integrating multiple imperfect, non-gold-standard methods, we can tune these diagnostics to our local conditions.
-We have demonstrated that these improvements can be impressive in real-world scenarios, and will have a large impact when scaled to the population sizes in low- and middle-income countries.
-As such, these low-cost improvements to existing testing programs have the potential to identify one to two orders of magnitude more cases than either gold-standard or alternative methods alone.
+The management of global pandemics can only be done with global testing.
+While the quest to achieve this using only gold-standard diagnostic methods is laudable, it is also often impractical.
+Imperfect diagnostics are frequently imperfect in different ways, and these differences are ripe for statistical exploitation.
+What is more, these approaches are often more agile than gold-standard diagnostics in situations of flux, for example, in the early stages of new pandemics or disease strains, when fast responses are essential.\\
+By investing in understanding how to utilise the complementary strengths of imperfect testing and deploy the limited gold-standard testing available for validation, we can provide good quality testing at the scale needed to fight infectious diseases.
 
-\hypertarget{funding}{%
-\section{Funding}\label{funding}}
+\hypertarget{funding-26-words}{%
+\section{Funding (\textasciitilde26 words)}\label{funding-26-words}}
 
 The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z).
 The authors declare no competing interests.
 
-\hypertarget{acknowledgements}{%
-\section{Acknowledgements}\label{acknowledgements}}
+\hypertarget{acknowledgements-67-words}{%
+\section{Acknowledgements (\textasciitilde67 words)}\label{acknowledgements-67-words}}
 
-CSTs + BAHCM/MathsAndStats + Matthiopoulos Research Group \todo{Fergus to look up names} + Dan Haydon
+We would like to thank members of the community support teams in Bangladesh who have provided essential services throughout the pandemic.
+Earlier drafts of this mansucript benefited from the input of Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
+The University of Glasgow COVID-19 in LMICs Group provided the environment in which to develop this work.
 
-\hypertarget{references}{%
-\section*{References}\label{references}}
-\addcontentsline{toc}{section}{References}
+\hypertarget{references-max-30}{%
+\section*{References (Max 30)}\label{references-max-30}}
+\addcontentsline{toc}{section}{References (Max 30)}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{0}{0}
@@ -506,28 +544,20 @@ CSTs + BAHCM/MathsAndStats + Matthiopoulos Research Group \todo{Fergus to look u
 \CSLLeftMargin{{[}20{]} }
 \CSLRightInline{Gneiting T, Raftery AE. Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association 2007;102:359--78.}
 
-\leavevmode\hypertarget{ref-muhi2021multi}{}%
-\CSLLeftMargin{{[}21{]} }
-\CSLRightInline{Muhi S, Tayler N, Hoang T, Ballard SA, Graham M, Rojek A, et al. Multi-site assessment of rapid, point-of-care antigen testing for the diagnosis of SARS-CoV-2 infection in a low-prevalence setting: A validation and implementation study. The Lancet Regional Health-Western Pacific 2021;9:100115.}
-
-\leavevmode\hypertarget{ref-xu2020clinical}{}%
-\CSLLeftMargin{{[}22{]} }
-\CSLRightInline{Xu T, Chen C, Zhu Z, Cui M, Chen C, Dai H, et al. Clinical features and dynamics of viral load in imported and non-imported patients with COVID-19. International Journal of Infectious Diseases 2020;94:68--71.}
-
 \leavevmode\hypertarget{ref-albert2021field}{}%
-\CSLLeftMargin{{[}23{]} }
+\CSLLeftMargin{{[}21{]} }
 \CSLRightInline{Albert E, Torres I, Bueno F, Huntley D, Molla E, Fernández-Fuentes MÁ, et al. Field evaluation of a rapid antigen test (panbio™ COVID-19 ag rapid test device) for COVID-19 diagnosis in primary healthcare centres. Clinical Microbiology and Infection 2021;27:472--e7.}
 
 \leavevmode\hypertarget{ref-menni2020real}{}%
-\CSLLeftMargin{{[}24{]} }
+\CSLLeftMargin{{[}22{]} }
 \CSLRightInline{Menni C, Valdes AM, Freidin MB, Sudre CH, Nguyen LH, Drew DA, et al. Real-time tracking of self-reported symptoms to predict potential COVID-19. Nature Medicine 2020;26:1037--40.}
 
 \leavevmode\hypertarget{ref-wolff2020risk}{}%
-\CSLLeftMargin{{[}25{]} }
+\CSLLeftMargin{{[}23{]} }
 \CSLRightInline{Wolff D, Nee S, Hickey NS, Marschollek M. Risk factors for covid-19 severity and fatality: A structured literature review. Infection 2020:1--4.}
 
 \leavevmode\hypertarget{ref-joe2020equal}{}%
-\CSLLeftMargin{{[}26{]} }
+\CSLLeftMargin{{[}24{]} }
 \CSLRightInline{Joe W, Kumar A, Rajpal S, Mishra U, Subramanian S. Equal risk, unequal burden? Gender differentials in COVID-19 mortality in india. Journal of Global Health Science 2020;2.}
 
 \end{CSLReferences}

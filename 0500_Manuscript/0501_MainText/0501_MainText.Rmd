@@ -100,35 +100,60 @@ header-includes:
   - \usepackage[colorinlistoftodos]{todonotes}
 ---
 
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+library(tidyverse)
+library(kableExtra) 
+library(viridis)
+library(viridisLite)
+pop_summ <- readRDS("0100_Data/0103_pop_summ.RDS")
+pop_size <- sum(pop_summ$Gender_Count)
+cross_entropy <- readRDS("0400_ModelAssessment/0430_MedCrossEnts.rds")
+scenario_outcomes <- readRDS("0400_ModelAssessment/0420_scenario_outcomes.rds") %>% ungroup()
 
-<!-- # Abstract -->
+scenario_outcomes$scenario <- 
+  recode(scenario_outcomes$scenario, `Agnostic` = "Scenario 1",
+         `Costly False Negatives` = "Scenario 2",
+         `Costly False Positives` = "Scenario 3")
 
-<!-- *Background* -->
+RATonlyROC <- readRDS("0400_ModelAssessment/0410_RATOnly_ROCrate.rds")
+RATonlyFPR <- RATonlyROC$MedFalsePosRate %>% round(2)
+RATonlyFNR <- RATonlyROC$MedFalseNegRate %>% round(2)
+```
 
-<!-- The majority of the world's population live in low- and middle-income countries where access to gold-standard diagnostics like RT-PCR is often limited. -->
-<!-- Rapid antigen testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice. -->
 
-<!-- *Methods* -->
+# Abstract (Max 250 Words - Currently over)
 
-<!-- Bangladesh's Institute of Epidemiology Disease Control And Research (IEDCR) identified potential COVID-19 patients in Dhaka using syndromic surveillance. -->
-<!-- A sample (n = 511) of these patients was tested using RAT and syndromic data were collected. -->
-<!-- Models were fit to predict RT-PCR status using the RAT data, the syndromic data, and the two combined. -->
-<!-- Model performance was measured using predictive power, sensitivity and specificity. -->
+*Background*
 
-<!-- *Findings* -->
+The majority of the world's population live in low- and middle-income countries where access to gold-standard diagnostics like RT-PCR is often limited.
+Rapid antigen testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice.
 
-<!-- Combined data models yielded improved performance over syndromic- and RAT-only models across all three metrics, with sensitivity of W (CI ...) {relative to {X and Y}, respectively}, specificity of A (CI ...) {relative to {B and C}, respectively} and log-loss of D (CI ...) {relative to {E and F}, respectively}. -->
+*Methods*
 
-<!-- *Interpretation* -->
+Bangladesh's Institute of Epidemiology Disease Control And Research (IEDCR) identified potential COVID-19 patients in Dhaka using syndromic surveillance.
+A sample (n = `r pop_size`) of these patients was tested using RAT and syndromic data were collected.
+Models were fit to predict RT-PCR status using the RAT data, the syndromic data, and the two combined.
+Model performance was measured using predictive power and classification performance under three epidemiological scenarios: "Agnostic", "Rising Cases" and "Low-Level Cases".
 
-<!-- We demonstrate that integrating these imperfect data sources greatly improves the detection of COVID-19. -->
-<!-- Low-cost and accessible surveillance methods make pandemic control in low- and middle- income countries a possibility. -->
+*Findings*
 
-<!-- *Funding* -->
+Combined data models yielded equal or improved performance over syndromic- and RAT-only models.
+For predictive performance, the cross entropy for the models were `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)`, `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)`, and `r cross_entropy %>% filter(ModelClass == "RATonly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% round(2)`, respectively.  
+In the first scenario, the median error rates were `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, and `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, respectively.  
+In the second scenario, the median error rates were `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, and `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, respectively.  
+In the final scenario, the median error rates were `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()`, respectively. \todo{Add CIs to median error rates.} 
 
-<!-- The Bill and Melinda Gates Foundation and the Wellcome Trust. -->
+*Interpretation*
 
-# Introduction
+Inexpensive and accessible surveillance methods are essential for pandemic control in low- and middle- income countries.
+These methods are imperfect, with much lower sensitivity and specificity than gold-standard methods like RT-PCR.
+We demonstrate that by exploiting complementary strengths and weaknesses across two imperfect diagnostics, we can greatly improve the detection of COVID-19.
+
+*Funding*
+
+The Bill and Melinda Gates Foundation and the Wellcome Trust.
+
+# Introduction (~1107 Words)
 
 Identification and isolation of COVID-19 cases remains key to the pandemic response across the globe.
 The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
@@ -182,7 +207,7 @@ In this paper, we demonstrate how to combine these data types to exploit their c
 We aim to compare the performance of these two testing methods and the combined approach both in terms of general prediction and as diagnostics under three epidemiological scenarios; and demonstrate that the combined data achieve equal to much lower error rates than the next best method.
 We then discuss the role of statistically integrating data from multiple imperfect testing methods in resource limited settings to improve the diagnosis of diseases, particularly COVID-19.
 
-# Methods
+# Methods (~1019 Words)
 
 Participants included in this study were identified for COVID-19 testing after self-reporting symptoms to the Bangladesh government's national hotlines for COVID-19 support.
 Recruitment took place across Dhaka (the capital city of Bangladesh) between 2nd April 2021 and 5th May 2021.
@@ -251,10 +276,8 @@ In Scenario 3, the pandemic is not declining but maintaining a steady rate of ca
 In this situation, policy-makers may be keen to keep false positive diagnoses low to prevent lockdown fatigue and to keep the workforce active.
 
 ```{r scenarios-tab, echo = FALSE, message = FALSE, warning = FALSE}
-library(kableExtra); library(tidyverse)
-
 dt <- tibble(
-   Scenarios = c("1 Agnostic", "2 Rising Cases", "3 Steady, Low-Level Cases"),
+   Scenarios = c("1 Agnostic", "2 Rising Cases", "3 Low-Level Cases"),
    Requirement = c("Maximise correct classification rates", 
                    "Max. 20% false negative rate", 
                    "Max. 20% false positive rate"),
@@ -272,23 +295,7 @@ The performance criterion is then used to determine which model performs the 'be
 
 ```
 
-# Results
-
-```{r inline_code, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
-pop_summ <- readRDS("0100_Data/0103_pop_summ.RDS")
-pop_size <- sum(pop_summ$Gender_Count)
-cross_entropy <- readRDS("0400_ModelAssessment/0430_MedCrossEnts.rds")
-scenario_outcomes <- readRDS("0400_ModelAssessment/0420_scenario_outcomes.rds") %>% ungroup()
-
-scenario_outcomes$scenario <- 
-  recode(scenario_outcomes$scenario, `Agnostic` = "Scenario 1",
-         `Costly False Negatives` = "Scenario 2",
-         `Costly False Positives` = "Scenario 3")
-
-RATonlyROC <- readRDS("0400_ModelAssessment/0410_RATOnly_ROCrate.rds")
-RATonlyFPR <- RATonlyROC$MedFalsePosRate %>% round(2)
-RATonlyFNR <- RATonlyROC$MedFalseNegRate %>% round(2)
-```
+# Results (~353 words)
 
 A total of `r pop_size` subjects had data available for the current analyses.
 The mean age of women participants (`r 100*pop_summ$Gender_Count[1]/pop_size %>% round()`% of the sample) was `r pop_summ$Age_Mean[1]  %>% round(2)` (SD = `r pop_summ$Age_SD[1] %>% round(2)`), and for men (`r round(100*pop_summ$Gender_Count[2]/pop_size)  %>% round()`% of the sample) was `r pop_summ$Age_Mean[2]  %>% round(2)` (SD = `r pop_summ$Age_SD[2] %>% round(2)`).
@@ -303,8 +310,7 @@ The median cross entropy values were between `r cross_entropy %>% filter(ModelCl
 Models in Class 3 (combined data model) performed best with cross entropy values between `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` (see Figure \@ref(fig:pred-perf)).
 
 ```{r pred-perf, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Predictive performance of candidate models. Interquartile ranges for the posterior cross entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. Cross entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each model class (1: rapid antigen testing (RAT) only; 2: syndromic data only; and 3: combined RAT and syndromic data)."}
-library(viridis)
-library(viridisLite)
+
 # Load libraries and helper functions
 source("0000_HelperCode_Libraries/0001_Libraries.R")
 source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
@@ -401,7 +407,7 @@ The median errors were between
 `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2, and 
 `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and 
 `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 3 (Figure \@ref(fig:scenario-plot)).
-In Scenario 3 ("Steady, Low-Level Cases"), the error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE)` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 3 (Figure \@ref(fig:scenario-plot)).
+In Scenario 3 ("Low-Level Cases"), the error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% unique()` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 3 (Figure \@ref(fig:scenario-plot)).
 
 ```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = " Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior mean  (+- posterior standard deviation) receiver operating characteristics for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space)."}
 ROC_plots <- readRDS("0400_ModelAssessment/0420_ROC_plot_dat.rds")
@@ -456,7 +462,7 @@ ggplot(scenario_outcomes,
 
 ```
 
-# Discussion
+# Discussion (~1314 Words)
 
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually. 
 These improvements are non-trivial in real-world settings.
@@ -470,11 +476,14 @@ These are large performance gains for any diagnostic but when deployed at the sc
 Furthermore, this boost is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries. 
 Outwith developing and rerunning the models presented in this paper, these improvements are essentially cost free and eminently scalable.
 
-The pattern is similar in epidemiological Scenarios 1 ("Agnostic") and 3 ("Steady, Low-Level Cases"), with the combined model class performing performing equally well or better than the other two classes (Figure \@ref(fig:scenario-plot)).
+The pattern is similar in epidemiological Scenarios 1 ("Agnostic") and 3 ("Low-Level Cases"), with the combined model class performing performing equally well or better than the other two classes (Figure \@ref(fig:scenario-plot)).
 These three scenarios only offer snapshots of performance, however, and we strongly advocate defining model performance in terms of false negative and false positive rates with reference to local conditions.
 An indication of how these models will perform under any condition can be obtained by comparing the more generic model performance metrics for prediction and classification (Figures \@ref(fig:pred-perf) and \@ref(fig:ROC-plot), respectively).
 These figures demonstrate both the added flexibility of the more complex model classes that allow them to be tailored to specific needs and the need to combine the high-quality but inflexible RAT results with the more flexible but lower quality syndromic data.
-
+Interestingly, the most of the Class 2 models performs approximately as well as chance except the simplest which performs worse than chance.
+A model that performs worse than random can still be useful if one takes the inverse decision. \todo{@Dirk - can you please clarify this or suggest reasons the model is performing so badly. The red line here is a univariate probit regression with one continuous covariate so I don't understand why it's performing so poorly unless the temporal cross validation sets are wildly different from each other?}
+Even a flexible model which performs as well as random classification can be useful if those error rates reflect those needed in a given local situation.
+Fortunately, Model Class 3 is both flexible and performs better than random. 
 
 We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients. 
 We do, however, highlight that while fever and loss of smell were the two most important symptoms in the two classes of syndromic models,
@@ -486,7 +495,7 @@ We were, however, surprised that gender was removed during model selection.
 Gender is thought to play a major role in infection risk [@wenham2020covid, @menni2020real, @wolff2020risk]. 
 As we are looking to predict symptomatic COVID-19 in symptomatic individuals, generalised risk of infection is perhaps less predictive than expected, potentially due to the balancing of risk and burden [@joe2020equal]. 
 
-We believe that the combined syndromic and rapid testing  model represents the most promising approach to testing for COVID-19 in low- and middle- income countries at present. 
+Using a large sample collected under field-realistic conditions, we have rigorously tested our approach.
 By taking a statistical modelling approach to case identification, we are able to update our diagnostic process in real time, allowing this method to readily adapt to new variants (or even new diseases) or new priorities for resource allocation. 
 The modelling frameworks we have used are also sufficiently flexible to accommodate new data sources. 
 Of particular interest are extensions to include the “pandemic context” in the model using space-time data. 
@@ -495,26 +504,32 @@ Naturally, these strengths have complementary limitations.
 Our models require updating in real-time and can only achieve good performance if the validation data are of high quality. 
 Similarly, targeting error rates is only sensible if those rates properly reflect local conditions which is hard to do in practice. 
 These limitations should be seriously considered but the alternatives for imperfect testing methods are diagnostics that cannot be tailored to local conditions at all (and, as such may perform worse than a method which is sub-optimally tailored to local conditions) or diagnostics which make these decisions implicitly and not explicitly. 
-We believe that in choosing to be explicit these decisions are more readily challenged, researched and improved upon. 
+We choose to make these decisions explicitly to allow them to be more readily challenged, researched and improved upon. 
 We also emphasise the need for rigorous experimental design to ensure findings from the sample population are applicable to the target population and the need for further research into understanding error rate trade-offs in applied settings. 
 
+We believe that the combined syndromic and rapid antigen testing approach represents the most promising approach to large-scale testing in low- and middle- income countries for COVID-19 at present. 
+By using the small amount of RT-PCR testing possible and formally integrating multiple imperfect, non-gold-standard methods, we can tune these diagnostics to our local conditions. 
+We have demonstrated that these improvements can be impressive in real-world scenarios, and will have a large impact when scaled to the population sizes in low- and middle-income countries. 
 The methodology we have outlined here is applicable to a wide range of diseases and settings across low- and middle-income countries. 
 One of the biggest challenges in diagnosing and tracking many diseases in resource-limited settings is the low availability of access to gold-standard testing (such as RT-PCR in the case of COVID-19) and high error rates of alternative testing methods. 
 In this paper, we have outlined the process for coupling a small number of gold-standard tests with formal statistical integration of alternative testing methods, to generate high quality diagnostic models. 
 This process readily maps onto many other case identification problems, including the diagnosis of several neglected tropical diseases. For example, malaria (gold standard (GS) is also RT-PCR, imperfect methods (IM) include antigen tests, syndromic diagnosis and blood smears), schistosomiasis (GS: RT-PCR or autopsy; IM: Kato Katz egg counts, antibody detection) and rabies (GS: fluorescent antibody test; IM: light microscopy, differential diagnosis).
 
-In conclusion, we believe that the combined syndromic and rapid antigen testing approach represents the most promising approach to large-scale testing in low- and middle- income countries at present. 
-By using the small amount of RT-PCR testing possible and formally integrating multiple imperfect, non-gold-standard methods, we can tune these diagnostics to our local conditions. 
-We have demonstrated that these improvements can be impressive in real-world scenarios, and will have a large impact when scaled to the population sizes in low- and middle-income countries. 
-As such, these low-cost improvements to existing testing programs have the potential to identify one to two orders of magnitude more cases than either gold-standard or alternative methods alone. 
+The management of global pandemics can only be done with global testing.
+While the quest to achieve this using only gold-standard diagnostic methods is laudable, it is also often impractical.
+Imperfect diagnostics are frequently imperfect in different ways, and these differences are ripe for statistical exploitation.
+What is more, these approaches are often more agile than gold-standard diagnostics in situations of flux, for example, in the early stages of new pandemics or disease strains, when fast responses are essential.  
+By investing in understanding how to utilise the complementary strengths of imperfect testing and deploy the limited gold-standard testing available for validation, we can provide good quality testing at the scale needed to fight infectious diseases.
 
-# Funding
+# Funding (~26 words)
 
 The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z). 
 The authors declare no competing interests.
 
-# Acknowledgements 
+# Acknowledgements (~67 words)
 
-CSTs + BAHCM/MathsAndStats + Matthiopoulos Research Group \todo{Fergus to look up names} + Dan Haydon
+We would like to thank members of the community support teams in Bangladesh who have provided essential services throughout the pandemic.
+Earlier drafts of this mansucript benefited from the input of Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
+The University of Glasgow COVID-19 in LMICs Group provided the environment in which to develop this work.
 
-# References
+# References (Max 30)
