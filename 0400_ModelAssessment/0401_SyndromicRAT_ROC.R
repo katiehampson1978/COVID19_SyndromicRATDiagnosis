@@ -24,6 +24,14 @@ synd_RAT_ROC <- ROC_diagnose(validation_df = best_valid,
                               prob_range = c(0.01, 0.99), 
                               increment_size = 0.02)
 saveRDS(synd_RAT_ROC, "0400_ModelAssessment/0410_SyndromicRAT_ROC.rds")
+# synd_RAT_ROC <- readRDS("0400_ModelAssessment/0410_SyndromicRAT_ROC.rds")
+# 
+# synd_RAT_ROC <- synd_RAT_ROC %>% 
+#   group_by(SwabType, FitType, threshold, Iter, Chain) %>% 
+#   summarise(TrueNegRate = mean(TrueNegRate),
+#             FalseNegRate = mean(FalseNegRate),
+#             TruePosRate = mean(TruePosRate),
+#             FalsePosRate = mean(FalsePosRate))
 
 # Generate true and false, positive and negative rates, calculate median, SD and 
 # CIs for each 

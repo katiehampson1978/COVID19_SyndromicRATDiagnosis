@@ -12,15 +12,14 @@ RATOnlyROC <- readRDS("0400_ModelAssessment/0410_RATOnly_ROCrate.rds")
 SyndOnlyROC$ModelClass <- "SyndOnly"
 SyndRATROC$ModelClass <- "SyndRAT"
 RATOnlyROC$ModelClass <- "RATonly"
-
 # Combine into one data frame
 ROCs <- rbind(SyndOnlyROC,
               SyndRATROC,
               RATOnlyROC)
 
-# Modify fit type name to include class, symptom number and age 
-ROCs$FitType[1:500] <- paste0(ROCs$ModelClass[1:500], "_", 
-                              parse_number(ROCs$FitType[1:500]), 
+# Modify fit type name to include class, symptom number
+ROCs$FitType <- paste0(ROCs$ModelClass, "_", 
+                              parse_number(ROCs$FitType), 
                               "Symptom")
 # Change RATonly row
 ROCs$FitType[501] <- "RATonly"
@@ -36,16 +35,16 @@ ggplot(ROC_plots ,
                      colour = FitType)) +
   geom_point() +
   geom_line() +
-  geom_errorbar(aes(ymin = MedTruePosRate - SDTruePosRate, 
+  geom_errorbar(aes(ymin = MedTruePosRate - SDTruePosRate,
                     ymax = MedTruePosRate + SDTruePosRate)) +
-  
-  geom_errorbarh(aes(xmin = MedFalsePosRate - SDFalsePosRate, 
+
+  geom_errorbarh(aes(xmin = MedFalsePosRate - SDFalsePosRate,
                      xmax = MedFalsePosRate + SDFalsePosRate)) +
   geom_line() +
   geom_abline(slope = 1, alpha = 0.1) +
   ylab("True Positive Rate") +
   xlab("False Positive Rate") +
-  facet_wrap(~ModelClass) +
+  facet_grid(cols = vars(ModelClass)) +
   ggtitle("ROC Curve For Each Model Class") +
   scale_colour_discrete(name = "Model Class", 
                         labels = c("0 Symptoms", 
@@ -55,20 +54,6 @@ ggplot(ROC_plots ,
                                    "4 Symptoms", 
                                    "RAT Only"))
 
-# True Negative vs False Negative plot
-ggplot(ROC_plots, 
-       aes(x = MedFalseNegRate, y = MedTrueNegRate, 
-           colour = FitType)) +
-  geom_point() +
-  geom_line() +
-  geom_errorbar(aes(ymin = MedTrueNegRate - SDTrueNegRate, 
-                    ymax = MedTrueNegRate + SDTrueNegRate)) +
-  
-  geom_errorbarh(aes(xmin = MedFalseNegRate - SDFalseNegRate, 
-                     xmax = MedFalseNegRate + SDFalseNegRate)) +
-  geom_line() +
-  geom_abline(slope = 1, alpha = 0.1) +
-  facet_wrap(~ModelClass)
 
 # Change threshold variable to numeric
 ROCs$threshold <- parse_number(ROCs$threshold)

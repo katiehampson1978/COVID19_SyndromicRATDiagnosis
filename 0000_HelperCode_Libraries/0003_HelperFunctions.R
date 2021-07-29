@@ -427,7 +427,15 @@ ROC_diagnose <- function(validation_df, prob_range, increment_size){
   diag_df$FalsePosRate = diag_df$FalsePos/(diag_df$FalsePos + diag_df$TrueNeg)
   diag_df$TrueNegRate = diag_df$TrueNeg/(diag_df$FalsePos + diag_df$TrueNeg)
   diag_df$TruePosRate = diag_df$TruePos/(diag_df$FalseNeg + diag_df$TruePos)
-
+  
+  # Average cross validation sets
+  diag_df <- diag_df %>% 
+    group_by(SwabType, FitType, threshold, Iter, Chain) %>% 
+    summarise(TrueNegRate = mean(TrueNegRate),
+              FalseNegRate = mean(FalseNegRate),
+              TruePosRate = mean(TruePosRate),
+              FalsePosRate = mean(FalsePosRate))
+  
   diag_df
 }
 

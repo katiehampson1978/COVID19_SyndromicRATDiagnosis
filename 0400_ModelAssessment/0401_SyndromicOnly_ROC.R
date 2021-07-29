@@ -24,7 +24,7 @@ synd_only_ROC <- ROC_diagnose(validation_df = best_valid,
                               prob_range = c(0.01, 0.99), 
                               increment_size = 0.02)
 saveRDS(synd_only_ROC, "0400_ModelAssessment/0410_SyndromicOnly_ROC.rds")
-
+# synd_only_ROC <- readRDS("0400_ModelAssessment/0410_SyndromicOnly_ROC.rds")
 # Generate true and false, positive and negative rates, calculate median, SD and 
 # CIs for each 
 synd_only_ROCrate <- synd_only_ROC  %>% 

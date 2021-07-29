@@ -5,27 +5,46 @@
 # Source helper code and libraries
 source("0000_HelperCode_Libraries/0001_Libraries.R")
 source("0000_HelperCode_Libraries/0003_HelperFunctions.R")
-RATonly <- readRDS("0100_Data/0103_nasal_dat.RDS")
-# RAT outcome
-RATresult <- RATonly$nasal_ag  
-# PCR outcome
-truth <- RATonly$result
+RATonly <- readRDS("0100_Data/0103_nasal_dat.RDS") %>% select(nasal_ag, result, week)
+RATonly <- RATonly %>% rename(CV = week)
 # Create data frame to match format of other ROC dateframes.
-RAT_only_ROC <- data.frame("SwabType" = "nasal",
-                           "FitType" = "RATonly",
-                           # Count each misclassification type
-                           "FalsePos" = sum(ifelse((RATresult - truth) == 1, 1, 0)),
-                           "TruePos" = sum(ifelse(RATresult == 1 & truth == 1, 1, 0)),
-                           "FalseNeg" = sum(ifelse((RATresult - truth) == -1, 1, 0)),
-                           "TrueNeg" = sum(ifelse(RATresult == 0 & truth == 0, 1, 0)))
-# Convert misclassification counts to rates
-RAT_only_ROC$MedFalseNegRate = RAT_only_ROC$FalseNeg/(RAT_only_ROC$FalseNeg +
-                                                     RAT_only_ROC$TruePos)
-RAT_only_ROC$MedFalsePosRate = RAT_only_ROC$FalsePos/(RAT_only_ROC$FalsePos +
-                                                     RAT_only_ROC$TrueNeg)
-RAT_only_ROC$MedTrueNegRate =  RAT_only_ROC$TrueNeg/(RAT_only_ROC$FalsePos +
-                                                    RAT_only_ROC$TrueNeg)
-RAT_only_ROC$MedTruePosRate =  RAT_only_ROC$TruePos/(RAT_only_ROC$FalseNeg +
-                                                    RAT_only_ROC$TruePos)
+classifications <- RATonly$nasal_ag - RATonly$result
+classifications[classifications == 0 & RATonly$result == 1] <- 10 #"TruePos" 
+classifications[classifications == 0 & RATonly$result == 0] <- -10 #"TrueNeg" 
+RATonly <- cbind(RATonly, classifications)
+
+RAT_only_ROC <- RATonly %>%
+  group_by(CV) %>% 
+  summarise(FalsePos = sum(classifications == 1), 
+            TruePos  = sum(classifications == 10), 
+            FalseNeg = sum(classifications == -1), 
+            TrueNeg  = sum(classifications == -10)) %>% 
+  ungroup() %>%
+  mutate(FitType = "RATonly", SwabType = "nasal", threshold = NA)
+
+RAT_only_ROC$FalseNegRate = RAT_only_ROC$FalseNeg/(RAT_only_ROC$FalseNeg + RAT_only_ROC$TruePos)
+RAT_only_ROC$FalsePosRate = RAT_only_ROC$FalsePos/(RAT_only_ROC$FalsePos + RAT_only_ROC$TrueNeg)
+RAT_only_ROC$TrueNegRate  = RAT_only_ROC$TrueNeg /(RAT_only_ROC$FalsePos + RAT_only_ROC$TrueNeg)
+RAT_only_ROC$TruePosRate  = RAT_only_ROC$TruePos /(RAT_only_ROC$FalseNeg + RAT_only_ROC$TruePos)
+
+
+RAT_only_ROC <- RAT_only_ROC  %>% 
+  group_by(SwabType, FitType, threshold) %>%
+  summarise(MedFalseNegRate = median(FalseNegRate, na.rm = TRUE),
+            SDFalseNegRate = sd(FalseNegRate, na.rm = TRUE),
+            my_80CI(varnam = "FalseNegRate", x = FalseNegRate),
+            MedFalsePosRate = median(FalsePosRate, na.rm = TRUE),
+            SDFalsePosRate = sd(FalsePosRate, na.rm = TRUE),
+            my_80CI(varnam = "FalsePosRate",x = FalsePosRate),
+            MedTrueNegRate = median(TrueNegRate, na.rm = TRUE),
+            SDTrueNegRate = sd(TrueNegRate, na.rm = TRUE),
+            my_80CI(varnam = "TrueNegRate", x = TrueNegRate),
+            MedTruePosRate = median(TruePosRate, na.rm = TRUE),
+            SDTruePosRate = sd(TruePosRate, na.rm = TRUE),
+            my_80CI(varnam = "TruePosRate", x = TruePosRate)) %>%
+  pivot_wider(names_from = probs, values_from = ends_with("_CI"))
+
+
+
 # Save output
 saveRDS(RAT_only_ROC, "0400_ModelAssessment/0410_RATOnly_ROCrate.rds")
