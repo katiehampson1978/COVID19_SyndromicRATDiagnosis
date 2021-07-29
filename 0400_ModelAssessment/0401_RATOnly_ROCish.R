@@ -30,17 +30,17 @@ RAT_only_ROC$TruePosRate  = RAT_only_ROC$TruePos /(RAT_only_ROC$FalseNeg + RAT_o
 
 RAT_only_ROC <- RAT_only_ROC  %>% 
   group_by(SwabType, FitType, threshold) %>%
-  summarise(MedFalseNegRate = median(FalseNegRate, na.rm = TRUE),
-            SDFalseNegRate = sd(FalseNegRate, na.rm = TRUE),
+  summarise(MedFalseNegRate = mean(FalseNegRate, na.rm = TRUE),
+            SDFalseNegRate = NA,
             my_80CI(varnam = "FalseNegRate", x = FalseNegRate),
-            MedFalsePosRate = median(FalsePosRate, na.rm = TRUE),
-            SDFalsePosRate = sd(FalsePosRate, na.rm = TRUE),
+            MedFalsePosRate = mean(FalsePosRate, na.rm = TRUE),
+            SDFalsePosRate = NA,
             my_80CI(varnam = "FalsePosRate",x = FalsePosRate),
-            MedTrueNegRate = median(TrueNegRate, na.rm = TRUE),
-            SDTrueNegRate = sd(TrueNegRate, na.rm = TRUE),
+            MedTrueNegRate = mean(TrueNegRate, na.rm = TRUE),
+            SDTrueNegRate = NA,
             my_80CI(varnam = "TrueNegRate", x = TrueNegRate),
-            MedTruePosRate = median(TruePosRate, na.rm = TRUE),
-            SDTruePosRate = sd(TruePosRate, na.rm = TRUE),
+            MedTruePosRate = mean(TruePosRate, na.rm = TRUE),
+            SDTruePosRate = NA,
             my_80CI(varnam = "TruePosRate", x = TruePosRate)) %>%
   pivot_wider(names_from = probs, values_from = ends_with("_CI"))
 
