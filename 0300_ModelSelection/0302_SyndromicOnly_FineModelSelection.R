@@ -67,8 +67,9 @@ nasal_tidy_run <- function(best_symptoms_so_far, round, covariate_names){
 }
 
 # Top 4 symptoms
-reject_symptoms <- c("red_eye", "headache", "muscle_pain", "runny_nose", "tired",
-                     "sore_throat", "breath_problem", "cough", "wet_cough", "diarrhoea")
+reject_symptoms <- c("breath_problem", "cough", "headache", "muscle_pain",
+                     "red_eye", "runny_nose","sore_throat", "tired", "wet_cough",
+                     "loss_of_smell") # Removed due to strong correlation with loss of taste
 
 
 

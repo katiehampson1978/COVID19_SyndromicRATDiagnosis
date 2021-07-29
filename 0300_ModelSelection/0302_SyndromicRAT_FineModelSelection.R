@@ -67,10 +67,10 @@ nasal_tidy_run <- function(best_symptoms_so_far, round, covariate_names){
 }
 
 # Top 4 symptoms
+# Select symptoms with weakest or inconsistent signed symptoms
 reject_symptoms <- c("breath_problem", "diarrhoea", "headache", "muscle_pain",
-                     "red_eye", "sore_throat", "tired", "vomit", "runny_nose",
-                     "loss_of_taste")
-
+                     "red_eye", "runny_nose","sore_throat", "tired", "vomit",
+                     "loss_of_smell") # Removed due to strong correlation with loss of taste
 
 
 # A for loop is justified here as the number of cores available means the models
