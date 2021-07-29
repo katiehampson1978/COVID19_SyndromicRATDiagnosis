@@ -415,7 +415,7 @@ ROC_diagnose <- function(validation_df, prob_range, increment_size){
 
   # Get classification counts
   diag_df <- (diagnosed_grouped_df) %>%
-    group_by(SwabType, FitType, threshold, Iter, Chain) %>% 
+    group_by(SwabType, FitType, threshold, Iter, Chain, CV) %>% 
     summarise(FalsePos = sum(classification == 1), 
               TruePos = sum(classification == 10), 
               FalseNeg = sum(classification == -1), 
