@@ -94,8 +94,14 @@ minimise_falsepos <- ROCs %>% group_by(FitType) %>%
 
 # Agnostic scenario
 # Identify threshold for each fit type that most closely exceed criterion
+# Hamonic mean function for two values
+harmonic_mean2 <- function(value1, value2){
+  hm2 <- (2*value1*value2)/(value1+value2)
+  hm2
+} 
+
 max_perf <- ROCs %>% group_by(FitType) %>%
-  mutate(tmp = (MedTruePosRate + MedTrueNegRate)) %>%
+  mutate(tmp = harmonic_mean2(MedTruePosRate, MedTrueNegRate)) %>%
   filter(tmp > 0) %>%
   slice(which.max(tmp)) %>%
   select(-tmp) 
@@ -127,7 +133,7 @@ scenario_outcomes_rounded <- scenario_outcomes %>%
 
 # Tidy names
 scenario_outcomes_rounded$FitType <- str_replace(scenario_outcomes_rounded$FitType, ".*_", "")
-View(scenario_outcomes_rounded)
+
 saveRDS(scenario_outcomes_rounded, "0400_ModelAssessment/0420_scenario_outcomes.rds")
 # Plot
 ggplot(scenario_outcomes_rounded, 
