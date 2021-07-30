@@ -22,7 +22,7 @@ ROCs$FitType <- paste0(ROCs$ModelClass, "_",
                               parse_number(ROCs$FitType), 
                               "Symptom")
 # Change RATonly row
-ROCs$FitType[1971] <- "RATonly"
+ROCs$FitType[length(ROCs$FitType)] <- "RATonly"
 
 # Create mirrored data frame to make plotting easier
 ROC_plots <- ROCs
@@ -35,11 +35,11 @@ ggplot(ROC_plots ,
                      colour = FitType)) +
   geom_point() +
   geom_line() +
-  geom_errorbar(aes(ymin = MedTruePosRate - SDTruePosRate,
-                    ymax = MedTruePosRate + SDTruePosRate)) +
+  geom_errorbar(aes(ymin = TruePosRate_CI_0.25,
+                    ymax = TruePosRate_CI_0.75)) +
 
-  geom_errorbarh(aes(xmin = MedFalsePosRate - SDFalsePosRate,
-                     xmax = MedFalsePosRate + SDFalsePosRate)) +
+  geom_errorbarh(aes(xmin = FalsePosRate_CI_0.25,
+                     xmax = FalsePosRate_CI_0.25)) +
   geom_line() +
   geom_abline(slope = 1, alpha = 0.1) +
   ylab("True Positive Rate") +
@@ -103,8 +103,14 @@ minimise_falsepos$MedError <- minimise_falsepos$MedFalseNegRate
 
 # Calculate SD of error for each scenario
 max_perf$SDError <- (max_perf$SDFalseNegRate + max_perf$SDFalsePosRate)
+max_perf$Error025 <- (max_perf$FalseNegRate_CI_0.25 + max_perf$FalsePosRate_CI_0.25)
+max_perf$Error075 <- (max_perf$FalseNegRate_CI_0.75 + max_perf$FalsePosRate_CI_0.75)
 minimise_falseneg$SDError <- minimise_falseneg$SDFalsePosRate
 minimise_falsepos$SDError <- minimise_falsepos$SDFalseNegRate 
+minimise_falseneg$Error025 <- minimise_falseneg$FalsePosRate_CI_0.25
+minimise_falsepos$Error025 <- minimise_falsepos$FalseNegRate_CI_0.25 
+minimise_falseneg$Error075 <- minimise_falseneg$FalsePosRate_CI_0.75
+minimise_falsepos$Error075 <- minimise_falsepos$FalseNegRate_CI_0.75 
 
 # Remove RATonly error as it is technically infinite
 # minimise_falseneg[minimise_falseneg$FitType == "RATonly", "MedError"] <- NA
@@ -118,15 +124,14 @@ scenario_outcomes_rounded <- scenario_outcomes %>%
 
 # Tidy names
 scenario_outcomes_rounded$FitType <- str_replace(scenario_outcomes_rounded$FitType, ".*_", "")
-
-saveRDS(scenario_outcomes_rounded, "0400_ModelAssessment/0420_scenario_outcomes.rds")
+scenario_outcomes$FitType <- str_replace(scenario_outcomes$FitType, ".*_", "")
+saveRDS(scenario_outcomes, "0400_ModelAssessment/0420_scenario_outcomes.rds")
 # Plot
 ggplot(scenario_outcomes_rounded, 
        aes(x = FitType, y = MedError, colour = ModelClass)) +
   geom_point() +
-  geom_errorbar(aes(ymin = MedError - SDError, 
-                    ymax = MedError + SDError)) +
-
+  geom_errorbar(aes(ymin = Error025, 
+                    ymax = Error075)) +
   ylab("Error") + 
   xlab("Model") +
   facet_wrap(~scenario)  +
