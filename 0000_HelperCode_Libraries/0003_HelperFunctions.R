@@ -453,8 +453,8 @@ read_logloss <- function(file){
   tmp
 }
 # Extract 80% credible interval
-my_80CI <- function(varnam, x) {
-  probs <- c(0.1,0.9)
+my_50CI <- function(varnam, x) {
+  probs <- c(0.25,0.75)
   tibble("{varnam}_CI" := quantile(x, probs, na.rm = TRUE, names = FALSE), probs = probs)
 }
 
