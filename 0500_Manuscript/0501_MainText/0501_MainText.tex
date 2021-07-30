@@ -166,8 +166,8 @@
   
  \end{frontmatter}
 
-\hypertarget{abstract-max-250-words---currently-over}{%
-\section{Abstract (Max 250 Words - Currently over)}\label{abstract-max-250-words---currently-over}}
+\hypertarget{abstract}{%
+\section{Abstract}\label{abstract}}
 
 \emph{Background}
 
@@ -197,8 +197,8 @@ We demonstrate that such improvements can be achieved by statistically utilising
 
 The Bill and Melinda Gates Foundation and the Wellcome Trust.
 
-\hypertarget{introduction-1107-words}{%
-\section{Introduction (\textasciitilde1107 Words)}\label{introduction-1107-words}}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
 
 Identification and isolation of COVID-19 cases remains key to the pandemic response across the globe.
 The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
@@ -256,11 +256,11 @@ We aim to compare the performance of these two testing methods and the combined 
 We show that the optimised combined data models achieve equal-to-much-lower error rates than the next best method in all metrics.
 We then discuss the role of statistically integrating data from multiple imperfect testing methods in resource limited settings to improve the diagnosis of diseases, particularly COVID-19.
 
-\hypertarget{methods-1019-words}{%
-\section{Methods (\textasciitilde1019 Words)}\label{methods-1019-words}}
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
 
-Participants included in this study were identified for COVID-19 testing after self-reporting symptoms to the Bangladesh government's national hotlines for COVID-19 support.
-Recruitment took place across Dhaka (the capital city of Bangladesh) between 2nd April 2021 and 5th May 2021.
+Participants included in this study were identified for COVID-19 testing by community support teams (CSTs).
+Recruitment took place across Dhaka (the capital city of Bangladesh) between 19th May 2021 and 11th July 2021.
 
 Patients were selected for further testing conditional on the presence of a fever (\textgreater38°C) at the point of testing and one or more of 14 additional symptoms associated with COVID-19 (breathing problems, coughing, diarrhoea, fever (ongoing), a headache, loss of taste, loss of smell, muscle pain, red eyes, a runny nose, a sore throat, tiredness, vomiting or a wet cough).
 The patient's age and gender were also recorded, but these data were not included in the patient selection criteria.
@@ -346,10 +346,10 @@ Scenario Name & Requirement & Performance Criterion (Error)\\
 \end{tabu}
 \end{table}
 
-\hypertarget{results-353-words}{%
-\section{Results (\textasciitilde353 words)}\label{results-353-words}}
+\hypertarget{results}{%
+\section{Results}\label{results}}
 
-A total of 1172 subjects had data available for the current analyses.
+Of 1241 subjects surveyed, a total of 1172 subjects had complete data available for the current analyses with the remained removed due to missed symptoms or ambiguous coding of dates or symptoms.
 The mean age of women participants (47\% of the sample) was 37 (SD = 14), and for men (53\% of the sample) was 36 (SD = 14).
 Participants were identief by the community support teams (CSTs) and drawn from across Dhaka.
 
@@ -370,15 +370,14 @@ Models in Class 3 (combined data model) performed best with cross-entropy values
 General model classification performance is shown by the full ROC curves for each model (Figure \ref{fig:ROC-plot}).
 
 Scenario specific classification performance is shown in Figure \ref{fig:scenario-plot}.
-In
-In Scenario 1 (``Agnostic,'' see Table \ref{tab:scenarios-tab}), the median error was 0.47 for models in Class 1 and Class 3 and between 0.87 and 0.9 for models in Class 2 (Figure \ref{fig:scenario-plot}).
-In Scenario 2 (``Rising Cases''), Model Class 1 was unable to meet the required false negative rate.
-The median errors were between
-0.74 and
-0.76 for models in Class 2, and
-0.43 and
-0.51 for models in Class 3 (Figure \ref{fig:scenario-plot}).
-In Scenario 3 (``Low-Level Cases''), the error in Class 1 was 0.02 and the median errors ranged from 0.19 to 0.2 for Class 2, and 0.15 to 0.2 for Class 3 (Figure \ref{fig:scenario-plot}).
+Across all three scenarios (defined in Table \ref{tab:scenarios-tab}), the best models in Class 3 performed equally well or better than the other two model classes.
+In Scenario 1 (``Agnostic''), models in Classes 1 and 3 performed equally well and distinctly better than models in Class 2.
+In Scenario 2 (``Rising Cases''), Model Class 1 failed to meet the requirement and so was excluded (effectively infinite error), and Model Class 3 once again outperformed Class 2.
+In Scenario 3 (``Low-Level Cases''), all three model classes met the requirement.
+Once again, Model Class 2 performed worst and Model Class 3 achieved the lowest error, with Model Class 1 falling in between the two (closer to Class 3 than 2).
+Across all the scenarios and both Classes 2 and 3, the number of symptoms made relatively little difference within the final four candidate models in terms of median performance, although the more complex models have higher precision.
+It should be noted that the candidate models are chosen as a result of a selection process and performed much better than more complex models (i.e.~those with 5 or more symptoms) or simpler models (with no symptoms but an intercept and covariates) in terms of cross-entropy and ROC, indicating they would likely also perform worse in these scenarios.
+These models were not tested on the scenarios to minimise the risk of over-fitting to the scenarios, in the case of the more complex models, and because they are not policy relevant, in the case of the simpler models.
 
 \begin{figure}
 \centering
@@ -392,8 +391,8 @@ In Scenario 3 (``Low-Level Cases''), the error in Class 1 was 0.02 and the media
 \caption{\label{fig:scenario-plot}Performance of models under each scenario measured by errors defined in Table 2. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).}
 \end{figure}
 
-\hypertarget{discussion-1314-words}{%
-\section{Discussion (\textasciitilde1314 Words)}\label{discussion-1314-words}}
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
 
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually.
 These improvements are non-trivial in real-world settings.
@@ -411,10 +410,6 @@ The pattern is similar in epidemiological Scenarios 1 (``Agnostic'') and 3 (``Lo
 These three scenarios only offer snapshots of performance, however, and we strongly advocate defining model performance in terms of false negative and false positive rates with reference to local conditions.
 An indication of how these models will perform under any condition can be obtained by comparing the more generic model performance metrics for prediction and classification (Figures \ref{fig:pred-perf} and \ref{fig:ROC-plot}, respectively).
 These figures demonstrate both the added flexibility of the more complex model classes that allow them to be tailored to specific needs and the need to combine the high-quality but inflexible RAT results with the more flexible but lower quality syndromic data.
-Interestingly, the most of the Class 2 models performs approximately as well as chance except the simplest which performs worse than chance.
-A model that performs worse than random can still be useful if one takes the inverse decision. \todo{@Dirk - can you please clarify this or suggest reasons the model is performing so badly. The red line here is a univariate probit regression with one continuous covariate so I don't understand why it's performing so poorly unless the temporal cross-validation sets are wildly different from each other?}
-Even a flexible model which performs as well as random classification can be useful if those error rates reflect those needed in a given local situation.
-Fortunately, Model Class 3 is both flexible and performs better than random.
 
 We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients.
 We do, however, highlight that while fever and loss of smell were the two most important symptoms in the two classes of syndromic models,
@@ -453,17 +448,17 @@ Imperfect diagnostics are frequently imperfect in different ways, and these diff
 What is more, these approaches are often more agile than gold-standard diagnostics in situations of flux, for example, in the early stages of new pandemics or disease strains, when fast responses are essential.\\
 By investing in understanding how to utilise the complementary strengths of imperfect testing and deploy the limited gold-standard testing available for validation, we can provide good quality testing at the scale needed to fight infectious diseases.
 
-\hypertarget{funding-26-words}{%
-\section{Funding (\textasciitilde26 words)}\label{funding-26-words}}
+\hypertarget{funding}{%
+\section{Funding}\label{funding}}
 
 The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z).
 The authors declare no competing interests.
 
-\hypertarget{acknowledgements-67-words}{%
-\section{Acknowledgements (\textasciitilde67 words)}\label{acknowledgements-67-words}}
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
 
 We would like to thank members of the community support teams in Bangladesh who have provided essential services throughout the pandemic.
-Earlier drafts of this mansucript benefited from the input of Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
+Earlier drafts of this mansucript benefited from the input of Paul Johnson, Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
 The University of Glasgow COVID-19 in LMICs Group provided the environment in which to develop this work.
 
 \hypertarget{references-max-30}{%

@@ -123,8 +123,7 @@ RATonlyFPR <- RATonlyROC$MedFalsePosRate %>% round(2)
 RATonlyFNR <- RATonlyROC$MedFalseNegRate %>% round(2)
 ```
 
-
-# Abstract (Max 250 Words - Currently over)
+# Abstract
 
 *Background*
 
@@ -154,7 +153,7 @@ We demonstrate that such improvements can be achieved by statistically utilising
 
 The Bill and Melinda Gates Foundation and the Wellcome Trust.
 
-# Introduction (~1107 Words)
+# Introduction
 
 Identification and isolation of COVID-19 cases remains key to the pandemic response across the globe.
 The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
@@ -212,10 +211,10 @@ We aim to compare the performance of these two testing methods and the combined 
 We show that the optimised combined data models achieve equal-to-much-lower error rates than the next best method in all metrics.
 We then discuss the role of statistically integrating data from multiple imperfect testing methods in resource limited settings to improve the diagnosis of diseases, particularly COVID-19.
 
-# Methods (~1019 Words)
+# Methods 
 
-Participants included in this study were identified for COVID-19 testing after self-reporting symptoms to the Bangladesh government's national hotlines for COVID-19 support.
-Recruitment took place across Dhaka (the capital city of Bangladesh) between 2nd April 2021 and 5th May 2021.
+Participants included in this study were identified for COVID-19 testing by community support teams (CSTs).
+Recruitment took place across Dhaka (the capital city of Bangladesh) between 19th May 2021 and 11th July 2021.
 
 Patients were selected for further testing conditional on the presence of a fever (>38°C) at the point of testing and one or more of 14 additional symptoms associated with COVID-19 (breathing problems, coughing, diarrhoea, fever (ongoing), a headache, loss of taste, loss of smell, muscle pain, red eyes, a runny nose, a sore throat, tiredness, vomiting or a wet cough).
 The patient's age and gender were also recorded, but these data were not included in the patient selection criteria.
@@ -304,9 +303,9 @@ The performance criterion is then used to determine which model performs the 'be
 
 ```
 
-# Results (~353 words)
+# Results
 
-A total of `r pop_size` subjects had data available for the current analyses.
+Of 1241 subjects surveyed, a total of `r pop_size` subjects had complete data available for the current analyses with the remained removed due to missed symptoms or ambiguous coding of dates or symptoms.
 The mean age of women participants (`r round(100*pop_summ$Gender_Count[1]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[1]  %>% round()` (SD = `r pop_summ$Age_SD[1] %>% round()`), and for men (`r round(100*pop_summ$Gender_Count[2]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[2]  %>% round()` (SD = `r pop_summ$Age_SD[2] %>% round()`).
 Participants were identief by the community support teams (CSTs) and drawn from across Dhaka.
 
@@ -482,7 +481,7 @@ ggplot(scenario_outcomes,
 
 ```
 
-# Discussion (~1314 Words)
+# Discussion 
 
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better prediction of COVID-19 status and greater flexibility than each diagnostic individually. 
 These improvements are non-trivial in real-world settings.
@@ -538,15 +537,15 @@ Imperfect diagnostics are frequently imperfect in different ways, and these diff
 What is more, these approaches are often more agile than gold-standard diagnostics in situations of flux, for example, in the early stages of new pandemics or disease strains, when fast responses are essential.  
 By investing in understanding how to utilise the complementary strengths of imperfect testing and deploy the limited gold-standard testing available for validation, we can provide good quality testing at the scale needed to fight infectious diseases.
 
-# Funding (~26 words)
+# Funding 
 
 The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z). 
 The authors declare no competing interests.
 
-# Acknowledgements (~67 words)
+# Acknowledgements
 
 We would like to thank members of the community support teams in Bangladesh who have provided essential services throughout the pandemic.
-Earlier drafts of this mansucript benefited from the input of Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
+Earlier drafts of this mansucript benefited from the input of Paul Johnson, Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
 The University of Glasgow COVID-19 in LMICs Group provided the environment in which to develop this work.
 
 # References (Max 30)
