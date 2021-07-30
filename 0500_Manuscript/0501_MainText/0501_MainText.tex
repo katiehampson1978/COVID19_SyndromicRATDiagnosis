@@ -99,6 +99,7 @@
 \usepackage{threeparttablex}
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
+\usepackage{xcolor}
 
 
 
@@ -184,8 +185,8 @@ Model performance was measured using predictive power and classification perform
 \emph{Findings}
 
 Combined data models yielded equal or improved performance over syndromic- and RAT-only models across all three epidemiological scenarios and when compared as more generic prediction and classification engines.
-In the ``Rising Cases'' scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is 26 percentage points lower that of the RAT only model.
-Although the syndromic only model matches the combined models false negative rate, its false positive rate is 31 percentage points higher.
+In the ``Rising Cases'' scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is 26.2012339 percentage points lower that of the RAT only model.
+Although the syndromic only model matches the combined models false negative rate, its false positive rate is 30.8213341 percentage points higher.
 
 \emph{Interpretation}
 
@@ -271,7 +272,7 @@ The full questionnaire and testing protocols are provided in Appendix XX.
 Participants provided written informed consent to sample collection and for their test results to be analyzed in the study.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart} \caption{Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation.}\label{fig:data-flowchart}
+\includegraphics[width=1\linewidth]{/home/fergus/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart} \caption{Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation.}\label{fig:data-flowchart}
 \end{figure}
 
 We examined the ability of the two imperfect identification methods, the syndromic profile and RAT result, to predict the patient's COVID-19 status when used separately and together.
@@ -306,7 +307,7 @@ As the score only uses the predicted probability and true values, it is possible
 More details on the model structure and selection process, including code, are available in Appendix XX.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart} \caption{Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross-validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross-validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross-entropy scoring. The cross-entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class.}\label{fig:modsel-flowchart}
+\includegraphics[width=1\linewidth]{/home/fergus/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart} \caption{Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross-validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross-validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross-entropy scoring. The cross-entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class.}\label{fig:modsel-flowchart}
 \end{figure}
 
 We then compared models as classifiers using their false positive and false negative rates in three epidemiological scenarios.
@@ -353,9 +354,9 @@ Of 1241 subjects surveyed, a total of 1172 subjects had complete data available 
 The mean age of women participants (47\% of the sample) was 37 (SD = 14), and for men (53\% of the sample) was 36 (SD = 14).
 Participants were identief by the community support teams (CSTs) and drawn from across Dhaka.
 
-Model selection for Model Class 2 (syndromic data only) and 3 (syndromic and RAT data), each retained age as an explanatory variable and showed a marked decline in predictive power at more than 4 symptoms.
-The final four symptoms in order of importance (i.e.~the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were wet cough, runny nose, loss of smell and breathing problems for Model Class 2, and fever, wet cough, tiredness and diarrhoea for Model Class 3.
-For both Model Class 2 and Model Class 3 model selection retained age but not gender as a covariate.
+Model selection for both Model Class 2 (syndromic data only) and 3 (syndromic and RAT data) showed a marked decline in predictive power at more than 4 symptoms.
+The covariate gender was dropped for both model classes while age was retained across Class 3 but dropped in Class 2.
+The final four symptoms in order of importance (i.e.~the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were loss of taste, diarrhoea, vomit and fever for Model Class 2, and fever, wet cough, cough and loss of taste for Model Class 3.
 
 In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of 3.24 (cross-entropy values further from zero correspond to worse predictive performance).\todo{DHC: out-of sample vs test set cross-entropy}
 The median cross-entropy values were between 2.53 and 2.59 for models in Class 2 (syndromic data only).
@@ -382,13 +383,13 @@ These models were not tested on the scenarios to minimise the risk of over-fitti
 \begin{figure}
 \centering
 \includegraphics{0501_MainText_files/figure-latex/ROC-plot-1.pdf}
-\caption{\label{fig:ROC-plot} Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior mean (+- posterior standard deviation) receiver operating characteristics for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space).}
+\caption{\label{fig:ROC-plot}Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior median and interquartile range ROC for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space).}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics{0501_MainText_files/figure-latex/scenario-plot-1.pdf}
-\caption{\label{fig:scenario-plot}Performance of models under each scenario measured by errors defined in Table 2. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).}
+\caption{\label{fig:scenario-plot}Performance of models under each scenario measured by posterior median and interquartile range for errors defined in Table 1. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).}
 \end{figure}
 
 \hypertarget{discussion}{%
@@ -399,9 +400,9 @@ These improvements are non-trivial in real-world settings.
 In Bangladesh, there are currently 15 000 new cases being identified every day, using only the limited supply of RT-PCR, the pandemic growth is accelerating and every missed case has a compounding effect.
 Scenario 2 (``Rising Cases'') was developed with the need to keep false negative rates low and maps well onto the situation in Bangladesh (see Table \ref{tab:scenarios-tab}).
 In this scenario, the combined data model (Model Class 3) false negative rate is
-26 percentage points lower that of the RAT only model (Model Class 1).
+26.2012339 percentage points lower that of the RAT only model (Model Class 1).
 Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is
-31 percentage points higher.
+30.8213341 percentage points higher.
 These are large performance gains for any diagnostic but when deployed at the scale of Bangladesh and similar countries, these improvements represent catching tens of thousands of cases that would otherwise be missed.
 Furthermore, this boost is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries (LMICs).
 Outwith developing and rerunning the models presented in this paper, these improvements are essentially cost-free and eminently scalable.
@@ -411,15 +412,10 @@ These three scenarios only offer snapshots of performance, however, and we stron
 An indication of how these models will perform under any condition can be obtained by comparing the more generic model performance metrics for prediction and classification (Figures \ref{fig:pred-perf} and \ref{fig:ROC-plot}, respectively).
 These figures demonstrate both the added flexibility of the more complex model classes that allow them to be tailored to specific needs and the need to combine the high-quality but inflexible RAT results with the more flexible but lower quality syndromic data.
 
-We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients.
-We do, however, highlight that while fever and loss of smell were the two most important symptoms in the two classes of syndromic models,
-the other symptoms retained were different (with cough and wet cough retained in the combined syndromic and RAT model, Class 3, and loss of taste and vomiting in the syndromic only model, Class 2).
-Further research is needed to understand the mechanisms by which symptoms predict COVID-19 and by which RAT misses COVID-19.
-Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using Threshold Cycle (Ct) values from the RT-PCR to compare viral load with respect to prediction by the different methods {[}21{]}.
-We note also that, as expected, age was retained in model selection.
-We were, however, surprised that gender was removed during model selection.
-Gender is thought to play a major role in infection risk {[}23{]}.
-As we are looking to predict symptomatic COVID-19 in symptomatic individuals, generalised risk of infection is perhaps less predictive than expected, potentially due to the balancing of risk and burden {[}24{]}.
+We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: CST-identified, symptomatic patients.
+We do, however, highlight that while fever and loss of taste were the two most important symptoms and gender was dropped in the two classes of syndromic models, the other symptoms retained were different (with cough and wet cough retained in the combined syndromic and RAT model, Class 3, and diarrhoea and vomiting in the syndromic only model, Class 2), and surprisingly age was dropped in the syndromic only model, Class 2 {[}23{]}.
+That the model classes did not retain the same variables indicates that RAT-positive COVID-19 patients present with different syndromes, however, the mechanisms for these differences is unclear.
+Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using Threshold Cycle (Ct) values from the RT-PCR to compare viral load with respect to prediction by the different methods {[}24{]}.
 
 Using a large sample collected under field-realistic conditions, we have rigorously tested our approach.
 By taking a statistical modelling approach to case identification, we are able to update our diagnostic process in real time, allowing this method to readily adapt to new variants (or even new diseases) or new priorities for resource allocation.
@@ -547,9 +543,9 @@ The University of Glasgow COVID-19 in LMICs Group provided the environment in wh
 \CSLLeftMargin{{[}20{]} }
 \CSLRightInline{Gneiting T, Raftery AE. Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association 2007;102:359--78.}
 
-\leavevmode\hypertarget{ref-albert2021field}{}%
+\leavevmode\hypertarget{ref-joe2020equal}{}%
 \CSLLeftMargin{{[}21{]} }
-\CSLRightInline{Albert E, Torres I, Bueno F, Huntley D, Molla E, Fernández-Fuentes MÁ, et al. Field evaluation of a rapid antigen test (panbio™ COVID-19 ag rapid test device) for COVID-19 diagnosis in primary healthcare centres. Clinical Microbiology and Infection 2021;27:472--e7.}
+\CSLRightInline{Joe W, Kumar A, Rajpal S, Mishra U, Subramanian S. Equal risk, unequal burden? Gender differentials in COVID-19 mortality in india. Journal of Global Health Science 2020;2.}
 
 \leavevmode\hypertarget{ref-menni2020real}{}%
 \CSLLeftMargin{{[}22{]} }
@@ -559,9 +555,9 @@ The University of Glasgow COVID-19 in LMICs Group provided the environment in wh
 \CSLLeftMargin{{[}23{]} }
 \CSLRightInline{Wolff D, Nee S, Hickey NS, Marschollek M. Risk factors for covid-19 severity and fatality: A structured literature review. Infection 2020:1--4.}
 
-\leavevmode\hypertarget{ref-joe2020equal}{}%
+\leavevmode\hypertarget{ref-albert2021field}{}%
 \CSLLeftMargin{{[}24{]} }
-\CSLRightInline{Joe W, Kumar A, Rajpal S, Mishra U, Subramanian S. Equal risk, unequal burden? Gender differentials in COVID-19 mortality in india. Journal of Global Health Science 2020;2.}
+\CSLRightInline{Albert E, Torres I, Bueno F, Huntley D, Molla E, Fernández-Fuentes MÁ, et al. Field evaluation of a rapid antigen test (panbio™ COVID-19 ag rapid test device) for COVID-19 diagnosis in primary healthcare centres. Clinical Microbiology and Infection 2021;27:472--e7.}
 
 \end{CSLReferences}
 

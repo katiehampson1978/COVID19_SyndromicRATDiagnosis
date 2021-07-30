@@ -309,9 +309,9 @@ Of 1241 subjects surveyed, a total of `r pop_size` subjects had complete data av
 The mean age of women participants (`r round(100*pop_summ$Gender_Count[1]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[1]  %>% round()` (SD = `r pop_summ$Age_SD[1] %>% round()`), and for men (`r round(100*pop_summ$Gender_Count[2]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[2]  %>% round()` (SD = `r pop_summ$Age_SD[2] %>% round()`).
 Participants were identief by the community support teams (CSTs) and drawn from across Dhaka.
 
-Model selection for Model Class 2 (syndromic data only) and 3 (syndromic and RAT data), each retained age as an explanatory variable and showed a marked decline in predictive power at more than 4 symptoms.
-The final four symptoms in order of importance (i.e. the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were wet cough, runny nose, loss of smell and breathing problems for Model Class 2, and fever, wet cough, tiredness and diarrhoea for Model Class 3.
-For both Model Class 2 and Model Class 3 model selection retained age  but not gender as a covariate.
+Model selection for both Model Class 2 (syndromic data only) and 3 (syndromic and RAT data) showed a marked decline in predictive power at more than 4 symptoms.
+The covariate gender was dropped for both model classes while age was retained across Class 3 but dropped in Class 2.
+The final four symptoms in order of importance (i.e. the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were loss of taste, diarrhoea, vomit and fever for Model Class 2, and fever, wet cough, cough and loss of taste for Model Class 3.
 
 In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of  `r cross_entropy %>% filter(ModelClass == "RATonly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% round(2)` (cross-entropy values further from zero correspond to worse predictive performance).\todo{DHC: out-of sample vs test set cross-entropy}
 The median cross-entropy values were between `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for models in Class 2 (syndromic data only).
@@ -428,7 +428,7 @@ These models were not tested on the scenarios to minimise the risk of over-fitti
 <!-- `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 3 (Figure \@ref(fig:scenario-plot)). -->
 <!-- In Scenario 3 ("Low-Level Cases"), the error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% unique()` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 3 (Figure \@ref(fig:scenario-plot)). -->
 
-```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = " Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior mean  (+- posterior standard deviation) receiver operating characteristics for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space)."}
+```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior median and interquartile range ROC for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space)."}
 ROC_plots <- readRDS("0400_ModelAssessment/0420_ROC_plot_dat.rds")
 model_classes <- c(
                     `RATonly` = "RAT Only",
@@ -441,11 +441,10 @@ ggplot(ROC_plots%>% filter(FitType!="0Symptom"),
                      colour = FitType)) +
   geom_point() +
   geom_line() +
-  geom_errorbar(aes(ymin = MedTruePosRate - SDTruePosRate, 
-                    ymax = MedTruePosRate + SDTruePosRate)) +
-  
-  geom_errorbarh(aes(xmin = MedFalsePosRate - SDFalsePosRate, 
-                     xmax = MedFalsePosRate + SDFalsePosRate)) +
+   geom_errorbar(aes(ymin = TruePosRate_CI_0.25,
+                    ymax = TruePosRate_CI_0.75)) +
+  geom_errorbarh(aes(xmin = FalsePosRate_CI_0.25,
+                     xmax = FalsePosRate_CI_0.25)) +
   geom_line() +
   geom_abline(slope = 1, alpha = 0.1) +
   ylab("True Positive Rate") +
@@ -458,13 +457,13 @@ ggplot(ROC_plots%>% filter(FitType!="0Symptom"),
 
 ```
 
-```{r scenario-plot, echo=FALSE, fig.cap="Performance of models under each scenario measured by errors defined in Table 2. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).", message=FALSE, warning=FALSE}
+```{r scenario-plot, echo=FALSE, fig.cap="Performance of models under each scenario measured by posterior median and interquartile range for errors defined in Table 1. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).", message=FALSE, warning=FALSE}
 
 ggplot(scenario_outcomes, 
        aes(x = MedError, y = FitType, colour = ModelClass)) +
   geom_point() +
-  geom_errorbarh(aes(xmin = MedError - SDError, 
-                    xmax = MedError + SDError)) +
+  geom_errorbarh(aes(xmin = Error025, 
+                     xmax = Error075)) +
   coord_cartesian(xlim = c(0,1.2)) +
   ylab("Model Structure") + 
   xlab("Error") +
@@ -500,15 +499,10 @@ These three scenarios only offer snapshots of performance, however, and we stron
 An indication of how these models will perform under any condition can be obtained by comparing the more generic model performance metrics for prediction and classification (Figures \@ref(fig:pred-perf) and \@ref(fig:ROC-plot), respectively).
 These figures demonstrate both the added flexibility of the more complex model classes that allow them to be tailored to specific needs and the need to combine the high-quality but inflexible RAT results with the more flexible but lower quality syndromic data.
 
-We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients. 
-We do, however, highlight that while fever and loss of smell were the two most important symptoms in the two classes of syndromic models,
-the other symptoms retained were different (with cough and wet cough retained in the combined syndromic and RAT model, Class 3, and loss of taste and vomiting in the syndromic only model, Class 2).
-Further research is needed to understand the mechanisms by which symptoms predict COVID-19 and by which RAT misses COVID-19. 
-Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using Threshold Cycle (Ct) values from the RT-PCR to compare viral load with respect to prediction by the different methods [@albert2021field]. 
-We note also that, as expected, age was retained in model selection. 
-We were, however, surprised that gender was removed during model selection.
-Gender is thought to play a major role in infection risk [@wenham2020covid, @menni2020real, @wolff2020risk]. 
-As we are looking to predict symptomatic COVID-19 in symptomatic individuals, generalised risk of infection is perhaps less predictive than expected, potentially due to the balancing of risk and burden [@joe2020equal]. 
+We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: CST-identified, symptomatic patients.
+We do, however, highlight that while fever and loss of taste were the two most important symptoms and gender was dropped in the two classes of syndromic models, the other symptoms retained were different (with cough and wet cough retained in the combined syndromic and RAT model, Class 3, and diarrhoea and vomiting in the syndromic only model, Class 2), and surprisingly age was dropped in the syndromic only model, Class 2 [@joe2020equal, @wenham2020covid, @menni2020real, @wolff2020risk].
+That the model classes did not retain the same variables indicates that RAT-positive COVID-19 patients present with different syndromes, however, the mechanisms for these differences is unclear.
+Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using Threshold Cycle (Ct) values from the RT-PCR to compare viral load with respect to prediction by the different methods [@albert2021field].
 
 Using a large sample collected under field-realistic conditions, we have rigorously tested our approach.
 By taking a statistical modelling approach to case identification, we are able to update our diagnostic process in real time, allowing this method to readily adapt to new variants (or even new diseases) or new priorities for resource allocation. 
