@@ -13,16 +13,16 @@ best_model_files <- paste0("0300_ModelSelection/Output/SyndromicRAT_Fine_Round",
 best_valid <- best_model_files %>% 
   future_map_dfr(read_validation)
 
-# Very lightly thin to make ROC calculations feasible
+#  Thin to make ROC calculations feasible
 iter_num <- max(best_valid$Iter)
-iter_thin <- 0.75 
+iter_thin <- 0.1 
 thinned_iter_indx <- sample(1:iter_num, iter_thin * iter_num)
 best_valid <- best_valid %>% filter(Iter %in% thinned_iter_indx)
 
 # Generate true and false, positive and negative counts 
 synd_RAT_ROC <- ROC_diagnose(validation_df = best_valid, 
                               prob_range = c(0.01, 0.99), 
-                              increment_size = 0.02)
+                              increment_size = 0.005)
 saveRDS(synd_RAT_ROC, "0400_ModelAssessment/0410_SyndromicRAT_ROC.rds")
 # synd_RAT_ROC <- readRDS("0400_ModelAssessment/0410_SyndromicRAT_ROC.rds")
 # 
