@@ -245,7 +245,7 @@ Structurally, the multivariate probit model allows the symptoms and COVID-19 sta
 In Model Class 3, we utilise the specificity of RAT by treating RAT positive patients as PCR positive patients.
 The RAT negative patients are then modelled using the sensitive syndromic approach using Model Class 2 to capture additional PCR-positive patients that are missed by the RAT.
 This approach leverages the fact that RAT-negative-PCR-positive patients may have different syndromic profiles than RAT-positive-PCR-positive patients and allows the model to adapt more specifically to that group 
-The models were fitted to the data using Hamiltonian Monte Carlo in the Stan programming language [@carpenter2017stan].
+The models were fitted to the data using Bayesian inference techniques based on Hamiltonian Monte Carlo in the Stan programming language [@carpenter2017stan].
 
 We conducted backwards model selection (starting with the most complex model feasible, with all 14 symptoms and both covariates) to identify a subset of models with the highest predictive power under temporal cross-validation (Figure \@ref(fig:modsel-flowchart)).
 Reducing the number of possible models to a small number of the most predictive models was necessary to reduce computational demand and reduce the risk of overfitting models to the test scenarios.
@@ -255,7 +255,7 @@ The number of candidate models used was not pre-determined.
 In fitting the models it became clear that there were "jumps" in performance (as defined below) between models containing five and four symptoms, so the models with zero to four symptoms were used as the candidate models.
 
 We scored the models' predictive power using cross-entropy.
-cross-entropy measures the accuracy of probabilistic predictions for models that predict binary outcomes using probabilities [@gneiting2007strictly], similar in concept to a mean squared error.
+Cross-entropy measures the accuracy of models that generate probabilities of binary outcomes, rather than make binary classifications, similar in concept to a mean square error for normally-distributed data, but adapted for binary data [@gneiting2007strictly].
 A cross-entropy value close to zero corresponds to high levels of accuracy, with larger values indicating lower accuracy.
 As the score only uses the predicted probability and true values, it is possible to directly compare the predictions of any model for the same test set.
 More details on the model structure and selection process, including code, are available in Appendix XX.
@@ -269,14 +269,15 @@ We then compared models as classifiers using their false positive and false nega
 In applied settings, models must often be evaluated on their performance as classifiers rather than just as prediction engines (i.e. their ability to say a patient is COVID-19 positive or negative, not simply the probability the patient might be COVID-19 positive or negative).
 To generate a classification, a probability threshold must be chosen over which patients are classified as COVID-19 positive.
 
-Classifier performance was compared using ROC curves and error rates under three epidemiological scenarios.
+Classifier performance was compared using receiver operating charactistic (ROC) curves and error rates under three epidemiological scenarios.
 ROC curves show the true and false positive rates that each model can achieve.
-To extract the error rate under the epidemiological scenarios (described below), we use the ROC calculations to identify the probability threshold which most closely meets the scenario requirement (see Table \@ref(tab:scenarios-tab).
+To extract the error rate under the epidemiological scenarios (described below and in Table \@ref(tab:scenarios-tab)), we use the ROC calculations, to identify the probability threshold which most closely meets the scenario requirement (see Table \@ref(tab:scenarios-tab) for requirements and Appendix XX for calculation details).\todo{Add ROC calculations to appendix}
 Comparing specific scenarios allows classifier performance to be demonstrated in relevant scenarios.
 Whether measuring classifier performance in specific scenarios or more generally, decisions need to be made about the relative cost and acceptable levels of the two types of misclassification (false positives and negatives).
 We strongly emphasise that local context should be the guide in applying these methods.
 
-In Scenario 1, we do not consider epidemiological context but simply weight false negative and false positive rates equally by aiming to maximise the two correct classification rates both individually and in total, as measured by the harmonic mean (as opposed to the arithmetic mean which would only maximise the rates in total).
+In Scenario 1, we do not consider epidemiological context but simply costing false negative and false positive rates equally.
+We do this by maximising the two correct classification rates both individually and in total, as measured by the harmonic mean (as opposed to the arithmetic mean which would only maximise the rates in total).
 Scenario 2 corresponds to the current situation in Bangladesh at time of writing (July 2021), with COVID-19 cases beginning to rapidly increase again.
 Under these circumstances, false negatives are extremely costly relative to false positives due to the exponential growth of the disease.
 In Scenario 3, the pandemic is not declining but maintaining a steady rate of cases.
@@ -296,7 +297,8 @@ col.names = c("Scenario Name",
               "Performance Criterion (Error)"),
 caption = "For each epidemiological scenario there is a requirement and a performance criterion.
 The requirement refers to a base level of performance the model must achieve; in general this will be a maximum acceptable error rate of some kind.
-The requirement determines a threshold for each model which most closely meets that requirement.
+These requirements were determined in discussion with members of the Institute of Epidemiology, Disease Control and Research, Ministry of Health, Bangladesh (IEDCR).
+The requirement determines a probability threshold for each model which most closely meets that requirement.
 The performance criterion is then used to determine which model performs the 'best' given that the requirement has been met.") %>%
   kable_styling(full_width = TRUE)
 
@@ -312,7 +314,7 @@ Model selection for Model Class 2 (syndromic data only) and 3 (syndromic and RAT
 The final four symptoms in order of importance (i.e. the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were wet cough, runny nose, loss of smell and breathing problems for Model Class 2, and fever, wet cough, tiredness and diarrhoea for Model Class 3.
 For both Model Class 2 and Model Class 3 model selection retained age  but not gender as a covariate.
 
-In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with a cross-entropy of  `r cross_entropy %>% filter(ModelClass == "RATonly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% round(2)` (cross-entropy values further from zero correspond to worse predictive performance).
+In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of  `r cross_entropy %>% filter(ModelClass == "RATonly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% round(2)` (cross-entropy values further from zero correspond to worse predictive performance).\todo{DHC: out-of sample vs test set cross-entropy}
 The median cross-entropy values were between `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for models in Class 2 (syndromic data only).
 Models in Class 3 (combined data model) performed best with cross-entropy values between `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` (see Figure \@ref(fig:pred-perf)).
 
@@ -409,14 +411,23 @@ ggplot(best_valid %>% filter(SympNum != "0 Symptoms"),
 General model classification performance is shown by the full ROC curves for each model (Figure \@ref(fig:ROC-plot)).
 
 Scenario specific classification performance is shown in Figure \@ref(fig:scenario-plot).
-In Scenario 1 ("Agnostic", see Table \@ref(tab:scenarios-tab)), the median error was `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE)` for models in Class 1 and Class 3 and between `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2 (Figure \@ref(fig:scenario-plot)).
-In Scenario 2 ("Rising Cases"), Model Class 1 was unable to meet the required false negative rate.
-The median errors were between 
-`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and 
-`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2, and 
-`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and 
-`r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 3 (Figure \@ref(fig:scenario-plot)).
-In Scenario 3 ("Low-Level Cases"), the error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% unique()` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 3 (Figure \@ref(fig:scenario-plot)).
+Across all three scenarios (defined in Table \@ref(tab:scenarios-tab)), the best models in Class 3 performed equally well or better than the other two model classes.
+In Scenario 1 ("Agnostic"), models in Classes 1 and 3 performed equally well and distinctly better than models in Class 2.
+In Scenario 2 ("Rising Cases"), Model Class 1 failed to meet the requirement and so was excluded (effectively infinite error), and Model Class 3 once again outperformed Class 2. 
+In Scenario 3 ("Low-Level Cases"), all three model classes met the requirement.
+Once again, Model Class 2 performed worst and Model Class 3 achieved the lowest error, with Model Class 1 falling in between the two (closer to Class 3 than 2).
+Across all the scenarios and both Classes 2 and 3, the number of symptoms made relatively little difference within the final four candidate models in terms of median performance, although the more complex models have higher precision.
+It should be noted that the candidate models are chosen as a result of a selection process and performed much better than more complex models (i.e. those with 5 or more symptoms) or simpler models (with no symptoms but an intercept and covariates) in terms of cross-entropy and ROC, indicating they would likely also perform worse in these scenarios.
+These models were not tested on the scenarios to minimise the risk of over-fitting to the scenarios, in the case of the more complex models, and because they are not policy relevant, in the case of the simpler models.
+
+<!-- In Scenario 1 ("Agnostic", see Table \@ref(tab:scenarios-tab)), the median error was `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE)` for models in Class 1 and Class 3 and between `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2 (Figure \@ref(fig:scenario-plot)). -->
+<!-- In Scenario 2 ("Rising Cases"), Model Class 1 was unable to meet the required false negative rate. -->
+<!-- The median errors were between -->
+<!-- `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and -->
+<!-- `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2, and -->
+<!-- `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and -->
+<!-- `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 3 (Figure \@ref(fig:scenario-plot)). -->
+<!-- In Scenario 3 ("Low-Level Cases"), the error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% unique()` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 3 (Figure \@ref(fig:scenario-plot)). -->
 
 ```{r ROC-plot, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = " Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior mean  (+- posterior standard deviation) receiver operating characteristics for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space)."}
 ROC_plots <- readRDS("0400_ModelAssessment/0420_ROC_plot_dat.rds")
@@ -489,10 +500,6 @@ The pattern is similar in epidemiological Scenarios 1 ("Agnostic") and 3 ("Low-L
 These three scenarios only offer snapshots of performance, however, and we strongly advocate defining model performance in terms of false negative and false positive rates with reference to local conditions.
 An indication of how these models will perform under any condition can be obtained by comparing the more generic model performance metrics for prediction and classification (Figures \@ref(fig:pred-perf) and \@ref(fig:ROC-plot), respectively).
 These figures demonstrate both the added flexibility of the more complex model classes that allow them to be tailored to specific needs and the need to combine the high-quality but inflexible RAT results with the more flexible but lower quality syndromic data.
-Interestingly, the most of the Class 2 models performs approximately as well as chance except the simplest which performs worse than chance.
-A model that performs worse than random can still be useful if one takes the inverse decision. \todo{@Dirk - can you please clarify this or suggest reasons the model is performing so badly. The red line here is a univariate probit regression with one continuous covariate so I don't understand why it's performing so poorly unless the temporal cross-validation sets are wildly different from each other?}
-Even a flexible model which performs as well as random classification can be useful if those error rates reflect those needed in a given local situation.
-Fortunately, Model Class 3 is both flexible and performs better than random. 
 
 We have deliberately not emphasised the final symptoms chosen through model selection in this paper as we are focusing on prediction and classification for a unique sub-population: self-referring, symptomatic patients. 
 We do, however, highlight that while fever and loss of smell were the two most important symptoms in the two classes of syndromic models,
