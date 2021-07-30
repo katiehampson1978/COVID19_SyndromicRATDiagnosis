@@ -44,7 +44,7 @@ RAT_only_ROC <- RAT_only_ROC  %>%
             my_80CI(varnam = "TruePosRate", x = TruePosRate)) %>%
   pivot_wider(names_from = probs, values_from = ends_with("_CI"))
 
-
+View(RAT_only_ROC)
 
 # Save output
 saveRDS(RAT_only_ROC, "0400_ModelAssessment/0410_RATOnly_ROCrate.rds")

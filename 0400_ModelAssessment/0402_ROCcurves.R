@@ -22,7 +22,7 @@ ROCs$FitType <- paste0(ROCs$ModelClass, "_",
                               parse_number(ROCs$FitType), 
                               "Symptom")
 # Change RATonly row
-ROCs$FitType[501] <- "RATonly"
+ROCs$FitType[1971] <- "RATonly"
 
 # Create mirrored data frame to make plotting easier
 ROC_plots <- ROCs

@@ -78,7 +78,6 @@ reject_symptoms <- c("breath_problem", "diarrhoea", "headache", "muscle_pain",
 for(i in seq_along(covariate_combos)){
   # Choose first covariate combo
   covariate_nam <- covariate_combos[[i]]
-  
 
   # Round 4 -----------------------------------------------------------------
 
