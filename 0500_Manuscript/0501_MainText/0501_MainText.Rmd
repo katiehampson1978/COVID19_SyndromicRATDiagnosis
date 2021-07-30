@@ -301,7 +301,7 @@ The performance criterion is then used to determine which model performs the 'be
 # Results (~353 words)
 
 A total of `r pop_size` subjects had data available for the current analyses.
-The mean age of women participants (`r 100*pop_summ$Gender_Count[1]/pop_size %>% round()`% of the sample) was `r pop_summ$Age_Mean[1]  %>% round(2)` (SD = `r pop_summ$Age_SD[1] %>% round(2)`), and for men (`r round(100*pop_summ$Gender_Count[2]/pop_size)  %>% round()`% of the sample) was `r pop_summ$Age_Mean[2]  %>% round(2)` (SD = `r pop_summ$Age_SD[2] %>% round(2)`).
+The mean age of women participants (`r round(100*pop_summ$Gender_Count[1]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[1]  %>% round()` (SD = `r pop_summ$Age_SD[1] %>% round()`), and for men (`r round(100*pop_summ$Gender_Count[2]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[2]  %>% round()` (SD = `r pop_summ$Age_SD[2] %>% round()`).
 Participants were self-selecting and drawn from across Dhaka.
 
 Model selection for Model Class 2 (syndromic data only) and 3 (syndromic and RAT data), each retained age as an explanatory variable and showed a marked decline in predictive power at more than 4 symptoms.
