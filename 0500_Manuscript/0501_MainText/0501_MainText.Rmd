@@ -482,7 +482,7 @@ ggplot(scenario_outcomes,
 
 ```
 
-# Discussion (1160 words)
+# Discussion (815 words)
 
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better identification of COVID-19 cases than either diagnostic in isolation.
 These gains in performance are mirrored across metrics of prediction, generic classification and scenario-specific classification.
