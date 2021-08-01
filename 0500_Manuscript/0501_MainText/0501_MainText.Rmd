@@ -169,7 +169,7 @@ In contrast, RATs can be conducted on nasal swabs, completed in the home with mi
 RATs can be taken by persons with limited training, thus decreasing the time and expense associated with identifying cases.
 Together, these traits make RATs an appealing alternative to RT-PCR, however, concerns have been raised that the lower sensitivity of RAT [@mak2020evaluation, muhi2021multi] leads to more false negative diagnoses.
 
-Another diagnostic that has been used since the start of the pandemic is symptom-thresholding\todo{JMC: Not an official term} [@jin2020rapid].
+Another diagnostic that has been used since the start of the pandemic is symptom-thresholding [@jin2020rapid]. \todo{JMC Not an official term}
 Here, a patient presenting with a fever and one or more symptoms is treated as a COVID-19 positive patient.
 The main advantage of this approach is the ease of implementation. 
 As with RAT, symptom-thresholding is faster, cheaper and less invasive than RT-PCR.
@@ -180,12 +180,12 @@ A natural extension, therefore, is syndromic modelling.
 In this approach, rather than using a set of pre-determined thresholds, a range of symptomatic and risk factor data (such as age and gender ) are collected and then a sub-sample of patients is tested using RT-PCR for validation [@sim2021utilizing].
 These data are used to fit a model that allows more accurate prediction of how likely a patient is to have COVID-19 through the identification of COVID-19 syndromes [@undurraga2021covid, @wenham2020covid].
 
-It is worth highlighting at this point that in resource-limited settings there is very limited provision for testing of asymptomatic cases, despite their important role in disease transmission [@mayorga2020modelling] \todo{JMC: Need to highlight that we are only dealing with symptomatic patients, this felt a good place to do it}.
+It is worth highlighting at this point that in resource-limited settings there is very limited provision for testing of asymptomatic cases, despite their important role in disease transmission [@mayorga2020modelling] \todo{JMC Need to highlight that we are only dealing with symptomatic patients, this felt a good place to do it}.
 Even while focusing solely on symptomatic patients, syndromic modelling is a complex and nuanced task.
 Disease syndromes can change between populations, when new variants emerge, and as other diseases become more or less common [@garry2020considerations].
 These changes can make syndromic models generalise poorly.
 For example, if another disease for which loss of smell is a symptom becomes common, loss of smell is no longer strongly indicative of COVID-19.
-Similarly, if everyone who presents has a cough, regardless of their COVID-19 status, then coughing will show no relationship with COVID-19 (even if the two are strongly related in the general population). \todo{JMC: query cross-sectional sampling}
+Similarly, if everyone who presents has a cough, regardless of their COVID-19 status, then coughing will show no relationship with COVID-19 (even if the two are strongly related in the general population). \todo{JMC query cross-sectional sampling}
 Furthermore, symptoms do not always occur in isolation, some, like loss of smell and loss of taste, are strongly related.
 Unfortunately, the majority of syndromic modelling methods currently used do not account for these complexities.
 Even where they can, at least partially, be accounted for, the many types of common respiratory disease generally means that syndromic modelling still tends to have quite low specificity [@garry2020considerations].
@@ -220,7 +220,7 @@ Patients were selected for further testing if they had a fever (>38°C) at the p
 If selected, the CSTs collected the patient's age and gender, and took two nasal swabs.
 
 One swab each was used for rapid antigen testing (RAT) and RT-PCR.
-The full questionnaire and testing protocols are provided in Appendix XX. 
+The full questionnaire and testing protocols are provided in Supplementary 1. 
 Participants provided written informed consent to sample collection and for their results to be analyzed in the study.
 
 ```{r data-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation."}
@@ -258,17 +258,16 @@ By first using general predictive power to narrow down the number of candidate m
 The number of candidate models used was not pre-determined but it was clear when fitting the models that there were "jumps" in performance (as defined below) between models containing five and four symptoms, so the models with one to four symptoms were used as the candidate models.
 Zero symptom models were not included in the analysis as they do not correspond to a feasible policy (with covariates they would require governments to ask individuals of a given gender and age as COVID-19 positive, and without covariates they would involve randomly assigning individuals as COVID-19 positive).
 
+```{r modsel-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross-validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross-validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross-entropy scoring. The cross-entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class."}
+knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf"))
+```
+
 ### Predictive Performance
 
 We scored the models' predictive power using cross-entropy.
 Cross-entropy measures the accuracy of models that generate probabilities of binary outcomes, rather than make binary classifications, similar in concept to a mean square error for normally-distributed data, but adapted for binary data [@gneiting2007strictly].
 A cross-entropy value close to zero corresponds to high levels of accuracy, with larger values indicating lower accuracy.
-More details on the model structure and selection process, including code, are available in Appendix XX.
-
-
-```{r modsel-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross-validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross-validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross-entropy scoring. The cross-entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class."}
-knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf"))
-```
+More details on the model structure and selection process, including code, are available in Supplementary 2.
 
 ### Classification Performance
 
@@ -317,7 +316,7 @@ Model selection for both Model Class 2 (syndromic data only) and 3 (syndromic an
 The covariate gender was dropped for both model classes while age was dropped in Class 2 but retained in Class 3.
 The final four symptoms in order of importance (i.e. the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were loss of taste, diarrhoea, vomit and fever for Model Class 2, and fever, wet cough, cough and loss of taste for Model Class 3.
 
-In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of  `r cross_entropy %>% filter(ModelClass == "RATonly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% round(2)` (cross-entropy values further from zero correspond to worse predictive performance).\todo{DHC: out-of sample vs test set cross-entropy}
+In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of  `r cross_entropy %>% filter(ModelClass == "RATonly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% round(2)` (cross-entropy values further from zero correspond to worse predictive performance).\todo{DHC out-of sample vs test set cross-entropy}
 The median cross-entropy values were between `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndOnly") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for models in Class 2.
 Models in Class 3 performed best with cross-entropy values between `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r cross_entropy %>% filter(ModelClass == "SyndRAT") %>% select(MedLogLoss) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` (see Figure \@ref(fig:pred-perf)).
 

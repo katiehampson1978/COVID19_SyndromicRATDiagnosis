@@ -1,0 +1,116 @@
+---
+title: '**S1 Data Collection Protocols** for *Combining Rapid Antigen Testing and Syndromic Data Improves Sensitivity and Specificity in Real-World COVID-19 Detection*'
+author:
+  - name: Fergus J Chadwick
+    email: 'f.chadwick.1@research.gla.ac.uk'
+    affiliation: IBAHCM,UoGLMICS
+  - name: Yacob Haddou
+    email:  yacob.haddou@glasgow.ac.uk
+    affiliation: IBAHCM,UoGLMICS
+  - name: Tasnuva Chowdhury
+    email:  tasnuvachowdhury2004@gmail.com
+    affiliation: IBAHCM
+  - name: David Pascall
+    email:  david.pascall@mrc-bsu.cam.ac.uk
+    affiliation: MRCB
+  - name: Shayan Chowdhury
+    email: shayan.chowdhury@a2i.gov.bd
+    affiliation:  a2i
+  - name: Jessica Clark
+    email: Jessica.Clark@glasgow.ac.uk
+    affiliation:  IBAHCM,UoGLMICS
+  - name: Joanna Andrecka
+    email: aandrecka@gmail.com
+    affiliation: UNFAO
+  - name: Mikolaj Kundergorski
+    email: mikolaj.kundegorski@gmail.com
+    affiliation: MathsandStatGla,UoGLMICS
+  - name: Craig Wilkie
+    email: craig.wilkie@glasgow.ac.uk
+    affiliation: MathsandStatGla,UoGLMICS
+  - name: Eric Brum
+    email: eric.brum@fao.org
+    affiliation: UNFAO
+  - name: Tahmina Shirin 
+    email: tahmina.shirin14@gmail.com
+    affiliation: IEDCR
+  - name: A S M Alamgir  
+    email: aalamgir@gmail.com
+    affiliation: IEDCR
+  - name: Mahbubur Rahman
+    email: dr_mahbub@yahoo.com
+    affiliation: IEDCR
+  - name: Ahmed Nawsher Alam
+    email: anawsher@yahoo.com
+    affiliation: IEDCR
+  - name: Farzana Khan
+    email: farzanakhan_25@yahoo.com
+    affiliation: IEDCR
+  - name: Janine Illian
+    email: janine.illian@glasgow.ac.uk
+    affiliation: MathsandStatGla,UoGLMICS
+  - name: Ben Swallow
+    email: ben.swallow@glasgow.ac.uk
+    affiliation: MathsandStatGla,UoGLMICS
+  - name: Davina L Hill
+    email: davina.hill@glasgow.ac.uk
+    affiliation: IBAHCM,UoGLMICS
+  - name:  Dirk Husmeier
+    email: dirk.husmeier@glasgow.ac.uk
+    affiliation: MathsandStatGla
+  - name: Jason Matthiopoulos
+    email: jason.matthiopoulos@glasgow.ac.uk
+    affiliation: IBAHCM,UoGLMICS
+  - name: Katie Hampson
+    email: katie.hampson@glasgow.ac.uk
+    affiliation: IBAHCM,UoGLMICS
+  - name: Ayesha Sania
+    email: ays328@mail.harvard.edu
+    affiliation: Columbia
+address:
+  - code: IBAHCM
+    address: Institute of Biodiversity, Animal Health and Comparative Medicine, University of Glasgow
+  - code: UoGLMICS
+    address: 'COVID-19 in LMICs Research Group, University of Glasgow'
+  - code: MRCB
+    address: MRC Biostatistics Unit, University of Cambridge 
+  - code: MathsandStatGla
+    address: School of Mathematics and Statistics, University of Glasgow
+  - code: a2i
+    address: 'a2i, United Nations Development Program, ICT Ministry, Bangladesh' 
+  - code: UNFAO
+    address: UN FAO in support of the UN Interagency Support Team, Bangladesh
+  - code: IEDCR
+    address: Institute of Epidemiology, Disease Control and Research, Ministry of Health, Bangladesh
+  - code: Columbia
+    address: Division of Developmental Neuroscience, Department of Psychiatry, Columbia University
+footnote:
+  - code: 1
+    text: "Corresponding Author"
+journal: "Lancet: Global Health"
+bibliography: Supp1.bib
+linenumbers: true
+numbersections: true
+csl: elsevier-vancouver.csl
+output:
+  bookdown::pdf_book:
+    base_format: rticles::elsevier_article
+header-includes:
+  - \renewenvironment{abstract}{}{}
+  - \usepackage[colorinlistoftodos]{todonotes}
+---
+```{r app-screenshots, echo=FALSE, out.width='100%', fig.cap="Data collection by the community support teams (CSTs) is implemented using a mobile phone application, screenshots presented here."}
+knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/app_screenshots.png"))
+```
+
+```{r sample-screenshots1, echo=FALSE, out.width='100%', fig.cap="Page 1 sample collection protocols developed by Tasnuva Chowdhury."}
+knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/protocol_p1.png"))
+```
+
+```{r sample-screenshots2, echo=FALSE, out.width='100%', fig.cap="Page 2 sample collection protocols developed by Tasnuva Chowdhury."}
+knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/protocol_p2.png"))
+```
+
+```{r sample-screenshots3, echo=FALSE, out.width='100%', fig.cap="Page 3 sample collection protocols developed by Tasnuva Chowdhury."}
+knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/protocol_p3.png"))
+```

@@ -1,0 +1,21 @@
+---
+title: "Draft: Combining Rapid Antigen Testing and Syndromic Data Improves Sensitivity and Specificity in Real-World COVID-19 Detection"
+output:
+ pdf_document:
+    toc: yes
+header-includes:
+  - \renewenvironment{abstract}{}{}
+  - \usepackage[colorinlistoftodos]{todonotes}
+  - \newenvironment{nalign}{\begin{equation}\begin{aligned}}{\end{aligned}\end{equation}\ignorespacesafterend}
+---
+
+```{r child = '0501_MainText/0501_MainText.Rmd'}
+```
+
+```{r child = '0502_Supplementary1/0502_Supp1Text.Rmd'}
+```
+
+```{r child =  '0502_Supplementary2/0502_Supp2Text.Rmd'}
+```
+
+

@@ -1,0 +1,391 @@
+\documentclass[]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+\usepackage[hyphens]{url}
+
+  \journal{Lancet: Global Health} % Sets Journal name
+
+
+\usepackage{lineno} % add
+  \linenumbers % turns line numbering on
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\usepackage{graphicx}
+\usepackage{booktabs} % book-quality tables
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\bibliographystyle{elsarticle-harv}
+\usepackage{longtable}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={S2 Statistical Methodology for Combining Rapid Antigen Testing and Syndromic Data Improves Sensitivity and Specificity in Real-World COVID-19 Detection},
+            colorlinks=false,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+\setcounter{secnumdepth}{5}
+% Pandoc toggle for numbering sections (defaults to be off)
+
+% Pandoc citation processing
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+% for Pandoc 2.8 to 2.10.1
+\newenvironment{cslreferences}%
+  {}%
+  {\par}
+% For Pandoc 2.11+
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+% Pandoc header
+\renewenvironment{abstract}{}{}
+\usepackage[colorinlistoftodos]{todonotes}
+\newenvironment{nalign}{\begin{equation}\begin{aligned}}{\end{aligned}\end{equation}\ignorespacesafterend}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+
+
+
+\begin{document}
+\begin{frontmatter}
+
+  \title{\textbf{S2 Statistical Methodology} for \emph{Combining Rapid Antigen Testing and Syndromic Data Improves Sensitivity and Specificity in Real-World COVID-19 Detection}}
+    \author[IBAHCM,UoGLMICS]{Fergus J Chadwick}
+   \ead{f.chadwick.1@research.gla.ac.uk} 
+    \author[IBAHCM,UoGLMICS]{Yacob Haddou}
+   \ead{yacob.haddou@glasgow.ac.uk} 
+    \author[IBAHCM]{Tasnuva Chowdhury}
+   \ead{tasnuvachowdhury2004@gmail.com} 
+    \author[MRCB]{David Pascall}
+   \ead{david.pascall@mrc-bsu.cam.ac.uk} 
+    \author[a2i]{Shayan Chowdhury}
+   \ead{shayan.chowdhury@a2i.gov.bd} 
+    \author[IBAHCM,UoGLMICS]{Jessica Clark}
+   \ead{Jessica.Clark@glasgow.ac.uk} 
+    \author[UNFAO]{Joanna Andrecka}
+   \ead{aandrecka@gmail.com} 
+    \author[MathsandStatGla,UoGLMICS]{Mikolaj Kundergorski}
+   \ead{mikolaj.kundegorski@gmail.com} 
+    \author[MathsandStatGla,UoGLMICS]{Craig Wilkie}
+   \ead{craig.wilkie@glasgow.ac.uk} 
+    \author[UNFAO]{Eric Brum}
+   \ead{eric.brum@fao.org} 
+    \author[IEDCR]{Tahmina Shirin}
+   \ead{tahmina.shirin14@gmail.com} 
+    \author[IEDCR]{A S M Alamgir}
+   \ead{aalamgir@gmail.com} 
+    \author[IEDCR]{Mahbubur Rahman}
+   \ead{dr\_mahbub@yahoo.com} 
+    \author[IEDCR]{Ahmed Nawsher Alam}
+   \ead{anawsher@yahoo.com} 
+    \author[IEDCR]{Farzana Khan}
+   \ead{farzanakhan\_25@yahoo.com} 
+    \author[MathsandStatGla,UoGLMICS]{Janine Illian}
+   \ead{janine.illian@glasgow.ac.uk} 
+    \author[MathsandStatGla,UoGLMICS]{Ben Swallow}
+   \ead{ben.swallow@glasgow.ac.uk} 
+    \author[IBAHCM,UoGLMICS]{Davina L Hill}
+   \ead{davina.hill@glasgow.ac.uk} 
+    \author[MathsandStatGla]{Dirk Husmeier}
+   \ead{dirk.husmeier@glasgow.ac.uk} 
+    \author[IBAHCM,UoGLMICS]{Jason Matthiopoulos}
+   \ead{jason.matthiopoulos@glasgow.ac.uk} 
+    \author[IBAHCM,UoGLMICS]{Katie Hampson}
+   \ead{katie.hampson@glasgow.ac.uk} 
+    \author[Columbia]{Ayesha Sania}
+   \ead{ays328@mail.harvard.edu} 
+      \address[IBAHCM]{Institute of Biodiversity, Animal Health and Comparative Medicine, University of Glasgow}
+    \address[UoGLMICS]{COVID-19 in LMICs Research Group, University of Glasgow}
+    \address[MRCB]{MRC Biostatistics Unit, University of Cambridge}
+    \address[MathsandStatGla]{School of Mathematics and Statistics, University of Glasgow}
+    \address[a2i]{a2i, United Nations Development Program, ICT Ministry, Bangladesh}
+    \address[UNFAO]{UN FAO in support of the UN Interagency Support Team, Bangladesh}
+    \address[IEDCR]{Institute of Epidemiology, Disease Control and Research, Ministry of Health, Bangladesh}
+    \address[Columbia]{Division of Developmental Neuroscience, Department of Psychiatry, Columbia University}
+      \cortext[1]{Corresponding Author}
+  
+  \begin{abstract}
+  
+  \end{abstract}
+  
+ \end{frontmatter}
+
+Below we have extended the modelling description provided in the main text to include more technical detail.
+The code used to implement these tasks is available at https://github.com/fergusjchadwick/COVID19\_SyndromicRATDiagnosis.
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart} \caption{Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation.}\label{fig:data-flowchart2}
+\end{figure}
+
+\hypertarget{modelling}{%
+\subsection{Modelling}\label{modelling}}
+
+\hypertarget{structure}{%
+\subsubsection{Structure}\label{structure}}
+
+We examined the ability of the two imperfect identification methods, syndromic modelling and RAT, to predict the patient's COVID-19 status when used separately and together.
+These combinations define three model classes (Figure \ref{fig:data-flowchart2}).
+\todo{Find more ways to cite Figure \\ref{fig:data-flowchart2} in this text.}
+
+Model Class 1 uses only the RAT result.
+It equates being RAT-positive with the patient being PCR-positive for COVID-19 (hereafter, PCR-positive), and being RAT-negative with PCR-negativity.
+We can write this formally for the \(i\)th individual as:
+
+\begin{equation}\begin{aligned}
+\text{PCR}_i &= \text{RAT}_i \\
+\text{PCR} &\in\{0,1\} \\
+\text{RAT} &\in\{0,1\}
+\end{aligned}\end{equation}\ignorespacesafterend
+
+Model Class 2 uses only the syndromic data.
+For this model, we used a Bayesian multivariate probit model {[}1{]}.
+The multivariate probit structures the outcomes of the PCR test and symptoms presence/absence as a \(D\)-dimensional vector of binary outcomes (\(\boldsymbol{y}_i=(y_{i1},y_{i2},\dots,y_{id})\), \(y_{ij}\in\{0,1\}\)).
+These outcomes are determined by an indicator function which takes a \(D\)-dimensional vector of \emph{continuous latent} variables (\(\boldsymbol{z}_i=(z_{i1},z_{i2},\dots,z_{id})\), \(z_{ij}\in\ \mathbb{R}\)).
+These latent continuous variables then covary as realisations of a \(D\)-dimensional multivariate normal,
+with the mean of the error structure informed by a linear predictor, \(\sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id}\), and a covariance between dimensions, \(\Sigma\).
+The linear predictor allows us to condition the outcomes on risk factor variables (here, age and gender) while the covariance structure allows us to account for the correlated nature of the symptoms with each other and the outcome.
+As Albert and Chib {[}1{]} identify in their paper, the covariance matrix formulation is not identifiable, with the variance, \(diag (\Sigma)\) and means of the latent variables, \(\boldsymbol{z}_i\) trading off against each other.
+For this reason, we use a correlation matrix, \(\Omega\), formulation with the variance set to 1.
+A correlation based framework also makes communication with clinicians and other practitioners smoother as correlations are more familiar.
+
+\begin{equation}\begin{aligned}
+y_{id} &= \mathbb{I}(z_{id} > 0) \\
+\boldsymbol{z}_{i} &= \boldsymbol{x}_i \boldsymbol{\beta} + \boldsymbol{\epsilon}_{i} \\
+z_{id} &= \sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id} \\
+\boldsymbol{\epsilon}_i &\sim N(\boldsymbol{0}, \boldsymbol{\Omega}) \\
+diag(\Omega)&=1 \\
+{\beta} &\sim N(0,1) \\
+\boldsymbol{\Omega} &\sim \text{LKJ}(1)
+\label{eq:ModelClass2}
+\end{aligned}\end{equation}\ignorespacesafterend
+
+Model Class 3 combines the two data sources.
+We utilise the specificity of RAT by treating RAT-positive patients as PCR-positive patients.
+The RAT-negative patients are modelled using the sensitive syndromic approach using Model Class 2 to capture PCR-positive patients that are missed by the RAT.
+This approach leverages the potential different syndromic profiles of PCR-positve patients who are RAT-positive and -negative, allowing the model to adapt solely to the latter.
+Structurally, the model combines Equations \eqref{eq:ModelClass1} and \eqref{eq:ModelClass2}, with RAT-positive patients being modelled using Equation \eqref{eq:ModelClass1}, and Equation \eqref{eq:ModelClass2}.
+
+\begin{equation}\begin{aligned}
+y_{i1} &= \begin{cases}
+    1,& \text{if } \text{RAT}_i=1 \\
+       & \text{otherwise}
+\end{cases}\\
+y_{id} &= \mathbb{I}(z_{id} > 0) \\
+\boldsymbol{z}_{i} &= \boldsymbol{x}_i \boldsymbol{\beta} + \boldsymbol{\epsilon}_{i} \\
+z_{id} &= \sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id} \\
+\boldsymbol{\epsilon}_i &\sim N(\boldsymbol{0}, \boldsymbol{\Omega}) \\
+diag(\Omega)&=1
+{\beta} &\sim N(0,1) \\
+\boldsymbol{\Omega} &\sim \text{LKJ}(1)
+\label{eq:ModelClass3}
+\end{aligned}\end{equation}\ignorespacesafterend
+
+\todo{This isn't quite right - need to demonstrate subsetting of i's, otherwise it implies that z is calculated for all data points}
+
+By using a Bayesian formulation, we generate full posteriors for our parameter estimates, allowing natural quantification of uncertainty.
+Bayesian methods also facilitate the use of more informative priors.
+While we used minimally informative priors here (standard normals in the probit scale for betas and an LKJ correlation prior with minimal shrinkage, \(\eta=1\) {[}2{]}), more informative priors that incorporate spatio-temporal effects, for instance, would be natural extensions.
+The models were fitted to the data using Bayesian inference techniques based on Hamiltonian Monte Carlo in the Stan programming language {[}3{]}.
+The models all converged with zero divergent transitions and large effective sample sizes.
+
+\hypertarget{model-selection}{%
+\subsubsection{Model Selection}\label{model-selection}}
+
+We conducted backwards model selection (starting with the most complex, biologically plausible model) to identify a subset of models with the highest predictive power under temporal cross-validation (Figure \ref{fig:modsel-flowchart2}).
+For the cross-validation, we divided the data into 5 folds of equal sizes in time order (i.e.~the first fold is formed of the chronologically first \(\frac{N}{K}\) patients, where \(N\) is the number of patients and \(K\) is the number of folds, the second fold by the next \(\frac{N}{K}\) etc.)
+To test the sensitivity of this cross-validation structure, we also did a strict temporal division (i.e.~the first \(\frac{T}{K}\) days where \(T\) is the number of days samples were taken on).
+The results did not change qualitatively between these approaches.
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart} \caption{Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross-validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross-validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross-entropy scoring. The cross-entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class.}\label{fig:modsel-flowchart2}
+\end{figure}
+
+The coarse round of model selection (Figure \ref{fig:modsel-flowchart2}) selected candidate symptoms based on whether they had a strong and consistent correlation with PCR as estimated according to Equations \eqref{eq:ModelClass2} and \eqref{eq:ModelClass3}.
+The models were fit with both covariates throughout the coarse round and symptoms were compared in nested models.
+In the fine round of model selection, these candidate symptoms and the covariate combinations (age and gender, age, gender and no covariates) were permuted to more exhaustively explore the model space.
+Reducing the number of possible models using the two stages of model selection was necessary to reduce computational demand and reduce the risk of overfitting models to the test scenarios.
+The large number of symptoms corresponds to a high number of potential model configurations (\textgreater131 000 for 14 symptoms and two covariates) which might perform well on the test sets (even under the challenging conditions of temporal cross-validation) but lack transferability.
+
+By using general predictive power to narrow down the number of candidate models and then testing those models, we are more likely to choose models which generalise well to new data.
+The number of candidate models used was not pre-determined but it was clear when fitting the models that there were ``jumps'' in performance (as defined below) between models containing five and four symptoms, so the models with one to four symptoms were used as the candidate models.
+Zero symptom models were not included in the analysis as they do not correspond to a feasible policy (with covariates they would require governments to ask individuals of a given gender and age as COVID-19 positive, and without covariates they would involve randomly assigning individuals as COVID-19 positive).
+
+Model selection carried out in this way is quite robust.
+However, if more time were available for model development we would advocate more sophisticated methods of variable selection, such as penalised complexity priors {[}4{]} or auxiliary variable selection {[}5{]}.
+These methods, once developed for the use-case, are superior but require significant testing that would prevent getting this work out in a policy-relevant timeframe.
+We also believe that these approaches may be harder for non-statisticians to adapt.
+
+\hypertarget{predictive-performance}{%
+\subsubsection{Predictive Performance}\label{predictive-performance}}
+
+We scored the models' predictive power using binary cross-entropy (hereafter, cross-entropy).
+Cross-entropy measures the accuracy of models that generate probabilities of binary outcomes, rather than make binary classifications, similar in concept to a mean square error for normally-distributed data, but adapted for binary data {[}6{]}.
+A cross-entropy value close to zero corresponds to high levels of accuracy, with larger values indicating lower accuracy.
+More specifically, the metric allows us to compare a binary vector, \(\boldsymbol{y}\in [0,1]\), with a vector of probablistic predictions (\(p(\boldsymbol{y})\in (0,1)\)) as follows:
+
+\begin{equation}\begin{aligned}
+\boldsymbol{H}_p(q)=\frac{1}{N}\sum_{i=1}^{N}y_i\cdot log(p(y_i))+(1-y_i)\cdot log(1-p(y_i))
+\label{eq:CrossEntropy}
+\end{aligned}\end{equation}\ignorespacesafterend
+
+The resulting score is comparable across all methods for assigning predictions where the same test data are used, allowing us to compare predictions from Model Classes 1-3.
+\(H_p(q)\in {0,\boldsymbol{R}_+}\) with zero indicating perfect prediction (assigning probabilities of ones and zeroes to outcomes of ones and zeros exactly) and larger values indicating worse predictions.
+
+\hypertarget{classification-performance}{%
+\subsubsection{Classification Performance}\label{classification-performance}}
+
+In applied settings, models must often be evaluated on their performance as classifiers rather than just as prediction engines (i.e.~their ability to say a patient is COVID-19 positive or negative, not simply the probability the patient might be COVID-19 positive or negative).
+To generate a classification, \(\hat{Y}\), a probability threshold, \(\hat{p}\), must be chosen over which patients are classified as COVID-19 positive:
+
+\begin{equation}\begin{aligned}
+\hat{Y} &= \begin{cases}
+    1,& \text{if } p(y) \geq \hat{p} \\
+     0  & \text{otherwise}
+\end{cases}
+\label{eq:ClassificationThreshold}
+\end{aligned}\end{equation}\ignorespacesafterend
+
+Receiver operating characteristics (ROCs) are a way to measure the performance of a set of classifications in terms of true and false positives and negatives (TP, FP, TN and FN) and the rates of each of these classification types (e.g.~\(TPR = \frac{TP}{TP+FN}\), and \(FPR = \frac{FP}{FP+TN}\)).
+The error rates are calculated with respect to a particular threshold, \(\hat{p}\), or across the range of possible \(\hat{p}\)s to generate a ROC curve {[}7{]}.
+In our epidemiological scenarios (outlined below) we use our ROC curve calculations to identify single thresholds which yield a required error rate.
+
+We strongly emphasise that generic performance here is only used to show the flexibility of the model classes; the best model for a local situation can only be determined if the relative cost of false positives and false negatives is known.
+Here, we choose three representative scenarios.
+Each scenario has a requirement and error rate (defined in Table \ref{tab:scenarios-tab2}).
+
+In Scenario 1, we do not consider epidemiological context but simply minimise false negative and false positive rates equally.
+We do this by maximising the two correct classification rates both individually and in total, as measured by the harmonic mean (as opposed to the arithmetic mean which would only maximise the rates in total).
+
+\[
+\text{ Find } \hat{p} \text{ which } \max \left( \frac{2\cdot \text{TPR}\cdot \text{TNR}}{\text{TPR} + \text{TNR}} \right), 
+\epsilon=\text{FPR} + \text{FNR} 
+\]
+\todo{I'm not sure if any of these equations are correct or sufficient or clear}
+
+Scenario 2 corresponds to the current situation in Bangladesh at time of writing (July 2021), with COVID-19 cases beginning to rapidly increase again.
+Under these circumstances, false negatives are extremely costly relative to false positives due to the exponential growth of the disease.
+
+\[
+\text{ Find } \hat{p} \text{ which } \max \left( FNR - 0.2 \leq 0 \right),\\
+\epsilon=\text{FPR}
+\]
+
+In Scenario 3, the pandemic is not declining but maintaining a steady rate of cases.
+In this situation, policy-makers may be keen to keep false positive diagnoses low to prevent lockdown fatigue and to keep the workforce active.
+
+\[
+\text{ Find } \hat{p} \text{ which } \max \left( FPR - 0.2 \leq 0 \right),\\
+\epsilon=\text{FNR}
+\]
+
+The requirements in Scenario 2 and 3 were developed in discussion with the Institute of Epidemiology, Disease Control and Research (IEDR), Bangladesh, for illustrative purposes.
+
+\begin{table}
+
+\caption{\label{tab:scenarios-tab2}For each epidemiological scenario there is a requirement and a performance criterion.
+The requirement refers to a base level of performance the model must achieve; in general this will be a maximum acceptable error rate of some kind.
+These requirements were determined in discussion with members of the Institute of Epidemiology, Disease Control and Research, Ministry of Health, Bangladesh (IEDCR).
+The requirement determines a probability threshold for each model which most closely meets that requirement.
+The performance criterion is then used to determine which model performs the 'best' given that the requirement has been met.}
+\centering
+\begin{tabu} to \linewidth {>{\raggedright}X>{\raggedright}X>{\raggedright}X}
+\toprule
+Scenario Name & Requirement & Performance Criterion (Error)\\
+\midrule
+1 Agnostic & Maximise correct classification rates & Sum of error rates\\
+2 Rising Cases & Max. 20\% false negative rate & False negative rate\\
+3 Low-Level Cases & Max. 20\% false positive rate & False positive rate\\
+\bottomrule
+\end{tabu}
+\end{table}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\hypertarget{ref-albert1993bayesian}{}%
+\CSLLeftMargin{{[}1{]} }
+\CSLRightInline{Albert JH, Chib S. Bayesian analysis of binary and polychotomous response data. Journal of the American Statistical Association 1993;88:669--79.}
+
+\leavevmode\hypertarget{ref-lewandowski2009generating}{}%
+\CSLLeftMargin{{[}2{]} }
+\CSLRightInline{Lewandowski D, Kurowicka D, Joe H. Generating random correlation matrices based on vines and extended onion method. Journal of Multivariate Analysis 2009;100:1989--2001.}
+
+\leavevmode\hypertarget{ref-carpenter2017stan}{}%
+\CSLLeftMargin{{[}3{]} }
+\CSLRightInline{Carpenter B, Gelman A, Hoffman MD, Lee D, Goodrich B, Betancourt M, et al. Stan: A probabilistic programming language. Journal of Statistical Software 2017;76:1--32.}
+
+\leavevmode\hypertarget{ref-simpson2017penalising}{}%
+\CSLLeftMargin{{[}4{]} }
+\CSLRightInline{Simpson D, Rue H, Riebler A, Martins TG, Sørbye SH. Penalising model component complexity: A principled, practical approach to constructing priors. Statistical Science 2017;32:1--28.}
+
+\leavevmode\hypertarget{ref-held2006bayesian}{}%
+\CSLLeftMargin{{[}5{]} }
+\CSLRightInline{Held L, Holmes CC. Bayesian auxiliary variable models for binary and multinomial regression. Bayesian Analysis 2006;1:145--68.}
+
+\leavevmode\hypertarget{ref-gneiting2007strictly}{}%
+\CSLLeftMargin{{[}6{]} }
+\CSLRightInline{Gneiting T, Raftery AE. Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association 2007;102:359--78.}
+
+\leavevmode\hypertarget{ref-hoo2017roc}{}%
+\CSLLeftMargin{{[}7{]} }
+\CSLRightInline{Hoo ZH, Candlish J, Teare D. What is an ROC curve? 2017.}
+
+\end{CSLReferences}
+
+
+\end{document}
