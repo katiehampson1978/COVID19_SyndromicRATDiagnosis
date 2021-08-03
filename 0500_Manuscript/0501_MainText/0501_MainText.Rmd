@@ -105,6 +105,7 @@ library(tidyverse)
 library(kableExtra) 
 library(viridis)
 library(viridisLite)
+options(OutDec="·")
 pop_summ <- readRDS("0100_Data/0103_pop_summ.RDS")
 pop_size <- sum(pop_summ$Gender_Count)
 cross_entropy <- readRDS("0400_ModelAssessment/0430_MedCrossEnts.rds")
@@ -123,7 +124,7 @@ RATonlyFPR <- RATonlyROC$MedFalsePosRate %>% round(2)
 RATonlyFNR <- RATonlyROC$MedFalseNegRate %>% round(2)
 ```
 
-# Abstract (288 words)
+# Abstract (252 words)
 
 *Background*
 
@@ -150,9 +151,9 @@ We demonstrate that such improvements can be achieved by statistically utilising
 
 *Funding*
 
-The Bill and Melinda Gates Foundation and the Wellcome Trust.
+The Bill and Melinda Gates Foundation, the Wellcome Trust and the Engineering and Physical Sciences Research Council.
 
-# Introduction (1080 Words)
+# Introduction (1079 Words)
 
 Identification and isolation of COVID-19 cases remains key to the pandemic response across the globe.
 The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
@@ -207,7 +208,7 @@ We aim to compare the performance of these two testing methods and the combined 
 We show that the optimised combined data models achieve equal-to-much-lower error rates than the next best method in all metrics.
 We then discuss the role of statistically integrating data from multiple imperfect testing methods in resource limited settings to improve the diagnosis of diseases, particularly COVID-19.
 
-# Methods (965 words)
+# Methods (950 words)
 
 ## Data Collection 
 
@@ -303,7 +304,7 @@ In Scenario 3, the pandemic is not declining but maintaining a steady rate of ca
 In this situation, policy-makers may be keen to keep false positive diagnoses low to prevent lockdown fatigue and to keep the workforce active.
 The requirements in Scenario 2 and 3 were developed in discussion with the Institute of Epidemiology, Disease Control and Research (IEDCR), Bangladesh, for illustrative purposes.
 
-# Results (476 words)
+# Results (550 words)
 
 Of 1241 subjects surveyed, a total of `r pop_size` subjects had complete data available for the current analyses with the remainder removed due to duplication of barcodes or missing data.
 The mean age of women participants (`r round(100*pop_summ$Gender_Count[1]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[1]  %>% round()` (SD = `r pop_summ$Age_SD[1] %>% round()`) years, and for men (`r round(100*pop_summ$Gender_Count[2]/pop_size)`% of the sample) was `r pop_summ$Age_Mean[2]  %>% round()` (SD = `r pop_summ$Age_SD[2] %>% round()`) years.
@@ -440,11 +441,30 @@ ggplot(ROC_plots%>% filter(FitType!="0Symptom"),
 
 ```{r scenario-plot, out.width = '100%', echo=FALSE, fig.cap="Performance of models under each scenario measured by posterior median and interquartile range for errors defined in Table 1. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).", message=FALSE, warning=FALSE}
 
-ggplot(scenario_outcomes, 
+rect <- data.frame("SwabType" = "nasal",
+                   "FitType" = "RATonly",
+                   "scenario" = "Scenario 2",
+                   "ModelClass" = "RATonly")
+
+scenario_outcomes_plot <- full_join(rect, scenario_outcomes)
+
+scenario_outcomes_plot$rect <- ifelse(
+  scenario_outcomes_plot$FitType == "RATonly" &
+                                      scenario_outcomes_plot$scenario == "Scenario 2",
+                                      1, 0)
+
+scenario_outcomes_plot$rectymin <- scenario_outcomes_plot$rect*4.75
+scenario_outcomes_plot$rectymax <- scenario_outcomes_plot$rect*5.25
+  
+ggplot(scenario_outcomes_plot, 
        aes(x = MedError, y = FitType, colour = ModelClass)) +
   geom_point() +
   geom_errorbarh(aes(xmin = Error025, 
                      xmax = Error075)) +
+    geom_rect(scenario_outcomes_plot,
+              mapping = aes(xmin=-Inf, xmax=Inf,
+                ymin=rectymin, ymax=rectymax), 
+              alpha = 0.2, color = NA,) +
   coord_cartesian(xlim = c(0,1.2)) +
   ylab("Model Structure") + 
   xlab("Error") +
@@ -456,23 +476,23 @@ ggplot(scenario_outcomes,
   theme_minimal() %+replace% 
   theme(legend.position = "bottom", aspect.ratio = 1, 
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  
-  
+
+
 
 ```
 
 Scenario specific classification performance is shown in Figure \@ref(fig:scenario-plot).
 Across all three scenarios (defined in Table \@ref(tab:scenarios-tab)), the best models in Class 3 performed equally well or better than the other two model classes.
 In Scenario 1 ("Agnostic"), models in Classes 1 and 3 performed equally well (overlapping posterior interquartile ranges) and distinctly better (no overlap in posterior interquartile range) than models in Class 2.
-The median error was `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE)` for models in Class 1 and Class 3 and between `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2 (Figure \@ref(fig:scenario-plot)).
+The median error was `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "RATonly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% round(2)` for models in Class 1 and Class 3 and between `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r scenario_outcomes %>% filter(scenario == "Scenario 1") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for models in Class 2 (Figure \@ref(fig:scenario-plot)).
 In Scenario 2 ("Rising Cases"), Model Class 1 failed to meet the requirement and so was excluded, and Model Class 3 once again outperformed Class 2. 
-The median errors were between `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()` and `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max()` for models in Class 3 (Figure \@ref(fig:scenario-plot)).
+The median errors were between `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for models in Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` and `r scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for models in Class 3 (Figure \@ref(fig:scenario-plot)).
 In Scenario 3 ("Low-Level Cases"), Model Class 2 once again performed worst, and Model Class 3 achieved the lowest error, with Model Class 1 falling in between the two (closer to Class 3 than 2).
-The error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% unique()` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min()` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max()` for Class 3 (Figure \@ref(fig:scenario-plot)).
+The error in Class 1 was `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "RATonly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% unique() %>% round(2)` and the median errors ranged from `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndOnly") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for Class 2, and `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% min() %>% round(2)` to `r scenario_outcomes %>% filter(scenario == "Scenario 3") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalsePosRate) %>% unlist(use.names = FALSE) %>% max() %>% round(2)` for Class 3 (Figure \@ref(fig:scenario-plot)).
 For Classes 2 and 3 across all the scenarios the number of symptoms made relatively little difference within the final four candidate models in terms of median performance, although the more complex models have higher precision.
 It should be noted that the candidate models are chosen as a result of a selection process and performed much better than more complex models (i.e. those with 5 or more symptoms) or simpler models (with no symptoms but an intercept and covariates) in terms of cross-entropy and ROC, indicating they would likely also perform worse in these scenarios.
 
-# Discussion (815 words)
+# Discussion (816 words)
 
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better identification of COVID-19 cases than either diagnostic in isolation.
 These gains in performance are mirrored across metrics of prediction, generic classification and scenario-specific classification.
@@ -519,13 +539,13 @@ By investing in understanding how to utilise the complementary strengths of impe
 
 # Funding (26 words)
 
-The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z). 
+The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), University of Glasgow reports funding from Wellcome (207569/Z/17/Z) and the Engineering and Physical Sciences Research Councils. \todo{Find Fergus PhD funding code} 
 The authors declare no competing interests.
 
 # Acknowledgements (69 words)
 
 We would like to thank members of the community support teams in Bangladesh who have provided essential services throughout the pandemic.
-Earlier drafts of this mansucript benefited from the input of Paul Johnson, Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
+Earlier drafts of this mansucript benefited from the input of Paul Johnson, Daniel Haydon, Frances Mair, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
 The University of Glasgow COVID-19 in LMICs Group provided the environment in which to develop this work.
 
 # References (Max 30)

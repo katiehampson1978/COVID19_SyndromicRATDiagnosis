@@ -165,8 +165,8 @@
   
  \end{frontmatter}
 
-\hypertarget{abstract-288-words}{%
-\section{Abstract (288 words)}\label{abstract-288-words}}
+\hypertarget{abstract-252-words}{%
+\section{Abstract (252 words)}\label{abstract-252-words}}
 
 \emph{Background}
 
@@ -176,7 +176,7 @@ Rapid antigen testing (RAT) and syndromic diagnosis are two alternative, inexpen
 \emph{Methods}
 
 Community support teams in Dhaka, Bangladesh identified potential COVID-19 patients in Dhaka using syndromic surveillance.
-A sample (n = 1172) of these patients was tested using RAT and syndromic data were collected.
+A sample (n = \text{1172}) of these patients was tested using RAT and syndromic data were collected.
 Models were fit to predict RT-PCR status using the RAT data, the syndromic data, and the two combined.
 Model performance was measured using predictive power and classification performance under three epidemiological scenarios: ``Agnostic,'' ``Rising Cases'' and ``Low-Level Cases.''
 
@@ -184,7 +184,7 @@ Model performance was measured using predictive power and classification perform
 
 Combined data models yielded equal or improved performance over syndromic- and RAT-only models across all three epidemiological scenarios and when compared as more generic prediction and classification engines.
 \textless\textless\textless\textless\textless\textless\textless{} HEAD
-In the ``Rising Cases'' scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is 26 (IQR: 24-29) percentage points lower that of the RAT only model.
+In the ``Rising Cases'' scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is \text{26} (IQR: \text{24}-\text{29}) percentage points lower that of the RAT only model.
 
 \emph{Interpretation}
 
@@ -193,10 +193,10 @@ We demonstrate that such improvements can be achieved by statistically utilising
 
 \emph{Funding}
 
-The Bill and Melinda Gates Foundation and the Wellcome Trust.
+The Bill and Melinda Gates Foundation, the Wellcome Trust and the Engineering and Physical Sciences Research Council.
 
-\hypertarget{introduction-1080-words}{%
-\section{Introduction (1080 Words)}\label{introduction-1080-words}}
+\hypertarget{introduction-1079-words}{%
+\section{Introduction (1079 Words)}\label{introduction-1079-words}}
 
 Identification and isolation of COVID-19 cases remains key to the pandemic response across the globe.
 The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
@@ -251,8 +251,8 @@ We aim to compare the performance of these two testing methods and the combined 
 We show that the optimised combined data models achieve equal-to-much-lower error rates than the next best method in all metrics.
 We then discuss the role of statistically integrating data from multiple imperfect testing methods in resource limited settings to improve the diagnosis of diseases, particularly COVID-19.
 
-\hypertarget{methods-965-words}{%
-\section{Methods (965 words)}\label{methods-965-words}}
+\hypertarget{methods-950-words}{%
+\section{Methods (950 words)}\label{methods-950-words}}
 
 \hypertarget{data-collection}{%
 \subsection{Data Collection}\label{data-collection}}
@@ -352,20 +352,20 @@ In Scenario 3, the pandemic is not declining but maintaining a steady rate of ca
 In this situation, policy-makers may be keen to keep false positive diagnoses low to prevent lockdown fatigue and to keep the workforce active.
 The requirements in Scenario 2 and 3 were developed in discussion with the Institute of Epidemiology, Disease Control and Research (IEDCR), Bangladesh, for illustrative purposes.
 
-\hypertarget{results-476-words}{%
-\section{Results (476 words)}\label{results-476-words}}
+\hypertarget{results-550-words}{%
+\section{Results (550 words)}\label{results-550-words}}
 
-Of 1241 subjects surveyed, a total of 1172 subjects had complete data available for the current analyses with the remainder removed due to duplication of barcodes or missing data.
-The mean age of women participants (47\% of the sample) was 37 (SD = 14) years, and for men (53\% of the sample) was 36 (SD = 14) years.
+Of 1241 subjects surveyed, a total of \text{1172} subjects had complete data available for the current analyses with the remainder removed due to duplication of barcodes or missing data.
+The mean age of women participants (\text{47}\% of the sample) was \text{37} (SD = \text{14}) years, and for men (\text{53}\% of the sample) was \text{36} (SD = \text{14}) years.
 Participants were identified by the community support teams (CSTs) and drawn from across Dhaka.
 
 Model selection for both Model Class 2 (syndromic data only) and 3 (syndromic and RAT data) showed a marked decline in predictive power at more than 4 symptoms.
 The covariate gender was dropped for both model classes while age was dropped in Class 2 but retained in Class 3.
 The final four symptoms in order of importance (i.e.~the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were loss of taste, diarrhoea, vomit and fever for Model Class 2, and fever, wet cough, cough and loss of taste for Model Class 3.
 
-In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of 3.24 (cross-entropy values further from zero correspond to worse predictive performance).
-The median cross-entropy values were between 2.53 and 2.59 for models in Class 2.
-Models in Class 3 performed best with cross-entropy values between 1.44 and 1.47 (see Figure \ref{fig:pred-perf}).
+In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of \text{3·24} (cross-entropy values further from zero correspond to worse predictive performance).
+The median cross-entropy values were between \text{2·53} and \text{2·59} for models in Class 2.
+Models in Class 3 performed best with cross-entropy values between \text{1·44} and \text{1·47} (see Figure \ref{fig:pred-perf}).
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{0501_MainText_files/figure-latex/pred-perf-1} \caption{Predictive performance of candidate models. Interquartile ranges for the posterior cross-entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. cross-entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each model class (1: rapid antigen testing (RAT) only; 2: syndromic data only; and 3: combined RAT and syndromic data).}\label{fig:pred-perf}
@@ -384,22 +384,22 @@ Generic model classification performance is shown by their ROC curves (Figure \r
 Scenario specific classification performance is shown in Figure \ref{fig:scenario-plot}.
 Across all three scenarios (defined in Table \ref{tab:scenarios-tab}), the best models in Class 3 performed equally well or better than the other two model classes.
 In Scenario 1 (``Agnostic''), models in Classes 1 and 3 performed equally well (overlapping posterior interquartile ranges) and distinctly better (no overlap in posterior interquartile range) than models in Class 2.
-The median error was 0.470082 for models in Class 1 and Class 3 and between 0.8692795 and 0.9019423 for models in Class 2 (Figure \ref{fig:scenario-plot}).
+The median error was \text{0·47} for models in Class 1 and Class 3 and between \text{0·87} and \text{0·9} for models in Class 2 (Figure \ref{fig:scenario-plot}).
 In Scenario 2 (``Rising Cases''), Model Class 1 failed to meet the requirement and so was excluded, and Model Class 3 once again outperformed Class 2.
-The median errors were between 0.746984 and 0.755422 for models in Class 2, and 0.4387707 and 0.494805 for models in Class 3 (Figure \ref{fig:scenario-plot}).
+The median errors were between \text{0·75} and \text{0·76} for models in Class 2, and \text{0·44} and \text{0·49} for models in Class 3 (Figure \ref{fig:scenario-plot}).
 In Scenario 3 (``Low-Level Cases''), Model Class 2 once again performed worst, and Model Class 3 achieved the lowest error, with Model Class 1 falling in between the two (closer to Class 3 than 2).
-The error in Class 1 was 0.0218039 and the median errors ranged from 0.1946676 to 0.1999916 for Class 2, and 0.1831021 to 0.1989851 for Class 3 (Figure \ref{fig:scenario-plot}).
+The error in Class 1 was \text{0·02} and the median errors ranged from \text{0·19} to \text{0·2} for Class 2, and \text{0·18} to \text{0·2} for Class 3 (Figure \ref{fig:scenario-plot}).
 For Classes 2 and 3 across all the scenarios the number of symptoms made relatively little difference within the final four candidate models in terms of median performance, although the more complex models have higher precision.
 It should be noted that the candidate models are chosen as a result of a selection process and performed much better than more complex models (i.e.~those with 5 or more symptoms) or simpler models (with no symptoms but an intercept and covariates) in terms of cross-entropy and ROC, indicating they would likely also perform worse in these scenarios.
 
-\hypertarget{discussion-815-words}{%
-\section{Discussion (815 words)}\label{discussion-815-words}}
+\hypertarget{discussion-816-words}{%
+\section{Discussion (816 words)}\label{discussion-816-words}}
 
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better identification of COVID-19 cases than either diagnostic in isolation.
 These gains in performance are mirrored across metrics of prediction, generic classification and scenario-specific classification.
 The biggest improvement is seen in Scenario 2 (``Rising Cases'') which was developed around the current situation in Bangladesh (see Table \ref{tab:scenarios-tab} where the pandemic is once again accelerating.
-In this scenario, the combined data model (Model Class 3) false negative rate is 26 (IQR: 24-29) percentage points lower that of the RAT only model (Model Class 1).
-Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is 31 (IQR: 29- 34) percentage points higher.
+In this scenario, the combined data model (Model Class 3) false negative rate is \text{26} (IQR: \text{24}-\text{29}) percentage points lower that of the RAT only model (Model Class 1).
+Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is \text{31} (IQR: \text{29}- \text{34}) percentage points higher.
 
 In a country where there are currently 15 000 new cases being identified every day, these improvements are non-trivial, representing tens of thousands of daily cases that would otherwise be missed.
 Futhermore, this boost in diagnostic performance is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries (LMICs).
@@ -441,14 +441,14 @@ By investing in understanding how to utilise the complementary strengths of impe
 \hypertarget{funding-26-words}{%
 \section{Funding (26 words)}\label{funding-26-words}}
 
-The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), and University of Glasgow reports funding from Wellcome (207569/Z/17/Z).
+The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), University of Glasgow reports funding from Wellcome (207569/Z/17/Z) and the Engineering and Physical Sciences Research Councils. \todo{Find Fergus PhD funding code}
 The authors declare no competing interests.
 
 \hypertarget{acknowledgements-69-words}{%
 \section{Acknowledgements (69 words)}\label{acknowledgements-69-words}}
 
 We would like to thank members of the community support teams in Bangladesh who have provided essential services throughout the pandemic.
-Earlier drafts of this mansucript benefited from the input of Paul Johnson, Daniel Haydon, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
+Earlier drafts of this mansucript benefited from the input of Paul Johnson, Daniel Haydon, Frances Mair, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
 The University of Glasgow COVID-19 in LMICs Group provided the environment in which to develop this work.
 
 \hypertarget{references-max-30}{%

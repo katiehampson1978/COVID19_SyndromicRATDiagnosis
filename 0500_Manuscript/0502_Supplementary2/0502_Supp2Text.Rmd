@@ -114,7 +114,6 @@ knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0501_MainText/MainTextF
 
 We examined the ability of the two imperfect identification methods, syndromic modelling and RAT, to predict the patient's COVID-19 status when used separately and together.
 These combinations define three model classes (Figure \@ref(fig:data-flowchart2)).
-\todo{Find more ways to cite Figure \@ref(fig:data-flowchart2) in this text.}
 
 Model Class 1 uses only the RAT result.
 It equates being RAT-positive with the patient being PCR-positive for COVID-19 (hereafter, PCR-positive), and being RAT-negative with PCR-negativity.
