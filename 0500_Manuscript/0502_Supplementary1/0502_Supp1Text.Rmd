@@ -98,19 +98,22 @@ output:
 header-includes:
   - \renewenvironment{abstract}{}{}
   - \usepackage[colorinlistoftodos]{todonotes}
+  - \usepackage{pdfpages}
+toc: true
 ---
-```{r app-screenshots, echo=FALSE, out.width='100%', fig.cap="Data collection by the community support teams (CSTs) is implemented using a mobile phone application, screenshots presented here."}
-knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/app_screenshots.png"))
-```
 
-```{r sample-screenshots1, echo=FALSE, out.width='100%', fig.cap="Page 1 sample collection protocols developed by Tasnuva Chowdhury."}
-knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/protocol_p1.png"))
-```
+This document compiles the Community Support Teams' Standard Operating Procedures for the identification of potential COVID-19 patients, screenshots of the data-collection application, and the protocol for the taking of nasal swabs for rapid antigen and PCR testing.
 
-```{r sample-screenshots2, echo=FALSE, out.width='100%', fig.cap="Page 2 sample collection protocols developed by Tasnuva Chowdhury."}
-knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/protocol_p2.png"))
-```
+# Guidelines for Identification of Potential Virus Fighters (PVF).
 
-```{r sample-screenshots3, echo=FALSE, out.width='100%', fig.cap="Page 3 sample collection protocols developed by Tasnuva Chowdhury."}
-knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0502_Supplementary1/Supp1Figs/protocol_p3.png"))
-```
+\includepdf[pages={-}]{Supp1Figs/SOP1.pdf}
+\includepdf[pages={-}]{Supp1Figs/SOP3.pdf}
+\includepdf[pages={-}]{Supp1Figs/SOP5.pdf}
+
+# Data Collection Application
+
+\includepdf[pages={-}]{Supp1Figs/app_screenshots.pdf}
+
+# Sample and Swab Collection Protocol
+
+\includepdf[pages={-}]{Supp1Figs/SampleProtocol.pdf}
