@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  3 AUG 2021 16:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  3 AUG 2021 18:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -978,24 +978,42 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [1
 
 
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (17.24895pt too wide) in paragraph at lines 186--193
+\T1/lmtt/m/n/10 r100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Sc
+enario
+ []
+
+
+Overfull \hbox (37.19888pt too wide) in paragraph at lines 186--193
+\T1/lmtt/m/n/10 2") %>% filter(ModelClass == "SyndRAT") %>%  select(FalseNegRat
+e_CI_0.75)
+ []
+
+
+Overfull \hbox (60.12907pt too wide) in paragraph at lines 186--193
+\T1/lmr/m/n/10 (-20) age points lower that of the RAT only model. >>>>>>> ce79c
+59d8f7a83106f23f02254b6e41c9a2a2ec5
+ []
+
+[2]
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 215.
+ine 219.
 
 LaTeX Warning: Marginpar on page 3 moved.
 
 [3]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-64.
+68.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
+) [4]
 
 pdfTeX warning: pdflatex (file /Users/fergusjchadwick/Dropbox/Git/COVID19_Syndr
 omicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf):
  PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscri
-pt/0501_MainText/MainTextFigs/DataFlowchart.pdf, id=125, 845.0471pt x 597.50829
+pt/0501_MainText/MainTextFigs/DataFlowchart.pdf, id=133, 845.0471pt x 597.50829
 pt>
 File: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Man
 uscript/0501_MainText/MainTextFigs/DataFlowchart.pdf Graphic file (type pdf)
@@ -1003,14 +1021,14 @@ uscript/0501_MainText/MainTextFigs/DataFlowchart.pdf Graphic file (type pdf)
 script/0501_MainText/MainTextFigs/DataFlowchart.pdf>
 Package pdftex.def Info: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRA
 TDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf  used o
-n input line 272.
+n input line 276.
 (pdftex.def)             Requested size: 345.0pt x 243.94061pt.
-[4] [5pdfTeX warning (ext4): destination with the same identifier (name{figure.
-1}) has been already used, duplicate ignored
+[5pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
+has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.284 
+l.296 
        </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_M
 anuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf>]
 
@@ -1019,7 +1037,7 @@ omicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowc
 hart.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> al
 lowed
 </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscri
-pt/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf, id=155, 845.0471pt x
+pt/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf, id=158, 845.0471pt x
  597.50829pt>
 File: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Man
 uscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf Graphic file (ty
@@ -1028,14 +1046,14 @@ pe pdf)
 script/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf>
 Package pdftex.def Info: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRA
 TDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.p
-df  used on input line 310.
+df  used on input line 314.
 (pdftex.def)             Requested size: 345.0pt x 243.94061pt.
 [6] [7pdfTeX warning (ext4): destination with the same identifier (name{figure.
 2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.320 
+l.330 
        </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_M
 anuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf>] [8pdfTeX war
 ning (ext4): destination with the same identifier (name{table.1}) has been alre
@@ -1043,317 +1061,329 @@ ady used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.356 
+l.367 
       ]
-<0501_MainText_files/figure-latex/pred-perf-1.pdf, id=185, 458.71375pt x 315.17
+<0501_MainText_files/figure-latex/pred-perf-1.pdf, id=187, 458.71375pt x 315.17
 75pt>
 File: 0501_MainText_files/figure-latex/pred-perf-1.pdf Graphic file (type pdf)
 <use 0501_MainText_files/figure-latex/pred-perf-1.pdf>
 Package pdftex.def Info: 0501_MainText_files/figure-latex/pred-perf-1.pdf  used
- on input line 374.
+ on input line 378.
 (pdftex.def)             Requested size: 458.71263pt x 315.17673pt.
 
-Overfull \hbox (113.71263pt too wide) in paragraph at lines 374--375
+Overfull \hbox (113.71263pt too wide) in paragraph at lines 378--379
  [][] 
  []
 
 
-LaTeX Warning: Reference `fig:ROC-plot' on page 9 undefined on input line 378.
+LaTeX Warning: Reference `fig:ROC-plot' on page 9 undefined on input line 382.
 
-<0501_MainText_files/figure-latex/ROC-plot-1.pdf, id=186, 465.74pt x 208.78pt>
+<0501_MainText_files/figure-latex/ROC-plot-1.pdf, id=188, 465.74pt x 208.78pt>
 File: 0501_MainText_files/figure-latex/ROC-plot-1.pdf Graphic file (type pdf)
 <use 0501_MainText_files/figure-latex/ROC-plot-1.pdf>
 Package pdftex.def Info: 0501_MainText_files/figure-latex/ROC-plot-1.pdf  used 
-on input line 380.
+on input line 384.
 (pdftex.def)             Requested size: 465.73886pt x 208.77946pt.
-<0501_MainText_files/figure-latex/scenario-plot-1.pdf, id=187, 465.74pt x 207.7
+<0501_MainText_files/figure-latex/scenario-plot-1.pdf, id=189, 465.74pt x 207.7
 7625pt>
 File: 0501_MainText_files/figure-latex/scenario-plot-1.pdf Graphic file (type p
 df)
 <use 0501_MainText_files/figure-latex/scenario-plot-1.pdf>
 Package pdftex.def Info: 0501_MainText_files/figure-latex/scenario-plot-1.pdf  
-used on input line 381.
+used on input line 385.
 (pdftex.def)             Requested size: 465.73886pt x 207.77573pt.
 
-Overfull \hbox (135.73886pt too wide) in paragraph at lines 380--382
+Overfull \hbox (135.73886pt too wide) in paragraph at lines 384--386
 [][]
  []
 
 
-Overfull \hbox (120.73886pt too wide) in paragraph at lines 380--382
+Overfull \hbox (120.73886pt too wide) in paragraph at lines 384--386
 [] 
  []
 
-[9] [10pdfTeX warning (ext4): destination with the same identifier (name{figure
-.3}) has been already used, duplicate ignored
+[9 <./0501_MainText_files/figure-latex/ROC-plot-1.pdf>] [10pdfTeX warning (ext4
+): destination with the same identifier (name{figure.3}) has been already used,
+ duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.382 
+l.386 
        <./0501_MainText_files/figure-latex/pred-perf-1.pdf>]
 
 LaTeX Warning: Reference `fig:scenario-plot' on page 11 undefined on input line
- 383.
+ 387.
 
-[11 <./0501_MainText_files/figure-latex/ROC-plot-1.pdf> <./0501_MainText_files/
-figure-latex/scenario-plot-1.pdf>]
+
+LaTeX Warning: Reference `fig:scenario-plot' on page 11 undefined on input line
+ 390.
+
+
+LaTeX Warning: Reference `fig:scenario-plot' on page 11 undefined on input line
+ 392.
+
+
+LaTeX Warning: Reference `fig:scenario-plot' on page 11 undefined on input line
+ 394.
+
+[11 <./0501_MainText_files/figure-latex/scenario-plot-1.pdf>]
 
 LaTeX Warning: Reference `fig:scenario-plot' on page 12 undefined on input line
- 405.
+ 412.
 
 
-LaTeX Warning: Reference `fig:ROC-plot' on page 12 undefined on input line 407.
+LaTeX Warning: Reference `fig:ROC-plot' on page 12 undefined on input line 414.
 
 
-[12] [13]
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 457--460
+[12]
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 464--467
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 457--460
+Underfull \hbox (badness 10000) in paragraph at lines 464--467
 
  []
 
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 461--464
+[13]
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 468--471
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 461--464
+Underfull \hbox (badness 10000) in paragraph at lines 468--471
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 465--468
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 472--475
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--468
+Underfull \hbox (badness 10000) in paragraph at lines 472--475
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 469--472
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 476--479
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 469--472
+Underfull \hbox (badness 10000) in paragraph at lines 476--479
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 473--476
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 480--483
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 473--476
+Underfull \hbox (badness 10000) in paragraph at lines 480--483
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 477--480
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 484--487
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 477--480
+Underfull \hbox (badness 10000) in paragraph at lines 484--487
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 481--484
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 488--491
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 481--484
+Underfull \hbox (badness 10000) in paragraph at lines 488--491
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 485--488
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 492--495
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 485--488
+Underfull \hbox (badness 10000) in paragraph at lines 492--495
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 489--492
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 496--499
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 489--492
+Underfull \hbox (badness 10000) in paragraph at lines 496--499
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 493--496
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 500--503
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 493--496
+Underfull \hbox (badness 10000) in paragraph at lines 500--503
+
+ []
+
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 504--507
+[][][] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 504--507
+
+ []
+
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 508--511
+[][][] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 508--511
 
  []
 
 [14]
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 497--500
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 512--515
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 497--500
+Underfull \hbox (badness 10000) in paragraph at lines 512--515
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 501--504
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 516--519
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 501--504
+Underfull \hbox (badness 10000) in paragraph at lines 516--519
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 505--508
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 520--523
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 505--508
+Underfull \hbox (badness 10000) in paragraph at lines 520--523
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 509--512
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 524--527
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 509--512
+Underfull \hbox (badness 10000) in paragraph at lines 524--527
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 513--516
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 528--531
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 513--516
+Underfull \hbox (badness 10000) in paragraph at lines 528--531
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 517--520
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 532--535
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 517--520
+Underfull \hbox (badness 10000) in paragraph at lines 532--535
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 521--524
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 536--539
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 521--524
+Underfull \hbox (badness 10000) in paragraph at lines 536--539
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 525--528
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 540--543
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 525--528
+Underfull \hbox (badness 10000) in paragraph at lines 540--543
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 529--532
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 544--547
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 529--532
+Underfull \hbox (badness 10000) in paragraph at lines 544--547
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 533--536
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 548--551
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 533--536
+Underfull \hbox (badness 10000) in paragraph at lines 548--551
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 537--540
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 552--555
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 537--540
+Underfull \hbox (badness 10000) in paragraph at lines 552--555
 
  []
 
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 541--544
-[][][] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 541--544
-
- []
-
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 545--548
-[][][] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 545--548
-
- []
-
-[15] [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 552.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 552.
+[15]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 559.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 559.
 (./0501_MainText.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 552.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 552.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 559.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 559.
 Package rerunfilecheck Info: File `0501_MainText.out' has not changed.
 (rerunfilecheck)             Checksum: 5AE190FF0232A99DCD92270DCE3CE6F9;2165.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 552.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 559.
  ) 
 Here is how much of TeX's memory you used:
- 25031 strings out of 480608
- 443162 string characters out of 5903630
- 724979 words of memory out of 5000000
- 40160 multiletter control sequences out of 15000+600000
- 596876 words of font info for 131 fonts, out of 8000000 for 9000
+ 25035 strings out of 480608
+ 443223 string characters out of 5903630
+ 720762 words of memory out of 5000000
+ 40162 multiletter control sequences out of 15000+600000
+ 597278 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,15n,83p,2022b,970s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local
@@ -1367,12 +1397,12 @@ texlive/2020/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/20
 20/texmf-dist/fonts/type1/public/lm/lmri7.pfb></usr/local/texlive/2020/texmf-di
 st/fonts/type1/public/lm/lmri8.pfb></usr/local/texlive/2020/texmf-dist/fonts/ty
 pe1/public/lm/lmss8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/
-lm/lmsy6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt8.pf
-b>
-Output written on 0501_MainText.pdf (16 pages, 524479 bytes).
+lm/lmsy6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.p
+fb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt8.pfb>
+Output written on 0501_MainText.pdf (15 pages, 551852 bytes).
 PDF statistics:
  341 PDF objects out of 1000 (max. 8388607)
  275 compressed objects within 3 object streams
- 87 named destinations out of 1000 (max. 500000)
- 18678 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 86 named destinations out of 1000 (max. 500000)
+ 19190 words of extra memory for PDF output out of 20736 (max. 10000000)
 
