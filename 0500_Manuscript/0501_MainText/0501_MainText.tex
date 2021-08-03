@@ -35,7 +35,6 @@
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 \bibliographystyle{elsarticle-harv}
 \usepackage{longtable}
-\usepackage{graphicx}
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -185,11 +184,7 @@ Model performance was measured using predictive power and classification perform
 
 Combined data models yielded equal or improved performance over syndromic- and RAT-only models across all three epidemiological scenarios and when compared as more generic prediction and classification engines.
 \textless\textless\textless\textless\textless\textless\textless{} HEAD
-In the ``Rising Cases'' scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is 26 (IQR: 24, 29) percentage points lower that of the RAT only model.
-=======
-In the ``Rising Cases'' scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is 26 (IQR: \texttt{r100*(RATonlyFNR\ -\ scenario\_outcomes\ \%\textgreater{}\%\ filter(scenario\ ==\ "Scenario\ 2")\ \%\textgreater{}\%\ filter(ModelClass\ ==\ "SyndRAT")\ \%\textgreater{}\%\ \ select(FalseNegRate\_CI\_0.75)\ \%\textgreater{}\%\ \ unlist(use.names\ =\ FALSE)\ \%\textgreater{}\%\ \ min())\ \%\textgreater{}\%\ round(2)}, 29) percentage points lower that of the RAT only model.
-\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater{} ce79c59d8f7a83106f23f02254b6e41c9a2a2ec5
-Although the syndromic only model matches the combined models false negative rate, its false positive rate is 31 (IQR: 29, 34) percentage points higher.
+In the ``Rising Cases'' scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is 26 (IQR: 24-29) percentage points lower that of the RAT only model.
 
 \emph{Interpretation}
 
@@ -216,7 +211,7 @@ In contrast, RATs can be conducted on nasal swabs, completed in the home with mi
 RATs can be taken by persons with limited training, thus decreasing the time and expense associated with identifying cases.
 Together, these traits make RATs an appealing alternative to RT-PCR, however, concerns have been raised that the lower sensitivity of RAT {[}10{]} leads to more false negative diagnoses.
 
-Another diagnostic that has been used since the start of the pandemic is symptom-thresholding {[}11{]}. \todo{JMC Not an official term}
+Another diagnostic that has been used since the start of the pandemic is symptom-thresholding {[}11{]}.
 Here, a patient presenting with a fever and one or more symptoms is treated as a COVID-19 positive patient.
 The main advantage of this approach is the ease of implementation.
 As with RAT, symptom-thresholding is faster, cheaper and less invasive than RT-PCR.
@@ -227,12 +222,12 @@ A natural extension, therefore, is syndromic modelling.
 In this approach, rather than using a set of pre-determined thresholds, a range of symptomatic and risk factor data (such as age and gender ) are collected and then a sub-sample of patients is tested using RT-PCR for validation {[}12{]}.
 These data are used to fit a model that allows more accurate prediction of how likely a patient is to have COVID-19 through the identification of COVID-19 syndromes {[}14{]}.
 
-It is worth highlighting at this point that in resource-limited settings there is very limited provision for testing of asymptomatic cases, despite their important role in disease transmission {[}15{]} \todo{JMC Need to highlight that we are only dealing with symptomatic patients, this felt a good place to do it}.
+It is worth highlighting at this point that in resource-limited settings there is very limited provision for testing of asymptomatic cases, despite their important role in disease transmission {[}15{]}.
 Even while focusing solely on symptomatic patients, syndromic modelling is a complex and nuanced task.
 Disease syndromes can change between populations, when new variants emerge, and as other diseases become more or less common {[}16{]}.
 These changes can make syndromic models generalise poorly.
 For example, if another disease for which loss of smell is a symptom becomes common, loss of smell is no longer strongly indicative of COVID-19.
-Similarly, if everyone who presents has a cough, regardless of their COVID-19 status, then coughing will show no relationship with COVID-19 (even if the two are strongly related in the general population). \todo{JMC query cross-sectional sampling}
+Similarly, if everyone who presents has a cough, regardless of their COVID-19 status, then coughing will show no relationship with COVID-19 (even if the two are strongly related in the general population).
 Furthermore, symptoms do not always occur in isolation, some, like loss of smell and loss of taste, are strongly related.
 Unfortunately, the majority of syndromic modelling methods currently used do not account for these complexities.
 Even where they can, at least partially, be accounted for, the many types of common respiratory disease generally means that syndromic modelling still tends to have quite low specificity {[}16{]}.
@@ -273,7 +268,7 @@ The full questionnaire and testing protocols are provided in Supplementary 1.
 Participants provided written informed consent to sample collection and for their results to be analyzed in the study.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart} \caption{Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation.}\label{fig:data-flowchart}
+\includegraphics[width=0.75\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart} \caption{Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation.}\label{fig:data-flowchart}
 \end{figure}
 
 \hypertarget{modelling}{%
@@ -284,7 +279,6 @@ Participants provided written informed consent to sample collection and for thei
 
 We examined the ability of the two imperfect identification methods, syndromic modelling and RAT, to predict the patient's COVID-19 status when used separately and together.
 These combinations define three model classes (Figure \ref{fig:data-flowchart}).
-\todo{Find more ways to cite Figure \\ref{fig:data-flowchart} in this text.}
 
 Model Class 1 uses only the RAT result.
 It equates being RAT-positive with the patient being PCR-positive for COVID-19 (hereafter, PCR-positive), and being RAT-negative with PCR-negativity.
@@ -369,20 +363,23 @@ Model selection for both Model Class 2 (syndromic data only) and 3 (syndromic an
 The covariate gender was dropped for both model classes while age was dropped in Class 2 but retained in Class 3.
 The final four symptoms in order of importance (i.e.~the most important symptom was retained in all of the final 4 models, the least important symptom was only retained in the 4 symptom model) were loss of taste, diarrhoea, vomit and fever for Model Class 2, and fever, wet cough, cough and loss of taste for Model Class 3.
 
-In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of 3.24 (cross-entropy values further from zero correspond to worse predictive performance).\todo{DHC out-of sample vs test set cross-entropy}
+In the comparison of model predictive performance, Model Class 1 (RAT only) performed worst with an out-of-sample cross-entropy of 3.24 (cross-entropy values further from zero correspond to worse predictive performance).
 The median cross-entropy values were between 2.53 and 2.59 for models in Class 2.
 Models in Class 3 performed best with cross-entropy values between 1.44 and 1.47 (see Figure \ref{fig:pred-perf}).
 
 \begin{figure}
-\centering
-\includegraphics{0501_MainText_files/figure-latex/pred-perf-1.pdf}
-\caption{\label{fig:pred-perf}Predictive performance of candidate models. Interquartile ranges for the posterior cross-entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. cross-entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each model class (1: rapid antigen testing (RAT) only; 2: syndromic data only; and 3: combined RAT and syndromic data).}
+\includegraphics[width=1\linewidth]{0501_MainText_files/figure-latex/pred-perf-1} \caption{Predictive performance of candidate models. Interquartile ranges for the posterior cross-entropy of the best candidate models at each level of model complexity tested under temporal cross-validation. cross-entropy is a measure of distance from the truth, so values closer to zero indicate better models. The intermediate complexity models perform best at prediction, although performance is similar across all the models within each model class (1: rapid antigen testing (RAT) only; 2: syndromic data only; and 3: combined RAT and syndromic data).}\label{fig:pred-perf}
 \end{figure}
 
 Generic model classification performance is shown by their ROC curves (Figure \ref{fig:ROC-plot}).
 
-\includegraphics{0501_MainText_files/figure-latex/ROC-plot-1.pdf}
-\includegraphics{0501_MainText_files/figure-latex/scenario-plot-1.pdf}
+\begin{figure}
+\includegraphics[width=1\linewidth]{0501_MainText_files/figure-latex/ROC-plot-1} \caption{Receiver operating characteristics for rapid antigen testing (RAT) only approach (Model Class 1) and posterior median and interquartile range ROC for Class 2 (syndromic data only) and 3 (syndromic and RAT data) models. These curves demonstrate the performance of the model for any hypothetical scenario as defined by the axes (as opposed to Figure 5 which demonstrates model performance in specific epidemiological scenarios which are realisations of a single point in this space).}\label{fig:ROC-plot}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{0501_MainText_files/figure-latex/scenario-plot-1} \caption{Performance of models under each scenario measured by posterior median and interquartile range for errors defined in Table 1. Low errors correspond to better model performance. There is no error rate defined for the Model Class 1 (RAT only model) in Scenario 2 as the model failed to meet the requirement for that scenario (making the error functionally infinite).}\label{fig:scenario-plot}
+\end{figure}
 
 Scenario specific classification performance is shown in Figure \ref{fig:scenario-plot}.
 Across all three scenarios (defined in Table \ref{tab:scenarios-tab}), the best models in Class 3 performed equally well or better than the other two model classes.
@@ -401,9 +398,8 @@ It should be noted that the candidate models are chosen as a result of a selecti
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better identification of COVID-19 cases than either diagnostic in isolation.
 These gains in performance are mirrored across metrics of prediction, generic classification and scenario-specific classification.
 The biggest improvement is seen in Scenario 2 (``Rising Cases'') which was developed around the current situation in Bangladesh (see Table \ref{tab:scenarios-tab} where the pandemic is once again accelerating.
-In this scenario, the combined data model (Model Class 3) false negative rate is 26 (IQR: 24, 29) percentage points lower that of the RAT only model (Model Class 1).
-Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is
-31 (IQR: 29, 34) percentage points higher.
+In this scenario, the combined data model (Model Class 3) false negative rate is 26 (IQR: 24-29) percentage points lower that of the RAT only model (Model Class 1).
+Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is 31 (IQR: 29- 34) percentage points higher.
 
 In a country where there are currently 15 000 new cases being identified every day, these improvements are non-trivial, representing tens of thousands of daily cases that would otherwise be missed.
 Futhermore, this boost in diagnostic performance is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries (LMICs).
