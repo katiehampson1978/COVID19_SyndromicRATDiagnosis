@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  1 AUG 2021 16:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  3 AUG 2021 16:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -975,24 +975,18 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 167.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 167.
-
-Overfull \hbox (4.79642pt too wide) in paragraph at lines 179--183
-[]\T1/lmr/m/n/10 (-20) Bangladesh's In-sti-tute of Epi-demi-ol-ogy Dis-ease Con
--trol And Re-search (IEDCR)
- []
-
 [1
 
 
 {/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 217.
+ine 215.
 
 LaTeX Warning: Marginpar on page 3 moved.
 
 [3]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-66.
+64.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -1009,17 +1003,16 @@ uscript/0501_MainText/MainTextFigs/DataFlowchart.pdf Graphic file (type pdf)
 script/0501_MainText/MainTextFigs/DataFlowchart.pdf>
 Package pdftex.def Info: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRA
 TDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf  used o
-n input line 274.
+n input line 272.
 (pdftex.def)             Requested size: 345.0pt x 243.94061pt.
 [4] [5pdfTeX warning (ext4): destination with the same identifier (name{figure.
 1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.278 \subsection{Modelling}\label{modelling}}
-                                               </Users/fergusjchadwick/Dropbox/
-Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/Da
-taFlowchart.pdf>]
+l.284 
+       </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_M
+anuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf>]
 
 pdfTeX warning: pdflatex (file /Users/fergusjchadwick/Dropbox/Git/COVID19_Syndr
 omicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowc
@@ -1035,79 +1028,114 @@ pe pdf)
 script/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf>
 Package pdftex.def Info: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRA
 TDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.p
-df  used on input line 312.
+df  used on input line 310.
 (pdftex.def)             Requested size: 345.0pt x 243.94061pt.
 [6] [7pdfTeX warning (ext4): destination with the same identifier (name{figure.
 2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.322 
+l.320 
        </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_M
-anuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf>] [8]
-<0501_MainText_files/figure-latex/pred-perf-1.pdf, id=186, 458.71375pt x 315.17
+anuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf>] [8pdfTeX war
+ning (ext4): destination with the same identifier (name{table.1}) has been alre
+ady used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.356 
+      ]
+<0501_MainText_files/figure-latex/pred-perf-1.pdf, id=185, 458.71375pt x 315.17
 75pt>
 File: 0501_MainText_files/figure-latex/pred-perf-1.pdf Graphic file (type pdf)
 <use 0501_MainText_files/figure-latex/pred-perf-1.pdf>
 Package pdftex.def Info: 0501_MainText_files/figure-latex/pred-perf-1.pdf  used
- on input line 376.
+ on input line 374.
 (pdftex.def)             Requested size: 458.71263pt x 315.17673pt.
 
-Overfull \hbox (113.71263pt too wide) in paragraph at lines 376--377
+Overfull \hbox (113.71263pt too wide) in paragraph at lines 374--375
  [][] 
  []
 
-[9pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
-as been already used, duplicate ignored
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.389 
-      ] [10pdfTeX warning (ext4): destination with the same identifier (name{fi
-gure.3}) has been already used, duplicate ignored
+LaTeX Warning: Reference `fig:ROC-plot' on page 9 undefined on input line 378.
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.389 
-       <./0501_MainText_files/figure-latex/pred-perf-1.pdf>]
-<0501_MainText_files/figure-latex/ROC-plot-1.pdf, id=209, 465.74pt x 208.78pt>
+<0501_MainText_files/figure-latex/ROC-plot-1.pdf, id=186, 465.74pt x 208.78pt>
 File: 0501_MainText_files/figure-latex/ROC-plot-1.pdf Graphic file (type pdf)
 <use 0501_MainText_files/figure-latex/ROC-plot-1.pdf>
 Package pdftex.def Info: 0501_MainText_files/figure-latex/ROC-plot-1.pdf  used 
-on input line 392.
+on input line 380.
 (pdftex.def)             Requested size: 465.73886pt x 208.77946pt.
-
-Overfull \hbox (120.73886pt too wide) in paragraph at lines 392--393
- [][] 
- []
-
-<0501_MainText_files/figure-latex/scenario-plot-1.pdf, id=210, 465.74pt x 207.7
+<0501_MainText_files/figure-latex/scenario-plot-1.pdf, id=187, 465.74pt x 207.7
 7625pt>
 File: 0501_MainText_files/figure-latex/scenario-plot-1.pdf Graphic file (type p
 df)
 <use 0501_MainText_files/figure-latex/scenario-plot-1.pdf>
 Package pdftex.def Info: 0501_MainText_files/figure-latex/scenario-plot-1.pdf  
-used on input line 398.
+used on input line 381.
 (pdftex.def)             Requested size: 465.73886pt x 207.77573pt.
 
-Overfull \hbox (120.73886pt too wide) in paragraph at lines 398--399
- [][] 
+Overfull \hbox (135.73886pt too wide) in paragraph at lines 380--382
+[][]
  []
 
-[11pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
- has been already used, duplicate ignored
+
+Overfull \hbox (120.73886pt too wide) in paragraph at lines 380--382
+[] 
+ []
+
+[9] [10pdfTeX warning (ext4): destination with the same identifier (name{figure
+.3}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.416 
-       <./0501_MainText_files/figure-latex/ROC-plot-1.pdf>] [12pdfTeX warning (
-ext4): destination with the same identifier (name{figure.5}) has been already u
-sed, duplicate ignored
+l.382 
+       <./0501_MainText_files/figure-latex/pred-perf-1.pdf>]
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.416 
-       <./0501_MainText_files/figure-latex/scenario-plot-1.pdf>] [13]
+LaTeX Warning: Reference `fig:scenario-plot' on page 11 undefined on input line
+ 383.
+
+[11 <./0501_MainText_files/figure-latex/ROC-plot-1.pdf> <./0501_MainText_files/
+figure-latex/scenario-plot-1.pdf>]
+
+LaTeX Warning: Reference `fig:scenario-plot' on page 12 undefined on input line
+ 405.
+
+
+LaTeX Warning: Reference `fig:ROC-plot' on page 12 undefined on input line 407.
+
+
+[12] [13]
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 457--460
+[][][] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 457--460
+
+ []
+
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 461--464
+[][][] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 461--464
+
+ []
+
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 465--468
+[][][] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 465--468
+
+ []
+
+
 Overfull \hbox (2.22221pt too wide) in paragraph at lines 469--472
 [][][] []
  []
@@ -1147,7 +1175,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 481--484
 
  []
 
-[14]
+
 Overfull \hbox (2.22221pt too wide) in paragraph at lines 485--488
 [][][] []
  []
@@ -1177,7 +1205,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 493--496
 
  []
 
-
+[14]
 Overfull \hbox (2.22221pt too wide) in paragraph at lines 497--500
 [][][] []
  []
@@ -1267,7 +1295,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 529--532
 
  []
 
-[15]
+
 Overfull \hbox (2.22221pt too wide) in paragraph at lines 533--536
 [][][] []
  []
@@ -1307,52 +1335,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 545--548
 
  []
 
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 549--552
-[][][] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 549--552
-
- []
-
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 553--556
-[][][] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 553--556
-
- []
-
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 557--560
-[][][] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 557--560
-
- []
-
-[16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 564.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 564.
+[15] [16]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 552.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 552.
 (./0501_MainText.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 564.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 564.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 552.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 552.
 Package rerunfilecheck Info: File `0501_MainText.out' has not changed.
 (rerunfilecheck)             Checksum: 5AE190FF0232A99DCD92270DCE3CE6F9;2165.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 564.
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 552.
  ) 
 Here is how much of TeX's memory you used:
- 25039 strings out of 480608
- 443238 string characters out of 5903630
- 725864 words of memory out of 5000000
+ 25031 strings out of 480608
+ 443162 string characters out of 5903630
+ 724979 words of memory out of 5000000
  40160 multiletter control sequences out of 15000+600000
- 597127 words of font info for 134 fonts, out of 8000000 for 9000
+ 596876 words of font info for 131 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,15n,83p,2022b,970s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local
@@ -1368,10 +1369,10 @@ st/fonts/type1/public/lm/lmri8.pfb></usr/local/texlive/2020/texmf-dist/fonts/ty
 pe1/public/lm/lmss8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/
 lm/lmsy6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt8.pf
 b>
-Output written on 0501_MainText.pdf (16 pages, 524792 bytes).
+Output written on 0501_MainText.pdf (16 pages, 524479 bytes).
 PDF statistics:
- 347 PDF objects out of 1000 (max. 8388607)
- 281 compressed objects within 3 object streams
- 89 named destinations out of 1000 (max. 500000)
+ 341 PDF objects out of 1000 (max. 8388607)
+ 275 compressed objects within 3 object streams
+ 87 named destinations out of 1000 (max. 500000)
  18678 words of extra memory for PDF output out of 20736 (max. 10000000)
 
