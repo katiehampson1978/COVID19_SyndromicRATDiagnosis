@@ -131,8 +131,14 @@ The multivariate probit structures the outcomes of the PCR test and symptoms pre
 These outcomes are determined by an indicator function which takes a $D$-dimensional vector of *continuous latent* variables ($\boldsymbol{z}_i=(z_{i1},z_{i2},\dots,z_{id})$, $z_{ij}\in\ \mathbb{R}$).
 These latent continuous variables then covary as realisations of a $D$-dimensional multivariate normal, 
 with the mean of the error structure informed by a linear predictor, $\sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id}$, and a covariance between dimensions, $\Sigma$.
-The linear predictor allows us to condition the outcomes on risk factor variables (here, age and gender) while the covariance structure allows us to account for the correlated nature of the symptoms with each other and the outcome.
-As Albert and Chib [@albert1993bayesian] identify in their paper, the covariance matrix formulation is not identifiable, with the variance, $diag (\Sigma)$ and means of the latent variables, $\boldsymbol{z}_i$ trading off against each other.
+The linear predictor allows us to condition the outcomes on risk factor variables (here, age and gender).
+The covariance structure allows us to account for the correlated nature of the symptoms with each other and the outcome.
+This multivariate approach (multiple response variables) is also a very efficient way of encoding higher order interactions.
+The contribution of symptoms might be heavily context dependent, for example, having a fever, a cough or a loss of taste might be uninformative symptoms independently, but in combination they might be highly diagnostic.
+These interaction terms use a large number of parameters and can be hard to fit to data.
+Using a multivariate structure allows us to exploit more efficient posterior sampling algorithms, and in higher dimensional settings like this uses fewer parameters.
+
+As Albert and Chib identify in their paper [@albert1993bayesian], the covariance matrix formulation of the model is not identifiable, with the variance, $diag (\Sigma)$ and means of the latent variables, $\boldsymbol{z}_i$ trading off against each other.
 For this reason, we use a correlation matrix, $\Omega$, formulation with the variance set to 1.
 A correlation based framework also makes communication with clinicians and other practitioners smoother as correlations are more familiar.
 
@@ -146,7 +152,6 @@ diag(\Omega)&=1 \\
 \boldsymbol{\Omega} &\sim \text{LKJ}(1)
 (\#eq:ModelClass2)
 \end{nalign}
-
 
 Model Class 3 combines the two data sources.
 We utilise the specificity of RAT by treating RAT-positive patients as PCR-positive patients.
