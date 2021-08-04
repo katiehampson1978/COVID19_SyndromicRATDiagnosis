@@ -279,9 +279,9 @@ We strongly emphasise that generic performance here is only used to show the fle
 dt <- tibble(
    Scenarios = c("1 Agnostic", "2 Rising Cases", "3 Low-Level Cases"),
    Requirement = c("Maximise correct classification rates", 
-                   "Max. 20% false negative rate", 
-                   "Max. 20% false positive rate"),
-   Error = c("Sum of error rates", "False negative rate", "False positive rate ")
+                   "20% false negative rate", 
+                   "20% false positive rate"),
+   Error = c("Sum of error rates", "False positive rate", "False negative rate")
 )
 kable(dt, "latex", booktabs = T,
 col.names = c("Scenario Name", 
@@ -290,10 +290,9 @@ col.names = c("Scenario Name",
 caption = "For each epidemiological scenario there is a requirement and a performance criterion.
 The requirement refers to a base level of performance the model must achieve; in general this will be a maximum acceptable error rate of some kind.
 These requirements were determined in discussion with members of the Institute of Epidemiology, Disease Control and Research, Ministry of Health, Bangladesh (IEDCR).
-The requirement determines a probability threshold for each model which most closely meets that requirement.
+The requirement determines a probability threshold for each model which most closely exceeds that requirement (i.e. for a 20% requirement, 20.1% error is unacceptable even though it might be the closest achieve error rate to the requirement).
 The performance criterion is then used to determine which model performs the 'best' given that the requirement has been met.") %>%
   kable_styling(full_width = TRUE)
-
 ```
 
 In Scenario 1, we do not consider epidemiological context but simply minimise false negative and false positive rates equally.
