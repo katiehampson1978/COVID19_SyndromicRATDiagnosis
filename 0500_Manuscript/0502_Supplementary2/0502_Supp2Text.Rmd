@@ -152,24 +152,7 @@ Model Class 3 combines the two data sources.
 We utilise the specificity of RAT by treating RAT-positive patients as PCR-positive patients.
 The RAT-negative patients are modelled using the sensitive syndromic approach using Model Class 2 to capture PCR-positive patients that are missed by the RAT.
 This approach leverages the potential different syndromic profiles of PCR-positve patients who are RAT-positive and -negative, allowing the model to adapt solely to the latter.
-Structurally, the model combines Equations \@ref(eq:ModelClass1) and \@ref(eq:ModelClass2), with RAT-positive patients being modelled using Equation \@ref(eq:ModelClass1), and Equation \@ref(eq:ModelClass2).
-
-\begin{nalign}
-y_{i1} &= \begin{cases}
-    1,& \text{if } \text{RAT}_i=1 \\
-       & \text{otherwise}
-\end{cases}\\
-y_{id} &= \mathbb{I}(z_{id} > 0) \\
-\boldsymbol{z}_{i} &= \boldsymbol{x}_i \boldsymbol{\beta} + \boldsymbol{\epsilon}_{i} \\
-z_{id} &= \sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id} \\
-\boldsymbol{\epsilon}_i &\sim N(\boldsymbol{0}, \boldsymbol{\Omega}) \\
-diag(\Omega)&=1
-{\beta} &\sim N(0,1) \\
-\boldsymbol{\Omega} &\sim \text{LKJ}(1)
-(\#eq:ModelClass3)
-\end{nalign}
-
-\todo{This isn't quite right - need to demonstrate subsetting of i's, otherwise it implies that z is calculated for all data points}
+Structurally, the model combines Equations \@ref(eq:ModelClass1) and \@ref(eq:ModelClass2), with RAT-positive patients being modelled using Equation \@ref(eq:ModelClass1), and RAT-negative patients with Equation \@ref(eq:ModelClass2).
 
 By using a Bayesian formulation, we generate full posteriors for our parameter estimates, allowing natural quantification of uncertainty.
 Bayesian methods also facilitate the use of more informative priors.
@@ -198,17 +181,12 @@ By using general predictive power to narrow down the number of candidate models 
 The number of candidate models used was not pre-determined but it was clear when fitting the models that there were "jumps" in performance (as defined below) between models containing five and four symptoms, so the models with one to four symptoms were used as the candidate models.
 Zero symptom models were not included in the analysis as they do not correspond to a feasible policy (with covariates they would require governments to ask individuals of a given gender and age as COVID-19 positive, and without covariates they would involve randomly assigning individuals as COVID-19 positive).
 
-Model selection carried out in this way is quite robust.
-However, if more time were available for model development we would advocate more sophisticated methods of variable selection, such as penalised complexity priors [@simpson2017penalising] or auxiliary variable selection [@held2006bayesian].
-These methods, once developed for the use-case, are superior but require significant testing that would prevent getting this work out in a policy-relevant timeframe.
-We also believe that these approaches may be harder for non-statisticians to adapt.
-
 ### Predictive Performance
 
 We scored the models' predictive power using binary cross-entropy (hereafter, cross-entropy).
 Cross-entropy measures the accuracy of models that generate probabilities of binary outcomes, rather than make binary classifications, similar in concept to a mean square error for normally-distributed data, but adapted for binary data [@gneiting2007strictly].
 A cross-entropy value close to zero corresponds to high levels of accuracy, with larger values indicating lower accuracy.
-More specifically, the metric allows us to compare a binary vector, $\boldsymbol{y}\in [0,1]$, with a vector of probablistic predictions ($p(\boldsymbol{y})\in (0,1)$) as follows:
+More specifically, the metric allows us to compare a binary vector, $\boldsymbol{y}\in [0,1]$, with a vector of probabilistic predictions ($p(\boldsymbol{y})\in (0,1)$) as follows:
 
 \begin{nalign}
 \boldsymbol{H}_p(q)=\frac{1}{N}\sum_{i=1}^{N}y_i\cdot log(p(y_i))+(1-y_i)\cdot log(1-p(y_i))
@@ -238,33 +216,21 @@ In our epidemiological scenarios (outlined below) we use our ROC curve calculati
 We strongly emphasise that generic performance here is only used to show the flexibility of the model classes; the best model for a local situation can only be determined if the relative cost of false positives and false negatives is known.
 Here, we choose three representative scenarios.
 Each scenario has a requirement and error rate (defined in Table \@ref(tab:scenarios-tab2)).
+We identify the threshold, $\hat{p}$, at which the requirement is most closely exceeded (i.e. if the requirement is an error rate should be a maximum 15%, the threshold that produces an error rate below 15% but as close to 15% as possible will be chosen).
 
 In Scenario 1, we do not consider epidemiological context but simply minimise false negative and false positive rates equally.
-We do this by maximising the two correct classification rates both individually and in total, as measured by the harmonic mean (as opposed to the arithmetic mean which would only maximise the rates in total).
-
-$$
-\text{ Find } \hat{p} \text{ which } \max \left( \frac{2\cdot \text{TPR}\cdot \text{TNR}}{\text{TPR} + \text{TNR}} \right), 
-\epsilon=\text{FPR} + \text{FNR} 
-$$
-\todo{I'm not sure if any of these equations are correct or sufficient or clear}
+We do this by maximising the two correct classification rates both individually and in total, as measured by the harmonic mean.
+The harmonic mean is used widely in the classification literature as it is maximised by achieving large values in all its component parts, rather than the arithmetic mean which can be maximised by having one extremely large component at the expense of other components.
+In other words, the arithmetic mean could be large because it has a very high TPR but a small TNR, whereas the harmonic mean will maximise both TPR and TNR.
+While conceptually the harmonic mean is better suited than the arithmetic for this use case, both produce qualitatively the same results for these data. 
 
 Scenario 2 corresponds to the current situation in Bangladesh at time of writing (July 2021), with COVID-19 cases beginning to rapidly increase again.
 Under these circumstances, false negatives are extremely costly relative to false positives due to the exponential growth of the disease.
 
-$$
-\text{ Find } \hat{p} \text{ which } \max \left( FNR - 0.2 \leq 0 \right),\\
-\epsilon=\text{FPR}
-$$
-
 In Scenario 3, the pandemic is not declining but maintaining a steady rate of cases.
 In this situation, policy-makers may be keen to keep false positive diagnoses low to prevent lockdown fatigue and to keep the workforce active.
 
-$$
-\text{ Find } \hat{p} \text{ which } \max \left( FPR - 0.2 \leq 0 \right),\\
-\epsilon=\text{FNR}
-$$
-
-The requirements in Scenario 2 and 3 were developed in discussion with the Institute of Epidemiology, Disease Control and Research (IEDR), Bangladesh, for illustrative purposes.
+The requirements in Scenario 2 and 3 were developed in discussion with the Institute of Epidemiology, Disease Control and Research (IEDCR), Bangladesh, for illustrative purposes.
 
 ```{r scenarios-tab2, echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
@@ -272,9 +238,9 @@ library(kableExtra)
 dt <- tibble(
    Scenarios = c("1 Agnostic", "2 Rising Cases", "3 Low-Level Cases"),
    Requirement = c("Maximise correct classification rates", 
-                   "Max. 20% false negative rate", 
-                   "Max. 20% false positive rate"),
-   Error = c("Sum of error rates", "False negative rate", "False positive rate ")
+                   "20% false negative rate", 
+                   "20% false positive rate"),
+   Error = c("Sum of error rates", "False positive rate", "False negative rate")
 )
 kable(dt, "latex", booktabs = T,
 col.names = c("Scenario Name", 
@@ -283,7 +249,7 @@ col.names = c("Scenario Name",
 caption = "For each epidemiological scenario there is a requirement and a performance criterion.
 The requirement refers to a base level of performance the model must achieve; in general this will be a maximum acceptable error rate of some kind.
 These requirements were determined in discussion with members of the Institute of Epidemiology, Disease Control and Research, Ministry of Health, Bangladesh (IEDCR).
-The requirement determines a probability threshold for each model which most closely meets that requirement.
+The requirement determines a probability threshold for each model which most closely exceeds that requirement (i.e. for a 20% requirement, 20.1% error is unacceptable even though it might be the closest achieve error rate to the requirement).
 The performance criterion is then used to determine which model performs the 'best' given that the requirement has been met.") %>%
   kable_styling(full_width = TRUE)
 
