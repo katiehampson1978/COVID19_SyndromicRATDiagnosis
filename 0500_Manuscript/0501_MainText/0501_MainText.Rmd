@@ -128,26 +128,25 @@ RATonlyFNR <- RATonlyROC$MedFalseNegRate %>% round(2)
 
 *Background*
 
-The majority of the world's population live in low- and middle-income countries (LMICs) where access to gold-standard diagnostics like RT-PCR is often limited.
+The majority of the world's population live in low- and middle-income countries (LMICs), where access to gold-standard diagnostics like RT-PCR is often limited.
 Rapid antigen testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice.
 
 *Methods*
 
 Community support teams in Dhaka, Bangladesh identified potential COVID-19 patients in Dhaka using syndromic surveillance.
 A sample (n = `r pop_size`) of these patients was tested using RAT and syndromic data were collected.
-Models were fit to predict RT-PCR status using the RAT data, the syndromic data, and the two combined.
+Models were fit to predict COVID-19 status using the RAT data, the syndromic data, and the two combined.
 Model performance was measured using predictive power and classification performance under three epidemiological scenarios: "Agnostic", "Rising Cases" and "Low-Level Cases".
 
 *Findings*
 
 Combined data models yielded equal or improved performance over syndromic- and RAT-only models across all three epidemiological scenarios and when compared as more generic prediction and classification engines.
-<<<<<<< HEAD
-In the "Rising Cases" scenario, which most closely represents the current situation in many LMICs, the combined data model false negative rate is `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min()) %>% round(2)` (IQR: `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>%  select(FalseNegRate_CI_0.75) %>%  unlist(use.names = FALSE) %>%  min()) %>% round(2)`-`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(FalseNegRate_CI_0.25) %>% unlist(use.names = FALSE) %>% min()) %>%  round(2)`) percentage points lower that of the RAT only model. 
+In the "Rising Cases" scenario, which most closely represents the current situation in many LMICs, the combined data model's false negative rate is `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min()) %>% round(2)` (IQR: `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>%  select(FalseNegRate_CI_0.75) %>%  unlist(use.names = FALSE) %>%  min()) %>% round(2)`-`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(FalseNegRate_CI_0.25) %>% unlist(use.names = FALSE) %>% min()) %>%  round(2)`) percentage points lower than the RAT only model's. 
 
 *Interpretation*
 
-Small, scalable improvements in the accuracy of mass-deployed but imperfect diagnostic methods can make a very big difference for pandemic control.  
 We demonstrate that by statistically utilising complementary strengths and weaknesses across two imperfect diagnostics, we can greatly improve the detection of COVID-19.
+Small, scalable improvements in the accuracy of mass-deployed but imperfect diagnostic methods can therefore make a very big difference for pandemic control.  
 
 *Funding*
 
@@ -158,23 +157,23 @@ The Bill and Melinda Gates Foundation, the Wellcome Trust and EPSRC.
 Identification and isolation of COVID-19 cases remains key to the pandemic response across the globe.
 The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
 RT-PCR testing has rapidly become the default, gold-standard test for COVID-19 in applied settings (although see [@drame2020should]) due to its high sensitivity and specificity for COVID-19 [@corman2020detection, @tahamtan2020real].
-Most of the world's population, however, live in low- and middle-income countries (LMICs) where the laboratory facilities needed to carry out RT-PCR tests are often scarce and hard to reach [@chowdhury2020long, @vandenberg2021considerations], and patient diagnosis and support comes from telemedicine or community support teams (CSTs) composed of local volunteers with basic training.
+Most of the world's population, however, live in low- and middle-income countries (LMICs), where the laboratory facilities needed to carry out RT-PCR tests are often scarce and hard to reach [@chowdhury2020long, @vandenberg2021considerations], and patient diagnosis and support comes from telemedicine or community support teams (CSTs) composed of local volunteers with basic training.
 COVID-19 diagnosis worldwide, therefore, must be made accessible using inexpensive methods that can be carried out locally [@cash2020has, @olalekan2020covid].
 
 An increasingly popular alternative to RT-PCR is rapid antigen testing (RAT) [@linares2020panbio].
 Like RT-PCR, these tests have high specificity for COVID-19 while being less expensive, easier to implement, and faster but with lower sensitivity [@boum2021performance].
-For RT-PCR testing, patients must travel to a designated site or have officials visit their home in enhanced personal protective equipment.
+For RT-PCR testing, patients must travel to a designated site or have officials visit their home in enhanced personal protective equipment and results can take from one day to a week to arrive.
 In contrast, RATs can be conducted on nasal swabs, completed in the home with minimal PPE, and results are available in 30 minutes.
 RATs can be taken by persons with limited training, thus decreasing the time and expense associated with identifying cases.
 Together, these traits make RATs an appealing alternative to RT-PCR, however, concerns have been raised that the lower sensitivity of RAT [@mak2020evaluation, muhi2021multi] leads to more false negative diagnoses.
 
 Another diagnostic that has been used since the start of the pandemic is symptom-thresholding [@jin2020rapid]. 
-Here, a patient presenting with a fever and one or more symptoms is treated as a COVID-19 positive patient.
+Here, clinicians develop a set of symptoms that they believe mean a patient has COVID-19, and treat patients with those symptoms (i.e. those who exceed the symptom threshold) as COVID-19 positive patients.
 The main advantage of this approach is the ease of implementation. 
 As with RAT, symptom-thresholding is faster, cheaper and less invasive than RT-PCR.
 Unlike RAT, symptom-thresholding can be scaled immediately at the onset of a pandemic, however, it is also reliant on thresholds developed then.
 These thresholds were necessarily drawn from clinical intuition, rather than data, often for different variants and populations than they are now applied to.
-Consequently, the relationship between the thresholds and the true COVID-19 status is often weak, with low specificity leading to a very large number of false positive diagnoses.
+Consequently, the relationship between the thresholds and the true COVID-19 status is often weak, with low specificity and thus a very large number of false positive diagnoses.
 A natural extension, therefore, is syndromic modelling.
 In this approach, rather than using a set of pre-determined thresholds, a range of symptomatic and risk factor data (such as age and gender ) are collected and then a sub-sample of patients is tested using RT-PCR for validation [@sim2021utilizing].
 These data are used to fit a model that allows more accurate prediction of how likely a patient is to have COVID-19 through the identification of COVID-19 syndromes [@undurraga2021covid, @wenham2020covid].
@@ -189,17 +188,18 @@ Furthermore, symptoms do not always occur in isolation, some, like loss of smell
 Unfortunately, the majority of syndromic modelling methods currently used do not account for these complexities.
 Even where they can, at least partially, be accounted for, the many types of common respiratory disease generally means that syndromic modelling still tends to have quite low specificity [@garry2020considerations].
 
-Moderate to poor sensitivity and specificity are problematic in diagnostics but may be tolerable depending on their scale and impact given the local situation.
+None of these alternative diagnostics, therefore, can match PCR testing in terms of both sensitivity and specificity.
+However, this may be tolerable depending on the scale and impact of misclassification given the local situation.
 Low specificity means a patient is likely to be told they have COVID-19 when they do not (a high false positive rate), leading to patients unnecessarily self-isolating and receiving support.
 This is expensive to the individual and to local public health bodies, reducing available resources for those who need them [@surkova2020false].
 Similarly, low sensitivity means more patients being told they do not have COVID-19 when they actually do (a high false negative rate), leading to the individual not getting appropriate support or taking action to prevent the disease spreading further [@west2020covid].
-Although the default approach is generally to minimise both misclassification rates (our "Agnostic" scenario below), the true costs of these misclassifications will depend on local context.
+Although the default approach is generally to minimise both misclassification rates, the true costs of these misclassifications will depend on local context.
 When the prevalence of the disease is low, false negatives will be correspondingly low and false positives may create local scepticism leading to poor adherence longer term.
 In this situation (our "Low-Level Cases" scenario), false positives might be more costly than false negatives [@surkova2020false].
 If the disease is abundant or increasing rapidly then changes in the false negative rate might have an outsized impact on the pandemic trajectory and thus be more costly, as in our "Rising Cases" scenario.
 Often the situation will be even more nuanced and a different balance will need to be struck [@vandenberg2021considerations].
 
-The "best" diagnostic, therefore, is not a single universal test.
+The "best" diagnostic, therefore, is not a single universal test but the one where the correct classifications have highest value and misclassifications have lowest cost.
 The two dominant testing methods available in LMICs when not adapted for the local situation are highly flawed.
 Relying solely on symptomatic diagnosis will likely overestimate the number of individuals with COVID-19 due to its lack of specificity.
 Conversely, RATs will give a false impression of control due to the number of positive cases that will be missed.
@@ -220,9 +220,9 @@ If selected, the CSTs collected the patient's age and gender, and took two nasal
 
 One swab each was used for rapid antigen testing (RAT) and RT-PCR.
 The full questionnaire and testing protocols are provided in Supplementary 1. 
-Participants provided written informed consent to sample collection and for their results to be analyzed in the study.
+Participants provided written informed consent to sample collection and for their results to be analysed in the study.
 
-```{r data-flowchart, echo=FALSE, out.width='75%', fig.cap="Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation."}
+```{r data-flowchart, echo=FALSE, out.width='75%', fig.cap="Schematic description of identification of likely COVID-19 patients by community support teams (CSTs), swab collection and model definitions. The teams collected syndromic data (age, gender and presence/absence of 14 predetermined symptoms), and two sets of naso-pharyngeal swabs (one each for Rapid Antigen Testing and RT-PCR). We then used rapid antigen testing (RAT) and the syndromic data, two imperfect but inexpensive diagnostics, to generate three model classes: RAT result only in Model Class 1, syndromic data only in Model Class 2, and both RAT result and syndromic data in Model Class 3. The RT-PCR test result is used to train and test each model using temporal cross-validation."}
 knitr::include_graphics(paste0(getwd(),"/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf"))
 ```
 
@@ -244,7 +244,7 @@ By using a Bayesian formulation, we are able to quantify uncertainty in the para
 Model Class 3 combines the two data sources.
 We utilise the specificity of RAT by treating RAT-positive patients as PCR-positive patients.
 The RAT-negative patients are modelled using the sensitive syndromic approach using Model Class 2 to capture PCR-positive patients that are missed by the RAT.
-This approach leverages the potential different syndromic profiles of PCR-positve patients who are RAT-positive and -negative, allowing the model to adapt solely to the latter.
+This approach leverages the potential different syndromic profiles of PCR-positive patients who are RAT-positive and -negative, allowing the model to adapt solely to the latter.
 The models were fitted to the data using Bayesian inference techniques based on Hamiltonian Monte Carlo in the Stan programming language [@carpenter2017stan].
 
 ### Model Selection
@@ -252,8 +252,8 @@ The models were fitted to the data using Bayesian inference techniques based on 
 We conducted backwards model selection (starting with the most complex, biologically plausible model) to identify a subset of models with the highest predictive power under temporal cross-validation (Figure \@ref(fig:modsel-flowchart)).
 Reducing the number of possible models was necessary to reduce computational demand and reduce the risk of overfitting models to the test scenarios.
 The large number of symptoms corresponds to a high number of potential model configurations (>131 000 for 14 symptoms and two covariates) which might perform  well on the test sets (even under the challenging conditions of temporal cross-validation) but lack transferability.
-By first using general predictive power to narrow down the number of candidate models and then testing those models, we are more likely to choose models which generalise well to new data.
-The number of candidate models used was not pre-determined but it was clear when fitting the models that there were "jumps" in performance (as defined below) between models containing five and four symptoms, so the models with one to four symptoms were used as the candidate models.
+By first using strength of relationship with the outcome (coarse selection) and general predictive power (fine selection) to narrow down the number of candidate models, and then testing those models in the scenarios, we are more likely to choose models which generalise well to new data.
+The number of candidate models emerged during the fitting process as it was clear that there were "jumps" in performance (as defined below) between models containing five and four symptoms, so the models with one to four symptoms were used as the candidate models.
 Zero symptom models were not included in the analysis as they do not correspond to a feasible policy (with covariates they would require governments to ask individuals of a given gender and age as COVID-19 positive, and without covariates they would involve randomly assigning individuals as COVID-19 positive).
 
 ```{r modsel-flowchart, echo=FALSE, out.width='100%', fig.cap="Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross-validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross-validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross-entropy scoring. The cross-entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class."}
@@ -495,13 +495,13 @@ It should be noted that the candidate models are chosen as a result of a selecti
 
 We have demonstrated that combining rapid antigen tests (RATs) with syndromic modelling yields better identification of COVID-19 cases than either diagnostic in isolation.
 These gains in performance are mirrored across metrics of prediction, generic classification and scenario-specific classification.
-The biggest improvement is seen in Scenario 2 ("Rising Cases") which was developed around the current situation in Bangladesh (see Table \@ref(tab:scenarios-tab) where the pandemic is once again accelerating.
+The biggest improvement is seen in Scenario 2 ("Rising Cases") which was developed around the current situation in Bangladesh (see Table \@ref(tab:scenarios-tab) where the pandemic is once again accelerating, a trend mirrored in many low- and middle- income countries (LMICs).
 In this scenario, the combined data model (Model Class 3) false negative rate is `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min()) %>% round(2)` (IQR: `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>%  select(FalseNegRate_CI_0.75) %>%  unlist(use.names = FALSE) %>%  min()) %>% round(2)`-`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(FalseNegRate_CI_0.25) %>% unlist(use.names = FALSE) %>% min()) %>%  round(2)`) percentage points lower that of the RAT only model (Model Class 1). 
-Although the syndromic only model (Model Class 2) matches the combined models false negative rate, its false positive rate is `r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()) %>% round(2)` (IQR: `r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>%  filter(ModelClass == "SyndOnly") %>% select(Error075) %>% unlist(use.names = FALSE) %>% min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(Error075) %>% unlist(use.names = FALSE) %>%  min()) %>% round(2)`- `r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(Error025) %>%  unlist(use.names = FALSE) %>%  min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(Error025) %>%  unlist(use.names = FALSE) %>% min()) %>% round(2)`) percentage points higher.
+Although the syndromic only model (Model Class 2) matches the combined model's false negative rate, its false positive rate is `r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedError) %>% unlist(use.names = FALSE) %>% min()) %>% round(2)` (IQR: `r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>%  filter(ModelClass == "SyndOnly") %>% select(Error075) %>% unlist(use.names = FALSE) %>% min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(Error075) %>% unlist(use.names = FALSE) %>%  min()) %>% round(2)`- `r 100*(scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndOnly") %>% select(Error025) %>%  unlist(use.names = FALSE) %>%  min() - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(Error025) %>%  unlist(use.names = FALSE) %>% min()) %>% round(2)`) percentage points higher.
 
 In a country where there are currently 15 000 new cases being identified every day, these improvements are non-trivial, representing tens of thousands of daily cases that would otherwise be missed.
-Futhermore, this boost in diagnostic performance is achieved with data that are already being collected in Bangladesh and other low- and middle- income countries (LMICs). 
-Outwith developing and rerunning the models presented in this paper, these improvements are essentially cost-free and eminently scalable.
+Furthermore, this boost in diagnostic performance is achieved with data that are either already being collected or are currently being rolled out in Bangladesh and other LMICs [@aziz2020integrated, @schultz2021pragmatic]. 
+The only cost involved in making these improvements is the model development which is easily scalable.
 
 The pattern is similar in epidemiological Scenarios 1 ("Agnostic") and 3 ("Low-Level Cases"), with the combined model class performing performing equally well or better than the other two classes (Figure \@ref(fig:scenario-plot)).
 These three scenarios only offer snapshots of performance.
@@ -510,9 +510,10 @@ These figures demonstrate both the added flexibility of the more complex model c
 
 The final symptoms chosen through model selection should be interpreted cautiously.
 These models were developed for prediction and classification in a unique sub-population: CST-identified, symptomatic patients.
-The symptoms and risk factors retained in the model classes differed, despite these data being collected over a short time period from the same population.
+Different symptoms and risk factors were retained for different model classes, despite these data being collected over a short time period from the same population.
 These differences may point to mechanisms by which CST-identified and RAT-positive patients differ from other groups.
-Of particular interest is whether individuals that are missed by RAT are less infectious, which could be explored by using viral load measured as Threshold Cycle (Ct) values from the RT-PCR [@albert2021field].
+Of particular interest is whether individuals that are identified by PCR but missed by RAT are less infectious and thus more typical of the asymptomatic population (possibly with some symptomatic co-morbidity).
+This could be explored by using viral load measured as Threshold Cycle (Ct) values from the RT-PCR [@albert2021field] and further testing for other illnesses.
 
 Our methodology has been developed using a large sample size drawn under field-realistic conditions and has thus developed with the practicalities of mass deployment in mind.
 Improving case identification using statistical methods allows us to update our diagnostic process in real-time, allowing rapid adaptation to new variants or even new diseases.
@@ -536,15 +537,15 @@ Imperfect diagnostics are frequently imperfect in different ways, and these diff
 What is more, these approaches are often more agile than gold-standard diagnostics in situations of flux, for example, in the early stages of new pandemics or disease strains, when fast responses are essential.  
 By investing in understanding how to utilise the complementary strengths of imperfect testing and deploy the limited gold-standard testing available for validation, we can provide good quality testing at the scale needed to fight infectious diseases.
 
-# Funding (26 words)
+# Funding (28 words)
 
 The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), University of Glasgow reports funding from Wellcome (207569/Z/17/Z) and EPSRC (EP/R513222/1).  
 The authors declare no competing interests.
 
-# Acknowledgements (69 words)
+# Acknowledgements 
 
 We would like to thank members of the community support teams in Bangladesh who have provided essential services throughout the pandemic.
-Earlier drafts of this mansucript benefited from the input of Paul Johnson, Daniel Haydon, Frances Mair, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
+Earlier drafts of this manuscript benefited from the input of Paul Johnson, Daniel Haydon, Frances Mair, Anne-Sophie Bonnet-Lebrun, Luca Nelli, Crinan Jarrett, Rita Claudia Cardoso Ribeiro, Halfan Ngowo, Heather McDevitt and Gina Bertolacci.
 The University of Glasgow COVID-19 in LMICs Group provided the environment in which to develop this work.
 
 # References (Max 30)
