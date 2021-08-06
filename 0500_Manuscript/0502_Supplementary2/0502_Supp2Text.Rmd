@@ -123,6 +123,7 @@ We can write this formally for the $i$th individual as:
 \text{PCR}_i &= \text{RAT}_i \\
 \text{PCR} &\in\{0,1\} \\
 \text{RAT} &\in\{0,1\}
+(\#eq:ModelClass1)
 \end{nalign}
 
 Model Class 2 uses only the syndromic data.

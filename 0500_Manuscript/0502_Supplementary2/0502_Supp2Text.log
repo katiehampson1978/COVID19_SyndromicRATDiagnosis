@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  1 AUG 2021 16:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  5 AUG 2021 19:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -991,8 +991,6 @@ Package pdftex.def Info: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRA
 TDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf  used o
 n input line 173.
 (pdftex.def)             Requested size: 345.0pt x 243.94061pt.
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 184.
 [1
 
 
@@ -1002,25 +1000,16 @@ n already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.185 
+l.184 
        </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_M
-anuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf>]
-
-LaTeX Warning: Reference `eq:ModelClass1' on page 3 undefined on input line 222
-.
-
-
-LaTeX Warning: Reference `eq:ModelClass1' on page 3 undefined on input line 222
-.
-
-[3]
+anuscript/0501_MainText/MainTextFigs/DataFlowchart.pdf>] [3]
 
 pdfTeX warning: pdflatex (file /Users/fergusjchadwick/Dropbox/Git/COVID19_Syndr
 omicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowc
 hart.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> al
 lowed
 </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscri
-pt/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf, id=119, 845.0471pt x
+pt/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf, id=118, 845.0471pt x
  597.50829pt>
 File: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Man
 uscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf Graphic file (ty
@@ -1029,82 +1018,66 @@ pe pdf)
 script/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf>
 Package pdftex.def Info: /Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRA
 TDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.p
-df  used on input line 256.
+df  used on input line 245.
 (pdftex.def)             Requested size: 345.0pt x 243.94061pt.
+
+LaTeX Warning: Reference `eq:ModelClass3' on page 4 undefined on input line 248
+.
+
 [4] [5pdfTeX warning (ext4): destination with the same identifier (name{figure.
 2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.264 
+l.253 
        </Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_M
 anuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart.pdf>] [6]
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 360--363
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 332--335
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 360--363
+Underfull \hbox (badness 10000) in paragraph at lines 332--335
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 364--367
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 336--339
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 364--367
+Underfull \hbox (badness 10000) in paragraph at lines 336--339
 
  []
 
 [7]
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 368--371
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 340--343
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 368--371
+Underfull \hbox (badness 10000) in paragraph at lines 340--343
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 372--375
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 344--347
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 372--375
+Underfull \hbox (badness 10000) in paragraph at lines 344--347
 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 376--379
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 348--351
 [][][] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 376--379
-
- []
-
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 380--383
-[][][] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 380--383
-
- []
-
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 384--387
-[][][] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 384--387
+Underfull \hbox (badness 10000) in paragraph at lines 348--351
 
  []
 
@@ -1113,28 +1086,28 @@ as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.391 \end{document}
+l.355 \end{document}
                     ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 391.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 391.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 355.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 355.
 (./0502_Supp2Text.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 391.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 391.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 355.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 355.
 Package rerunfilecheck Info: File `0502_Supp2Text.out' has not changed.
 (rerunfilecheck)             Checksum: 917263C2721CC435028562F0BA971F85;730.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 391.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 355.
  ) 
 Here is how much of TeX's memory you used:
- 24914 strings out of 480608
- 440392 string characters out of 5903630
- 720026 words of memory out of 5000000
- 40108 multiletter control sequences out of 15000+600000
- 613397 words of font info for 127 fonts, out of 8000000 for 9000
+ 24791 strings out of 480608
+ 437516 string characters out of 5903630
+ 711487 words of memory out of 5000000
+ 39985 multiletter control sequences out of 15000+600000
+ 613645 words of font info for 130 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,16n,83p,2024b,970s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,16n,83p,2024b,489s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
 texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2020/t
 exmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2020/texmf-dist/
@@ -1156,10 +1129,10 @@ xlive/2020/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2020
 /lmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy6.pfb
 ></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/loca
 l/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on 0502_Supp2Text.pdf (8 pages, 410760 bytes).
+Output written on 0502_Supp2Text.pdf (8 pages, 407929 bytes).
 PDF statistics:
- 252 PDF objects out of 1000 (max. 8388607)
- 196 compressed objects within 2 object streams
- 47 named destinations out of 1000 (max. 500000)
+ 246 PDF objects out of 1000 (max. 8388607)
+ 190 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
  20639 words of extra memory for PDF output out of 20736 (max. 10000000)
 
