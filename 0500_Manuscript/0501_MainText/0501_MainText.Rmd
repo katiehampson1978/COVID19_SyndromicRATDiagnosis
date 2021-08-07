@@ -542,7 +542,7 @@ By investing in understanding how to utilise the complementary strengths of impe
 
 # Funding (28 words)
 
-The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), University of Glasgow reports funding from Wellcome (207569/Z/17/Z) and EPSRC (EP/R513222/1).  
+The Bill and Melinda Gates Foundation funded work by FAO (INV-022851), University of Glasgow reports funding from the Wellcome Trust (207569/Z/17/Z) and EPSRC (EP/R513222/1).
 The authors declare no competing interests.
 
 # Acknowledgements 
