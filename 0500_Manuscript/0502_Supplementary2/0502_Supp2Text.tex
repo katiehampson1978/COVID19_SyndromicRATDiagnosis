@@ -184,38 +184,34 @@ These combinations define three model classes (Figure \ref{fig:data-flowchart2})
 
 Model Class 1 uses only the RAT result.
 It equates being RAT-positive with the patient being PCR-positive for COVID-19 (hereafter, PCR-positive), and being RAT-negative with PCR-negativity.
-We can write this formally for the \(i\)th individual as:
-
-\begin{equation}\begin{aligned}
-\text{PCR}_i &= \text{RAT}_i \\
-\text{PCR} &\in\{0,1\} \\
-\text{RAT} &\in\{0,1\}
-\label{eq:ModelClass1}
-\end{aligned}\end{equation}\ignorespacesafterend
 
 Model Class 2 uses only the syndromic data.
 For this model, we used a Bayesian multivariate probit model {[}1{]}.
 The multivariate probit structures the outcomes of the PCR test and symptoms presence/absence as a \(D\)-dimensional vector of binary outcomes (\(\boldsymbol{y}_i=(y_{i1},y_{i2},\dots,y_{id})\), \(y_{ij}\in\{0,1\}\)).
 These outcomes are determined by an indicator function which takes a \(D\)-dimensional vector of \emph{continuous latent} variables (\(\boldsymbol{z}_i=(z_{i1},z_{i2},\dots,z_{id})\), \(z_{ij}\in\ \mathbb{R}\)).
 These latent continuous variables then covary as realisations of a \(D\)-dimensional multivariate normal,
-with the mean of the error structure informed by a linear predictor, \(\sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id}\), and a covariance between dimensions, \(\Sigma\).
+with the mean of the error structure informed by a linear predictor, \(\sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id}\), and a covariance (\(\Sigma\)) between dimensions.
 The linear predictor allows us to condition the outcomes on risk factor variables (here, age and gender).
 The covariance structure allows us to account for the correlated nature of the symptoms with each other and the outcome.
-This multivariate approach (multiple response variables) is also a very efficient way of encoding higher order interactions.
-The contribution of symptoms might be heavily context dependent, for example, having a fever, a cough or a loss of taste might be uninformative symptoms independently, but in combination they might be highly diagnostic.
+This multivariate approach (multiple response variables) is also a very efficient way of encoding complex relationships between symptoms.
+These relationships need to be accounted for because symptoms are not simply additive in their predictive power.
+For example, in the diagnosis of measles the ``Three C's'' are used: cough, coryza (irritation and inflammation of the mucous membrane in the nose leading to head cold, fever, sneezing) and conjunctivitis.
+These symptoms individually, and in pairwise combination could be indicative of a wide range of diseases, but when all three are present measles is a highly probable cause (obviously, this is a simplified example conditioning on patient age and vaccination status).
+In the alternative, univariate approach, symptoms would be encoded as covariates in the linear predictor for PCR-status, and the complex relationships would need to be reflected as high-order interaction terms.
 These interaction terms use a large number of parameters and can be hard to fit to data.
 Using a multivariate structure allows us to exploit more efficient posterior sampling algorithms, and in higher dimensional settings like this uses fewer parameters.
 
-As Albert and Chib identify in their paper {[}1{]}, the covariance matrix formulation of the model is not identifiable, with the variance, \(diag (\Sigma)\) and means of the latent variables, \(\boldsymbol{z}_i\) trading off against each other.
+The covariance matrix formulation of the model described above is not identifiable, because the variance, \(diag (\Sigma)\) and means of the latent variables, \(\boldsymbol{z}_i\) trade off against each other {[}1{]}.
 For this reason, we use a correlation matrix, \(\Omega\), formulation with the variance set to 1.
 A correlation based framework also makes communication with clinicians and other practitioners smoother as correlations are more familiar.
+We thus formulate the multivariate probit as:
 
 \begin{equation}\begin{aligned}
 y_{id} &= \mathbb{I}(z_{id} > 0) \\
 \boldsymbol{z}_{i} &= \boldsymbol{x}_i \boldsymbol{\beta} + \boldsymbol{\epsilon}_{i} \\
 z_{id} &= \sum_{j=1}^J x_{ij}\beta_{jd} + \epsilon_{id} \\
 \boldsymbol{\epsilon}_i &\sim N(\boldsymbol{0}, \boldsymbol{\Omega}) \\
-diag(\Omega)&=1 \\
+\Omega_{ii}&=1 \\
 {\beta} &\sim N(0,1) \\
 \boldsymbol{\Omega} &\sim \text{LKJ}(1)
 \label{eq:ModelClass2}
@@ -225,7 +221,7 @@ Model Class 3 combines the two data sources.
 We utilise the specificity of RAT by treating RAT-positive patients as PCR-positive patients.
 The RAT-negative patients are modelled using the sensitive syndromic approach using Model Class 2 to capture PCR-positive patients that are missed by the RAT.
 This approach leverages the potential different syndromic profiles of PCR-positve patients who are RAT-positive and -negative, allowing the model to adapt solely to the latter.
-Structurally, the model combines Equations \eqref{eq:ModelClass1} and \eqref{eq:ModelClass2}, with RAT-positive patients being modelled using Equation \eqref{eq:ModelClass1}, and RAT-negative patients with Equation \eqref{eq:ModelClass2}.
+Structurally, the model combines Model Class 1 and Model Class 2, with RAT-positive patients being modelled using Model Class 1, and RAT-negative patients with Model Class 2.
 
 By using a Bayesian formulation, we generate full posteriors for our parameter estimates, allowing natural quantification of uncertainty.
 Bayesian methods also facilitate the use of more informative priors.
@@ -245,14 +241,14 @@ The results did not change qualitatively between these approaches.
 \includegraphics[width=1\linewidth]{/Users/fergusjchadwick/Dropbox/Git/COVID19_SyndromicRATDiagnosis/0500_Manuscript/0501_MainText/MainTextFigs/ModelSelectionFlowchart} \caption{Schematic for rounds of model selection in the multivariate probit component of Model Classes 2 and 3. With 14 symptoms (only 5 shown here for demonstration purposes) and two covariates there are over 131000 possible model combinations. To make exploring these possible models computationally feasible and to reduce the risk of overfitting, we carried out two rounds of model selection. First, the data are divided into temporal cross-validation sets. The multivariate probit connects symptoms to the RT-PCR result through a correlation matrix. In the coarse model selection, the most complex feasible model (all symptoms and covariates) is fit to the training data. The estimated correlations between each symptom and the RT-PCR result are compared for each cross-validation set. The symptoms that have non-zero correlations in a systematic direction (i.e. all positively or all negatively correlated with RT-PCR result) are retained. The process is then repeated on each retained set of symptoms until the four symptoms in each model class with the strongest correlation to RT-PCR result. We then conduct a more exhaustive model selection on all the possible permutations of the four symptoms and two covariates. In this round, each model is fit to training data and used to predict for the test set, and the quality of those predictions is measured using cross-entropy scoring. The cross-entropy score is then used to select the best predictive model for each level of model complexity. Only these final models are then used for classification. This reduces the set of models tested as classifiers from >131 000 to just four per model class.}\label{fig:modsel-flowchart2}
 \end{figure}
 
-The coarse round of model selection (Figure \ref{fig:modsel-flowchart2}) selected candidate symptoms based on whether they had a strong and consistent correlation with PCR as estimated according to Equations \eqref{eq:ModelClass2} and \eqref{eq:ModelClass3}.
+The coarse round of model selection (Figure \ref{fig:modsel-flowchart2}) selected candidate symptoms based on whether they had a strong and consistent correlation with PCR as estimated according to Equation \eqref{eq:ModelClass2}.
 The models were fit with both covariates throughout the coarse round and symptoms were compared in nested models.
 In the fine round of model selection, these candidate symptoms and the covariate combinations (age and gender, age, gender and no covariates) were permuted to more exhaustively explore the model space.
 Reducing the number of possible models using the two stages of model selection was necessary to reduce computational demand and reduce the risk of overfitting models to the test scenarios.
 The large number of symptoms corresponds to a high number of potential model configurations (\textgreater131 000 for 14 symptoms and two covariates) which might perform well on the test sets (even under the challenging conditions of temporal cross-validation) but lack transferability.
 
-By using general predictive power to narrow down the number of candidate models and then testing those models, we are more likely to choose models which generalise well to new data.
-The number of candidate models used was not pre-determined but it was clear when fitting the models that there were ``jumps'' in performance (as defined below) between models containing five and four symptoms, so the models with one to four symptoms were used as the candidate models.
+By using general predictive power to narrow down the number of candidate models and then testing those models, we are more likely to choose models that generalise well to new data.
+It was clear when fitting the models that there were ``jumps'' in performance (as defined below) between models containing five and four symptoms, so the models with one to four symptoms were used as the candidate models.
 Zero symptom models were not included in the analysis as they do not correspond to a feasible policy (with covariates they would require governments to ask individuals of a given gender and age as COVID-19 positive, and without covariates they would involve randomly assigning individuals as COVID-19 positive).
 
 \hypertarget{predictive-performance}{%
