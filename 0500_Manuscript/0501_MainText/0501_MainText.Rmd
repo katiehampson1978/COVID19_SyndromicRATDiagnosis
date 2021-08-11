@@ -128,25 +128,21 @@ RATonlyFNR <- RATonlyROC$MedFalseNegRate %>% round(2)
 
 *Background*
 
-The majority of the world's population live in low- and middle-income countries (LMICs), where access to gold-standard diagnostics like polymerase chain reaction (PCR) is limited.
-Rapid antigen testing (RAT) and syndromic diagnosis are two alternative, inexpensive and easy-to-deploy surveillance methods but there are concerns that they lack the sensitivity and specificity to effectively guide practice.
+Most of the world's population live in low- and middle-income countries (LMICs), where access to gold-standard diagnostics for SARS-CoV-2, like PCR, is limited. Syndromic diagnosis is often the only means to identify cases, even though many are asymptomatic. Rapid antigen testing is an inexpensive and easy-to-deploy surveillance alternative but concerns remain about sensitivity and specificity. Here we [[[[....DO SOMETHING REALLY USEFUL AND IMPORTANT - TELL ME WHAT!!!!...]]] to effectively guide practice.
 
 *Methods*
 
-Community support teams in Dhaka, Bangladesh, identified potential COVID-19 patients using syndromic surveillance.
-A sample (n = `r pop_size`) of these patients was tested using PCR and RAT, and syndromic data were collected.
-Statistical models were fit to predict PCR status using only the RAT data, only the syndromic data, and both combined.
-Model performance was measured using predictive power and classification performance under three real-world, epidemiological scenarios: "Agnostic", "Rising Cases" and "Low-Level Cases".
+Community-based volunteers were trained in Dhaka, Bangladesh to identified potential COVID-19 patients through syndromic surveillance. 
+A sample (n = `r pop_size`) of these patients was tested using PCR and RAT. Statistical models were fit to predict their PCR status using only RAT results, only syndromic data, and their combination. The predictive power and classification performance of these models was examined under relevant epidemiological scenarios experienced in Dhaka during the pandemic: "Agnostic", "Rising Cases" and "Low-Level Cases". [[[[.. WE STILL NEED A BIT MORE HERE - THE PURPOSE OF THE COMPARISON WAS TO EVALUATE WHAT???..]]]
 
 *Findings*
 
-Combined data models yielded equal or improved performance over syndromic- and RAT-only models across all three scenarios and by scenario-free prediction and classification metrics.  
-In the "Rising Cases" scenario, which most closely represents the current situation in many LMICs, the combined data model's false negative rate is `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min()) %>% round(2)` (IQR: `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>%  select(FalseNegRate_CI_0.75) %>%  unlist(use.names = FALSE) %>%  min()) %>% round(2)`-`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(FalseNegRate_CI_0.25) %>% unlist(use.names = FALSE) %>% min()) %>%  round(2)`) percentage points lower than the RAT only model's. 
+Models combining RAT and syndromic data yielded equal or improved performance over syndromic- and RAT-only models across all scenarios and by scenario-free prediction and classification metrics.  
+In the "Rising Cases" scenario, which represents the current situation in many LMICs, the combined data model's false negative rate is `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(MedFalseNegRate) %>% unlist(use.names = FALSE) %>% min()) %>% round(2)` (IQR: `r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>%  select(FalseNegRate_CI_0.75) %>%  unlist(use.names = FALSE) %>%  min()) %>% round(2)`-`r 100*(RATonlyFNR - scenario_outcomes %>% filter(scenario == "Scenario 2") %>% filter(ModelClass == "SyndRAT") %>% select(FalseNegRate_CI_0.25) %>% unlist(use.names = FALSE) %>% min()) %>%  round(2)`) percentage points lower than the RAT only model's. [[[[..  WE NEED TO REPORT SOME MORE RESULTS COMPARING ACROSS SCENARIOS..]]]
 
 *Interpretation*
 
-We demonstrate that by statistically utilising complementary strengths and weaknesses across two imperfect diagnostics, we can greatly improve the detection of COVID-19.
-Small, scalable improvements in the accuracy of already mass-deployed but imperfect diagnostic methods can therefore make a big difference for pandemic control.  
+By drawing from complementary strengths across two imperfect diagnostics, we demonstrate substantive improvements in SARS-CoV-2 detection, and reduced rates of false positive diagnostics [[[[..  DETAIL THE PROS AND CONS OF THIS FOR PRACTITIONERS & PATIENTS HERE; GIVE A VISION OF HOW THIS COULD BE DEPLOYED..]]]. Small, scalable improvements in the accuracy of current imperfect diagnostic practices have potential to better control the pandemic in LMIC settings.  
 
 *Funding*
 
@@ -155,10 +151,10 @@ The Bill and Melinda Gates Foundation, the Wellcome Trust and EPSRC.
 # Introduction (1079 Words)
 
 Identification and isolation of COVID-19 cases remains key to the global pandemic response.
-The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and develop population-level interventions.
-Reverse transcription polymerase chain reaction (RT-PCR, hereafter, PCR) testing has rapidly become the default, gold-standard test for COVID-19 in applied settings (although see [@drame2020should]) due to its high sensitivity and specificity for COVID-19 [@corman2020detection, @tahamtan2020real].
-Most of the world's population, however, live in low- and middle-income countries (LMICs), where the laboratory facilities needed to carry out PCR tests are often scarce and hard to access [@chowdhury2020long, @vandenberg2021considerations]. 
-In such settings, patient diagnosis and support comes from telemedicine or community support teams (CSTs) composed of local volunteers with basic training.
+The faster and more accurately we can identify cases, the more effectively we can provide clinical care, reduce transmission of infection and implement population-level interventions.
+Reverse transcription polymerase chain reaction (RT-PCR, hereafter, PCR) testing has rapidly become the default, gold-standard test for SARS-CoV-2 [[[[..  maybe check how COVID-19 vs SARS-CoV-2 used in other Global Health papers.]]] in applied settings (although see [@drame2020should]) due to its high sensitivity and specificity [@corman2020detection, @tahamtan2020real].
+Most of the world's population, however, live in low- and middle-income countries (LMICs), where laboratory facilities needed to carry out PCR tests are often scarce and hard to access [@chowdhury2020long, @vandenberg2021considerations]. 
+In such settings, patient diagnosis and support is limited. In Dhaka, Bangladesh, some telemedicine or community support teams (CSTs) composed of local volunteers with basic training in COVID-19 diagnosis and care and prevention of transmission.
 COVID-19 diagnosis worldwide, therefore, must become accessible, harnessing inexpensive methods that can be carried out locally [@cash2020has, @olalekan2020covid].
 
 An increasingly popular alternative to PCR is rapid antigen testing (RAT) [@linares2020panbio].
